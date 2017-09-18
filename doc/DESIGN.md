@@ -94,6 +94,3 @@ The basic implementation of cell society contains three parts, **simulation**, *
 
 In terms of the implementation process of the project, all team members would understand the structure of the program and relationship between different classes. Empty methods would be written first to ensure that when another class is trying to called certain method, it would exists. This also speeds up the coding process since no one needs to wait for others to finish the method their code depends on. 
 
-test
-
-
