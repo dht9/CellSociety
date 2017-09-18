@@ -64,7 +64,7 @@ For an edge cell, it will have an index that equal 0, or the total number of row
 Once all cells know their next states, the program will iterate through the 2x2 array of cells (created from the xml file containing a grid of initial states) and the cells will set their current state equal to their next state. The cells will set their own colors using a cell method that returns the appropriate color based on the cell state (via a Map).
 
 
-**Use case: Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in an XML file. **
+**Use case: Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in an XML file.**
 
 
 The input XML file will be parsed to read in a value for probCatch for the Fire simulation in the configuration class. Each cell will have a constant double value of probCatch (within [0,1] inclusive). If a burning cell has a tree neighbor, a random double within [0,1] (inclusive) will be generated. If this value is less than the value of probCatch, the tree neighbor’s next state will be burning. A random double will be generated for every tree neighbor of a burning cell.
