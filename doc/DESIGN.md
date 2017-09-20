@@ -87,11 +87,10 @@ We also make an important decision on the update process for each cell. In order
 We choose to let each cell make decision about its own state during update and execute the update in their own methods. This means that we might need to pass some additional parameters to the cell constructor to ensure that the cell class would have the permission to implement the changes. The reason for the cell to make decision and execute update is that other class won’t need to request information from cell, make the decision, implement and change the cell state. Since cell class knows all the information needed, it will just need to make the decision and implement, saving two extra steps. 
 
 
-## Team Responsibilities
+## Team Responsibilities 
 
 The basic implementation of cell society contains three parts, **simulation**, **configuration** and **visualization**. Estelle is responsible for simulation, David is responsible for configuration while Ryan is responsible for visualization. Since there is not a clear cut for these three parts when implementing all the classes, and since there is a lot of dependency and collaboration between different classes, team members may make some changes in someone else’s class. 
 
 
 In terms of the implementation process of the project, all team members would understand the structure of the program and relationship between different classes. Empty methods would be written first to ensure that when another class is trying to called certain method, it would exists. This also speeds up the coding process since no one needs to wait for others to finish the method their code depends on. 
-
 
