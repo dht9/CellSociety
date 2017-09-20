@@ -1,7 +1,9 @@
 package config;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -11,10 +13,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import cell.Cell;
 import javafx.scene.paint.Color;
 
 import org.w3c.dom.Node;
 
+/**
+ * This is the class that parses the XML file.
+ * 
+ * @author DavidTran
+ *
+ */
 public class XMLReader {
 
 	private DocumentBuilderFactory dbFactory;
@@ -24,7 +33,9 @@ public class XMLReader {
 
 	private String simulationType;
 	private Map<Integer, Color> colorMap;
-	private int[][] cellGrid;
+	private Cell[][] cellGrid;
+	private int numRows;
+	private int numCols;
 
 	
 	/**
@@ -38,6 +49,8 @@ public class XMLReader {
 		initDOMParser();
 
 		createColorMap();
+		
+		createCellGrid();
 
 	}
 	
@@ -84,6 +97,27 @@ public class XMLReader {
 	 * Generate a grid of cell states.
 	 */
 	public void createCellGrid() {
+		
+		NodeList nList = doc.getElementsByTagName("row");
+		numRows = nList.getLength();
+		numCols = numRows;
+		
+		cellGrid = new Cell[numRows][numCols];
+		
+		int[] gridSize = {numRows,numCols};
+		
+		for (int i = 0; i < numRows; i++) {
+			Node row = nList.item(i);
+			String rowString = ((Element) row).getAttribute("cellStates");
+			List<String> colStates = Arrays.asList(rowString.toString().split(","));
+			System.out.println(colStates);
+			
+			for (int j = 0; j < colStates.size(); j++) {
+//				cellGrid[i][j] = new Cell(i, j, colStates.get(j), gridSize);
+			}
+			
+			
+		}
 		
 	}
 
