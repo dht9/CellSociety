@@ -24,10 +24,14 @@ public class XMLReader {
 
 	private String simulationType;
 	private Map<Integer, Color> colorMap;
-	private int[][] cellStateGrid;
+	private int[][] cellGrid;
 
-	// private Element classElement;
-
+	
+	/**
+	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType; 
+	 * 
+	 * @param xmlInput - file to be chosen by user.
+	 */
 	public XMLReader(File xmlInput) {
 		xmlFile = xmlInput;
 
@@ -36,14 +40,19 @@ public class XMLReader {
 		createColorMap();
 
 	}
-
+	
+	
+	/**
+	 * Initialize XML file parser.
+	 */
 	public void initDOMParser() {
 		try {
 			dbFactory = DocumentBuilderFactory.newInstance();
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
 			doc.getDocumentElement().normalize();
-			System.out.println("Simulation Type: " + doc.getDocumentElement().getAttribute("type"));
+			simulationType = doc.getDocumentElement().getAttribute("type");
+			System.out.println("Simulation Type: " + simulationType);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error with XML File");
@@ -51,6 +60,9 @@ public class XMLReader {
 		}
 	}
 
+	/**
+	 * Generate a mapping of cell states and color.
+	 */
 	private void createColorMap() {
 		Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
 
@@ -58,7 +70,7 @@ public class XMLReader {
 
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node nNode = nList.item(i);
-			//System.out.println(nNode.getNodeName());
+			// System.out.println(nNode.getNodeName());
 
 			Element eElement = (Element) nNode;
 			Integer state = Integer.parseInt(eElement.getAttribute("cellState"));
@@ -67,10 +79,20 @@ public class XMLReader {
 			colorMap.put(state, color);
 		}
 	}
+	
+	/**
+	 * Generate a grid of cell states.
+	 */
+	public void createCellGrid() {
+		
+	}
 
+	
+	/**
+	 * Tests the XML reader for parsing.
+	 */
 	public static void main(String args[]) {
-
-		XMLReader reader = new XMLReader(
-				new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/gameOfLife.xml"));
+		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/gameOfLife.xml");
+		XMLReader reader = new XMLReader(xml);
 	}
 }
