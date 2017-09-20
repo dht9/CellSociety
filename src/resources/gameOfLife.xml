@@ -2,17 +2,22 @@
 
 <simulation type = "GameOfLife">
 
-	<parameters>
-	</parameters>
-
-	<colormap>
-		<color cellState = "0" color = "White"></color>
-		<color cellState = "1" color = "Black"></color>
-	</colormap>
+	<colormap cellState = "0" color = "White"></colormap>
+	<colormap cellState = "1" color = "Black"></colormap>
+	
+	<parameters></parameters>
 
 	<grid>
-		<row cellStates = "0,1"></row>
-		<row cellStates = "1,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
 	</grid>
 	
 </simulation>
