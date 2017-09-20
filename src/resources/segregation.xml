@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "Segregation">
+
+	<colors>
+		<colormap cellState = "0" color = "White"></colormap>
+		<colormap cellState = "1" color = "Red"></colormap>
+		<colormap cellState = "2" color = "Blue"></colormap>
+	</colors>
+	
+	<parameters>
+		<parametermap name="satisfiedThreshold" value="0.5"></parametermap>
+	</parameters>
+
+	<grid>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+	</grid>
+	
+</simulation>

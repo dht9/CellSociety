@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "PredatorPrey">
+
+	<colors>
+		<colormap cellState = "0" color = "Blue"></colormap>
+		<colormap cellState = "1" color = "Orange"></colormap>
+		<colormap cellState = "2" color = "Gray"></colormap>
+	</colors>
+	
+	<parameters>
+		<parametermap name="fishBreedTime" value="5"></parametermap>
+		<parametermap name="sharkBreedTime" value="5"></parametermap>
+		<parametermap name="fishDieTime" value="1"></parametermap>
+		<parametermap name="sharkDieTime" value="3"></parametermap>
+	</parameters>
+	
+
+	<grid>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+	</grid>
+	
+</simulation>

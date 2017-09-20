@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "Fire">
+	
+	<colors>
+		<colormap cellState = "0" color = "Yellow"></colormap>
+		<colormap cellState = "1" color = "Green"></colormap>
+		<colormap cellState = "2" color = "Red"></colormap>
+	</colors>
+	
+	<parameters>
+		<parametermap name="probCatch" value="0.5"></parametermap>
+	</parameters>
+
+	<grid>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+	</grid>
+	
+</simulation>
