@@ -19,7 +19,7 @@ import javafx.scene.paint.Color;
 import org.w3c.dom.Node;
 
 /**
- * This is the class that parses the XML file.
+ * This is the class that parses the input XML file.
  * 
  * @author DavidTran
  *
@@ -33,32 +33,37 @@ public class XMLReader {
 
 	private String simulationType;
 	private Map<Integer, Color> colorMap;
+	private Map<String, Double> parameterMap;
 	private Cell[][] cellGrid;
+	private int[][] stateGrid;
 	private int numRows;
 	private int numCols;
 
-	
 	/**
-	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType; 
+	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType;
 	 * 
-	 * @param xmlInput - file to be chosen by user.
+	 * @param xmlInput file to be chosen by user.
+	 * 
 	 */
 	public XMLReader(File xmlInput) {
+		
 		xmlFile = xmlInput;
 
 		initDOMParser();
 
-		createColorMap();
-		
-		createCellGrid();
+		colorMap = createColorMap();
+
+		parameterMap = createParameterMap();
+
+		stateGrid = createCellGrid();
 
 	}
-	
-	
+
 	/**
 	 * Initialize XML file parser.
 	 */
 	public void initDOMParser() {
+
 		try {
 			dbFactory = DocumentBuilderFactory.newInstance();
 			dBuilder = dbFactory.newDocumentBuilder();
@@ -74,59 +79,88 @@ public class XMLReader {
 	}
 
 	/**
-	 * Generate a mapping of cell states and color.
+	 * Generate a mapping of cell state and color.
 	 */
-	private void createColorMap() {
-		Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
+	private Map<Integer,Color> createColorMap() {
 
-		NodeList nList = doc.getElementsByTagName("color");
+		Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
+		NodeList nList = doc.getElementsByTagName("colormap");
 
 		for (int i = 0; i < nList.getLength(); i++) {
-			Node nNode = nList.item(i);
-			// System.out.println(nNode.getNodeName());
 
+			Node nNode = nList.item(i);
 			Element eElement = (Element) nNode;
+
 			Integer state = Integer.parseInt(eElement.getAttribute("cellState"));
 			Color color = Color.valueOf(eElement.getAttribute("color"));
 
 			colorMap.put(state, color);
 		}
+		return colorMap;
 	}
-	
+
+	/**
+	 * Generate a mapping of parameter name and value.
+	 * @return
+	 */
+	private Map<String,Double> createParameterMap() {
+
+		Map<String, Double> parameterMap = new HashMap<String, Double>();
+		NodeList nList = doc.getElementsByTagName("parameter");
+
+		for (int i = 0; i < nList.getLength(); i++) {
+
+			Node nNode = nList.item(i);
+			Element eElement = (Element) nNode;
+
+			String name = eElement.getAttribute("name");
+			Double value = Double.parseDouble(eElement.getAttribute("value"));
+
+			parameterMap.put(name, value);
+			System.out.println(parameterMap);
+		}
+		
+		return parameterMap;
+	}
+
 	/**
 	 * Generate a grid of cell states.
 	 */
-	public void createCellGrid() {
-		
+	public int[][] createCellGrid() {
+
 		NodeList nList = doc.getElementsByTagName("row");
+		
 		numRows = nList.getLength();
 		numCols = numRows;
-		
 		cellGrid = new Cell[numRows][numCols];
-		
-		int[] gridSize = {numRows,numCols};
-		
+		stateGrid = new int[numRows][numCols];
+		int[] gridSize = { numRows, numCols };
+
+		// iterate through row entries
 		for (int i = 0; i < numRows; i++) {
-			Node row = nList.item(i);
-			String rowString = ((Element) row).getAttribute("cellStates");
-			List<String> colStates = Arrays.asList(rowString.toString().split(","));
+
+			Node currentRow = nList.item(i);
+
+			String row = ((Element) currentRow).getAttribute("cellStates");
+			List<String> colStates = Arrays.asList(row.toString().split(","));
 			System.out.println(colStates);
-			
-			for (int j = 0; j < colStates.size(); j++) {
-//				cellGrid[i][j] = new Cell(i, j, colStates.get(j), gridSize);
+
+			// iterate through each column in for current row
+			for (int j = 0; j < numCols; j++) {
+				// can create cell grid
+				stateGrid[i][j] = Integer.parseInt(colStates.get(j));	
 			}
-			
-			
 		}
+		System.out.println(Arrays.deepToString(stateGrid));
 		
+		return stateGrid;
 	}
 
-	
 	/**
 	 * Tests the XML reader for parsing.
 	 */
 	public static void main(String args[]) {
-		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/gameOfLife.xml");
+		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/fire.xml");
 		XMLReader reader = new XMLReader(xml);
 	}
 }
