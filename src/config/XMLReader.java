@@ -42,11 +42,12 @@ public class XMLReader {
 	/**
 	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType;
 	 * 
-	 * @param xmlInput file to be chosen by user.
+	 * @param xmlInput
+	 *            file to be chosen by user.
 	 * 
 	 */
 	public XMLReader(File xmlInput) {
-		
+
 		xmlFile = xmlInput;
 
 		initDOMParser();
@@ -81,7 +82,7 @@ public class XMLReader {
 	/**
 	 * Generate a mapping of cell state and color.
 	 */
-	private Map<Integer,Color> createColorMap() {
+	private Map<Integer, Color> createColorMap() {
 
 		Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
 		NodeList nList = doc.getElementsByTagName("colormap");
@@ -93,20 +94,21 @@ public class XMLReader {
 
 			Integer state = Integer.parseInt(eElement.getAttribute("cellState"));
 			Color color = Color.valueOf(eElement.getAttribute("color"));
-
 			colorMap.put(state, color);
 		}
+		
 		return colorMap;
 	}
 
 	/**
 	 * Generate a mapping of parameter name and value.
+	 * 
 	 * @return
 	 */
-	private Map<String,Double> createParameterMap() {
+	private Map<String, Double> createParameterMap() {
 
 		Map<String, Double> parameterMap = new HashMap<String, Double>();
-		NodeList nList = doc.getElementsByTagName("parameter");
+		NodeList nList = doc.getElementsByTagName("parametermap");
 
 		for (int i = 0; i < nList.getLength(); i++) {
 
@@ -115,11 +117,10 @@ public class XMLReader {
 
 			String name = eElement.getAttribute("name");
 			Double value = Double.parseDouble(eElement.getAttribute("value"));
-
 			parameterMap.put(name, value);
-			System.out.println(parameterMap);
 		}
 		
+		System.out.println(parameterMap);
 		return parameterMap;
 	}
 
@@ -129,7 +130,7 @@ public class XMLReader {
 	public int[][] createCellGrid() {
 
 		NodeList nList = doc.getElementsByTagName("row");
-		
+
 		numRows = nList.getLength();
 		numCols = numRows;
 		cellGrid = new Cell[numRows][numCols];
@@ -148,11 +149,11 @@ public class XMLReader {
 			// iterate through each column in for current row
 			for (int j = 0; j < numCols; j++) {
 				// can create cell grid
-				stateGrid[i][j] = Integer.parseInt(colStates.get(j));	
+				stateGrid[i][j] = Integer.parseInt(colStates.get(j));
 			}
 		}
 		System.out.println(Arrays.deepToString(stateGrid));
-		
+
 		return stateGrid;
 	}
 
@@ -160,7 +161,7 @@ public class XMLReader {
 	 * Tests the XML reader for parsing.
 	 */
 	public static void main(String args[]) {
-		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/fire.xml");
+		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/segregation.xml");
 		XMLReader reader = new XMLReader(xml);
 	}
 }

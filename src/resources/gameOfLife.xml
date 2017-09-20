@@ -2,8 +2,10 @@
 
 <simulation type = "GameOfLife">
 
-	<colormap cellState = "0" color = "White"></colormap>
-	<colormap cellState = "1" color = "Black"></colormap>
+	<colors>
+		<colormap cellState = "0" color = "White"></colormap>
+		<colormap cellState = "1" color = "Black"></colormap>
+	</colors>
 	
 	<parameters></parameters>
 
