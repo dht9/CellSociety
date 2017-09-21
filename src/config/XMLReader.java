@@ -32,6 +32,7 @@ public class XMLReader {
 	private File xmlFile;
 
 	private String simulationType;
+	private String edgeType;
 	private Map<Integer, Color> colorMap;
 	private Map<String, Double> parameterMap;
 	private Cell[][] cellGrid;
@@ -51,6 +52,10 @@ public class XMLReader {
 		xmlFile = xmlInput;
 
 		initDOMParser();
+		
+//		setEdgeType();
+//		
+//		setSimulationType();
 
 		colorMap = createColorMap();
 
@@ -70,7 +75,6 @@ public class XMLReader {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
 			doc.getDocumentElement().normalize();
-			simulationType = doc.getDocumentElement().getAttribute("type");
 			System.out.println("Simulation Type: " + simulationType);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,10 +129,27 @@ public class XMLReader {
 	}
 
 	/**
+	 * Retrieve the name of the simulation type.
+	 */
+	private void setSimulationType() {
+		simulationType = doc.getDocumentElement().getAttribute("type");
+	}
+	
+	/**
+	 * Retrieve the name of the edge type.
+	 */
+	private void setEdgeType() {
+		NodeList nList = doc.getElementsByTagName("edges");
+		Node node = nList.item(0);
+		edgeType = ((Element) node).getAttribute("cellStates");
+	}
+	
+	
+	/**
 	 * Generate a grid of cell states.
 	 */
 	public int[][] createCellGrid() {
-
+		
 		NodeList nList = doc.getElementsByTagName("row");
 
 		numRows = nList.getLength();
@@ -161,7 +182,7 @@ public class XMLReader {
 	 * Tests the XML reader for parsing.
 	 */
 	public static void main(String args[]) {
-		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/segregation.xml");
+		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/fire.xml");
 		XMLReader reader = new XMLReader(xml);
 	}
 }
