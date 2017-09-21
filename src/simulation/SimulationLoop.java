@@ -15,7 +15,22 @@ import javafx.util.Duration;
  */
 public class SimulationLoop {
 
+	private int guiWidth;
+	private int guiHeight;
 	private int fps = 60;
+	private Stage myStage;
+	private Scene myScene;
+	
+	
+	/**
+	 * Constructor, give simulation loop a scene
+	 */
+	public SimulationLoop(Stage s, Scene scene, int width, int height) {
+		myStage = s;
+		myScene = scene;
+		guiWidth = width;
+		guiHeight = height;
+	}
 
 	/**
 	 * Initializes and starts the simulation loop.
@@ -32,24 +47,9 @@ public class SimulationLoop {
 	 * Primary loop for running each frame of the simulation.
 	 */
 	private void step() {
+		
 		// do stuff
-	}
-
-	/**
-	 * Initializes the scene based off user input of XML.
-	 * 
-	 * @param s stage for the gui
-	 * @param guiWidth
-	 * @param guiHeight
-	 * @return scene to be displayed on the stage
-	 */
-	public Scene setupScene(Stage s, int guiWidth, int guiHeight) {
-
-		// need to call method that creates buttons and waits for XML input via button
-
-		Scene scene = new Scene(new Group(), guiWidth, guiHeight);
-
-		return scene;
+		
 	}
 
 }
