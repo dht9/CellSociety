@@ -1,10 +1,9 @@
 package simulation;
-import javafx.stage.Stage;
 
 /**
  * This class starts the simulation.
  * 
- * @author DavidTran, Estelle He, Ryan Chung
+ * @author David Tran, Estelle He, Ryan Chung
  *
  */
 public class Main {
