@@ -2,6 +2,12 @@ package cell;
 
 import java.util.ArrayList;
 
+/**
+ * Game of Life implementation of Cell superclass
+ * 
+ * @author estellehe
+ *
+ */
 public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
