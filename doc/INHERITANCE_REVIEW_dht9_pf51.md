@@ -1,7 +1,7 @@
 # Interitance Review Questions
 
-#### Configuration Roles:
-  * David Tran [dht9], Paulo Flecha [pf51] 
+#### Discussion Participants:
+  * David Tran [dht9], Paulo Flecha [pf51], Estelle He [wh103], Ryan Chung [tc140]
 
 ## Part 1
 
