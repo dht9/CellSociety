@@ -53,9 +53,9 @@ public class XMLReader {
 
 		initDOMParser();
 		
-//		setEdgeType();
-//		
-//		setSimulationType();
+		edgeType = setEdgeType();
+
+		simulationType = setSimulationType();
 
 		colorMap = createColorMap();
 
@@ -68,7 +68,7 @@ public class XMLReader {
 	/**
 	 * Initialize XML file parser.
 	 */
-	public void initDOMParser() {
+	private void initDOMParser() {
 
 		try {
 			dbFactory = DocumentBuilderFactory.newInstance();
@@ -131,17 +131,19 @@ public class XMLReader {
 	/**
 	 * Retrieve the name of the simulation type.
 	 */
-	private void setSimulationType() {
-		simulationType = doc.getDocumentElement().getAttribute("type");
+	private String setSimulationType() {
+		NodeList nList = doc.getElementsByTagName("simulation");
+		Element element = (Element) nList.item(0);
+		return element.getAttribute("type");
 	}
 	
 	/**
 	 * Retrieve the name of the edge type.
 	 */
-	private void setEdgeType() {
+	private String setEdgeType() {
 		NodeList nList = doc.getElementsByTagName("edges");
 		Node node = nList.item(0);
-		edgeType = ((Element) node).getAttribute("cellStates");
+		return ((Element) node).getAttribute("type");
 	}
 	
 	
@@ -182,7 +184,7 @@ public class XMLReader {
 	 * Tests the XML reader for parsing.
 	 */
 	public static void main(String args[]) {
-		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/fire.xml");
+		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/predatorPrey.xml");
 		XMLReader reader = new XMLReader(xml);
 	}
 }
