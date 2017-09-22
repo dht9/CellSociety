@@ -35,6 +35,10 @@ public class SimulationLoop {
 		guiHeight = height;
 		shouldRun = false;
 	}
+	
+	public void setXMLReader(XMLReader xmlReaderInput) {
+		xmlReader = xmlReaderInput;
+	}
 
 	/**
 	 * Initializes and starts the simulation loop.
@@ -69,16 +73,5 @@ public class SimulationLoop {
 	public void pause() {
 		shouldRun = false;
 	}
-	
-	public boolean getRun() {
-		return shouldRun;
-	}
-	
-	public void setXMLReader(XMLReader xmlReaderInput) {
-		xmlReader = xmlReaderInput;
-	}
-	
-	
-
 
 }
