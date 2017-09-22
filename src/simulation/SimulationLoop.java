@@ -1,18 +1,9 @@
 package simulation;
-import java.io.File;
-import java.util.ResourceBundle;
 
 import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,7 +21,7 @@ public class SimulationLoop {
 	private int fps = 60;
 	private Stage myStage;
 	private Scene myScene;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");;
+	private boolean shouldRun;
 	
 	
 	/**
@@ -41,6 +32,7 @@ public class SimulationLoop {
 		myScene = scene;
 		guiWidth = width;
 		guiHeight = height;
+		shouldRun = false;
 	}
 
 	/**
@@ -57,80 +49,30 @@ public class SimulationLoop {
 	/**
 	 * Primary loop for running each frame of the simulation.
 	 */
-	private void step() {
+	public void step() {
 		
-		// do stuff
-		
-	}
-	
-	/**
-	 * Method inspired by BrowserView.java
-	 * 
-	 * @param scene
-	 * @return
-	 */
-	public Node makeButtonPanel(Stage s) {
-	
-		HBox btnPanel = new HBox();
-		
-		Button chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s));
-		
-		Button submitXMLButton = makeButton("SubmitXMLCommand", event -> submitXML());
-		
-		Button startButton = makeButton("StartCommand", event -> play());
-		
-		Button pauseButton = makeButton("PauseCommand", event -> pause());
-		
-		Button stepButton = makeButton("StepCommand", event -> stepForward());
-		
-		btnPanel.getChildren().addAll(chooseXMLButton, submitXMLButton, startButton, pauseButton, stepButton);
-
-		return btnPanel;
-		
-	}
-	/**
-	 * This method inspired by Browserview.java by Robert Duvall
-	 * 
-	 * @param property text displayed on button
-	 * @param handler actions if button pressed
-	 * @return
-	 */
-	private Button makeButton (String property, EventHandler<ActionEvent> handler) {
-		Button btn = new Button();
-		String label = myResources.getString(property);
-		btn.setText(label);
-		btn.setOnAction(handler);
-		return btn;
-	}
-	
-	/**
-	 * Button Event Handler Methods
-	 */
-	private void openXML(Stage s) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
-		File file = fileChooser.showOpenDialog(s);
-		
-		if (file != null) {
-			XMLReader xmlReader = new XMLReader(file);
+		if (shouldRun) {
+			
+			// do stuff
+			System.out.println("running");
 		}
-	}
-	
-	private void submitXML() {
 		
 	}
-	
-	private void play() {
-		
+
+	// start/resume the simulation
+	public void play() {
+		shouldRun = true;
 	}
 	
-	private void pause() {
-		
+	// pause the simulation
+	public void pause() {
+		shouldRun = false;
 	}
 	
-	private void stepForward() {
-		
+	public boolean getRun() {
+		return shouldRun;
 	}
+	
 	
 
 
