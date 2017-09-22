@@ -22,12 +22,13 @@ public class SimulationLoop {
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
+	private XMLReader xmlReader;
 	
 	
 	/**
 	 * Constructor, give simulation loop a scene
 	 */
-	public SimulationLoop(Stage s, Scene scene, int width, int height, XMLReader xmlReader) {
+	public SimulationLoop(Stage s, Scene scene, int width, int height) {
 		myStage = s;
 		myScene = scene;
 		guiWidth = width;
@@ -51,7 +52,7 @@ public class SimulationLoop {
 	 */
 	public void step() {
 		
-		if (shouldRun) {
+		if (shouldRun && xmlReader != null) {
 			
 			// do stuff
 			System.out.println("running");
@@ -71,6 +72,10 @@ public class SimulationLoop {
 	
 	public boolean getRun() {
 		return shouldRun;
+	}
+	
+	public void setXMLReader(XMLReader xmlReaderInput) {
+		xmlReader = xmlReaderInput;
 	}
 	
 	

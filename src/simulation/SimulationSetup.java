@@ -49,7 +49,7 @@ public class SimulationSetup extends Application {
 
 		s.show();
 
-		mySimulationLoop = new SimulationLoop(s, scene, guiSize, guiSize, xmlReader);
+		mySimulationLoop = new SimulationLoop(s, scene, guiSize, guiSize);
 
 		mySimulationLoop.start();
 
@@ -126,6 +126,8 @@ public class SimulationSetup extends Application {
 	 *            Stage for file chooser window
 	 */
 	private void openXML(Stage s) {
+		
+		mySimulationLoop.pause();
 
 		FileChooser fileChooser = new FileChooser();
 		String currentPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/src/resources";
@@ -137,6 +139,8 @@ public class SimulationSetup extends Application {
 		if (file != null) {
 
 			xmlReader = new XMLReader(file);
+			
+			mySimulationLoop.setXMLReader(xmlReader);
 			
 		}
 	}
