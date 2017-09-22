@@ -1,6 +1,7 @@
 package simulation;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 import config.XMLReader;
@@ -90,7 +91,6 @@ public class SimulationSetup extends Application {
 		pauseButton = makeButton("PauseCommand", event -> pause());
 
 		stepButton = makeButton("StepCommand", event -> step());
-		
 
 		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton);
 
@@ -116,15 +116,18 @@ public class SimulationSetup extends Application {
 	}
 
 	/**
+	 * Give user a window to select XML file and create XMLReader instance if file
+	 * is valid.
 	 * 
-	 * Button Event Handler Methods
-	 * 
+	 * @param s
+	 *            Stage for file chooser window
 	 */
 	private void openXML(Stage s) {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
-		fileChooser.setInitialDirectory(
-	            new File(System.getProperty("/cellsociety_team10/src/resources")));
+		String currentPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/src/resources";
+		fileChooser.setInitialDirectory(new File(currentPath));
+		FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter("(*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extentionFilter);
 		File file = fileChooser.showOpenDialog(s);
 
 		if (file != null) {
