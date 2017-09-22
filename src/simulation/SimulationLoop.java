@@ -1,7 +1,8 @@
 package simulation;
+
+import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,6 +21,8 @@ public class SimulationLoop {
 	private int fps = 60;
 	private Stage myStage;
 	private Scene myScene;
+	private boolean shouldRun;
+	private XMLReader xmlReader;
 	
 	
 	/**
@@ -30,6 +33,11 @@ public class SimulationLoop {
 		myScene = scene;
 		guiWidth = width;
 		guiHeight = height;
+		shouldRun = false;
+	}
+	
+	public void setXMLReader(XMLReader xmlReaderInput) {
+		xmlReader = xmlReaderInput;
 	}
 
 	/**
@@ -46,10 +54,24 @@ public class SimulationLoop {
 	/**
 	 * Primary loop for running each frame of the simulation.
 	 */
-	private void step() {
+	public void step() {
 		
-		// do stuff
+		if (shouldRun && xmlReader != null) {
+			
+			// do stuff
+			System.out.println("running");
+		}
 		
+	}
+
+	// start/resume the simulation
+	public void play() {
+		shouldRun = true;
+	}
+	
+	// pause the simulation
+	public void pause() {
+		shouldRun = false;
 	}
 
 }

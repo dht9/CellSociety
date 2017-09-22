@@ -3,15 +3,25 @@
 <simulation type = "Segregation">
 
 	<colors>
-		<colormap cellState = "0" color = "White"></colormap>
-		<colormap cellState = "1" color = "Red"></colormap>
-		<colormap cellState = "2" color = "Blue"></colormap>
+		<colormap cellState = "0" color = "WHITE"></colormap>
+		<colormap cellState = "1" color = "RED"></colormap>
+		<colormap cellState = "2" color = "BLUE"></colormap>
 	</colors>
+	
+	<states>
+		<statemap cellState = "0" name = "EMPTY"></statemap>
+		<statemap cellState = "1" name = "A"></statemap>
+		<statemap cellState = "2" name = "B"></statemap>
+	</states>
 	
 	<parameters>
 		<parametermap name="satisfiedThreshold" value="0.5"></parametermap>
 	</parameters>
 
+	<edges>
+		<edge type = "straight"></edge>
+	</edges>
+	
 	<grid>
 		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
 		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
