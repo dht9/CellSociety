@@ -35,7 +35,6 @@ public class XMLReader {
 	private String edgeType;
 	private Map<Integer, Color> colorMap;
 	private Map<String, Double> parameterMap;
-	private Cell[][] cellGrid;
 	private int[][] stateGrid;
 	private int numRows;
 	private int numCols;
@@ -50,15 +49,17 @@ public class XMLReader {
 	public XMLReader(File xmlInput) {
 
 		xmlFile = xmlInput;
-
+		
 		initDOMParser();
 		
-		edgeType = setEdgeType();
-
 		simulationType = setSimulationType();
-
+		System.out.println("Simulation Type: " + simulationType);
+		
+		edgeType = setEdgeType();
+		System.out.println("Edge Type: " + edgeType);
+		
 		colorMap = createColorMap();
-
+		
 		parameterMap = createParameterMap();
 
 		stateGrid = createCellGrid();
@@ -75,20 +76,38 @@ public class XMLReader {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(xmlFile);
 			doc.getDocumentElement().normalize();
-			System.out.println("Simulation Type: " + simulationType);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error with XML File");
 			// add more "error" code later
 		}
 	}
+	
+	/**
+	 * Retrieve the name of the simulation type.
+	 */
+	public String setSimulationType() {
+		
+		return doc.getDocumentElement().getNodeName();
+	}
+	
+	/**
+	 * Retrieve the name of the edge type.
+	 */
+	public String setEdgeType() {
+		
+		NodeList nList = doc.getElementsByTagName("edge");
+		Element element = (Element) nList.item(0);
+		
+		return element.getAttribute("type");
+	}
 
 	/**
 	 * Generate a mapping of cell state and color.
 	 */
-	private Map<Integer, Color> createColorMap() {
+	public Map<Integer, Color> createColorMap() {
 
-		Map<Integer, Color> colorMap = new HashMap<Integer, Color>();
+		colorMap = new HashMap<Integer, Color>();
 		NodeList nList = doc.getElementsByTagName("colormap");
 
 		for (int i = 0; i < nList.getLength(); i++) {
@@ -109,9 +128,9 @@ public class XMLReader {
 	 * 
 	 * @return
 	 */
-	private Map<String, Double> createParameterMap() {
+	public Map<String, Double> createParameterMap() {
 
-		Map<String, Double> parameterMap = new HashMap<String, Double>();
+		parameterMap = new HashMap<String, Double>();
 		NodeList nList = doc.getElementsByTagName("parametermap");
 
 		for (int i = 0; i < nList.getLength(); i++) {
@@ -127,24 +146,6 @@ public class XMLReader {
 		System.out.println(parameterMap);
 		return parameterMap;
 	}
-
-	/**
-	 * Retrieve the name of the simulation type.
-	 */
-	private String setSimulationType() {
-		NodeList nList = doc.getElementsByTagName("simulation");
-		Element element = (Element) nList.item(0);
-		return element.getAttribute("type");
-	}
-	
-	/**
-	 * Retrieve the name of the edge type.
-	 */
-	private String setEdgeType() {
-		NodeList nList = doc.getElementsByTagName("edges");
-		Node node = nList.item(0);
-		return ((Element) node).getAttribute("type");
-	}
 	
 	
 	/**
@@ -156,9 +157,7 @@ public class XMLReader {
 
 		numRows = nList.getLength();
 		numCols = numRows;
-		cellGrid = new Cell[numRows][numCols];
 		stateGrid = new int[numRows][numCols];
-		int[] gridSize = { numRows, numCols };
 
 		// iterate through row entries
 		for (int i = 0; i < numRows; i++) {
@@ -175,7 +174,7 @@ public class XMLReader {
 				stateGrid[i][j] = Integer.parseInt(colStates.get(j));
 			}
 		}
-		System.out.println(Arrays.deepToString(stateGrid));
+//		System.out.println(Arrays.deepToString(stateGrid));
 
 		return stateGrid;
 	}
@@ -184,7 +183,9 @@ public class XMLReader {
 	 * Tests the XML reader for parsing.
 	 */
 	public static void main(String args[]) {
-		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/predatorPrey.xml");
+		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/segregation.xml");
 		XMLReader reader = new XMLReader(xml);
 	}
+	
+	
 }
