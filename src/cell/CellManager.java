@@ -1,6 +1,7 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CellManager {
 	private ArrayList<Cell> myCellList;
@@ -12,13 +13,27 @@ public class CellManager {
 	public CellManager(String type) {
 		myCellList = new ArrayList<Cell>();
 		myType = type;
+		//TODO change type to enum
 	}
 	
+	/**
+	 * get the neighbor cell list for input cell
+	 * 
+	 * @param current
+	 * @return
+	 */
 	private ArrayList<Cell> getNeighbor(Cell current) {
-		for (Cell each: myCellList) {
-			
+		ArrayList<Cell> neighborList = new ArrayList<Cell>();
+		Iterator<Cell> cellIter = myCellList.iterator();
+		if (cellIter.hasNext()) {
+			Cell next = cellIter.next();
+			if (current.isNeighbor(next)) {
+				neighborList.add(next);
+			}
 		}
-		return myCellList;
+		return neighborList;
 	}
+	
+	public 
 
 }

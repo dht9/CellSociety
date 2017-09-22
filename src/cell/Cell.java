@@ -79,5 +79,13 @@ public abstract class Cell {
 		mycol = mynextCol;
 		mystate = mynextState;
 	}
+	
+	/**
+	 * check if certain cell is the neighbor of this cell based on the rules
+	 * 
+	 * @param other
+	 * @return
+	 */
+	public abstract boolean isNeighbor(Cell other);
 
 }
