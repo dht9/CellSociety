@@ -33,7 +33,7 @@ public class SimulationSetup extends Application {
 	private Button chooseXMLButton;
 	private Button startButton;
 	private Button pauseButton;
-	private Button stepButton;
+	private Button stepButton;;
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
