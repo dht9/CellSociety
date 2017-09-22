@@ -1,5 +1,7 @@
 package cell;
 
+import java.util.ArrayList;
+
 /**
  * This is the cell superclass that has abstract cell method shared by all cell subclass
  * 
@@ -7,13 +9,13 @@ package cell;
  *
  */
 public abstract class Cell {
-	private int myrow;
-	private int mycol;
-	private String mystate;
-	private int[] mygrid;
-	private int mynextRow;
-	private int mynextCol;
-	private int mynextState;
+	protected int myrow;
+	protected int mycol;
+	protected int mystate;
+	protected int[] mygrid;
+	protected int mynextRow;
+	protected int mynextCol;
+	protected int mynextState;
 	
 	/**
 	 * constructor for cell superclass
@@ -22,7 +24,7 @@ public abstract class Cell {
 	 * @param state
 	 * @param gridSize is the {row, col} of current grid, used to determine whether on the edge
 	 */
-	public Cell(int row, int column, String state, int[] gridSize) {
+	public Cell(int row, int column, int state, int[] gridSize) {
 		myrow = row;
 		mycol = column;
 		mystate = state;
@@ -49,7 +51,7 @@ public abstract class Cell {
 	 * access state
 	 * @return state
 	 */
-	public String state() {
+	public int state() {
 		return mystate;
 	}
 	
@@ -61,5 +63,21 @@ public abstract class Cell {
 		return (myrow == 1 || mycol == 1 || myrow == mygrid[0] || mycol == mygrid[1]);
 	}
 	
+	/**
+	 * update cell position and state depending on the neighborlist input
+	 * 
+	 * store update info
+	 * @param neighborlist
+	 */
+	public abstract void updateInfo(ArrayList<Cell> neighborlist);
+	
+	/**
+	 * execute the update information on the cell
+	 */
+	public void update() {
+		myrow = mynextRow;
+		mycol = mynextCol;
+		mystate = mynextState;
+	}
 
 }
