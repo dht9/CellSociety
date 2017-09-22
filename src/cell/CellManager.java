@@ -11,9 +11,8 @@ public class CellManager {
 	/**
 	 * constructor for cell manager, initialize mycelllist
 	 */
-	public CellManager(String type) {
+	public CellManager() {
 		myCellList = new ArrayList<Cell>();
-		myType = type;
 		//TODO change type to enum
 	}
 	
@@ -58,19 +57,46 @@ public class CellManager {
 		}
 	}
 	
-	public void initialize(int[][] statusArray) {
-		int row = statusArray.length;
-		int col = statusArray[0].length;
+	/**
+	 * initialize all cells based on the stateArray parsed by XML file and store them in mycelllist
+	 * 
+	 * @param stateArray
+	 * @param type
+	 */
+	public void initialize(int[][] stateArray, String type) {
+		int row = stateArray.length;
+		int col = stateArray[0].length;
+		myType = type;
 		int[] gridSize = {row, col};
 		for (int i = 0; i < row; i++) {
 			for(int j = 0; j < col; j++) {
-				Cell current = new Cell(row, col, statusArray[row][col], gridSize);
+				Cell current = createCell(row, col, stateArray[row][col], gridSize, type);
+				myCellList.add(current);
 			}
 		}
 	}
 	
-	private Cell createCell(String type) {
-		switch(type) 
+	/**
+	 * create cell based on the designated type
+	 * 
+	 * @param row
+	 * @param col
+	 * @param state
+	 * @param gridSize
+	 * @param type
+	 * @return cell
+	 */
+	private Cell createCell(int row, int col, int state, int[] gridSize, String type) {
+		Cell current;
+		switch(type) {
+			case "GameOfLife":
+				current = new GameofLife(row, col, state, gridSize);
+				break;
+			default:
+				current = new GameofLife(row, col, state, gridSize);
+				break;
+		}
+		return current;
 	}
 
 }
