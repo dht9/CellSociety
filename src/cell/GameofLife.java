@@ -25,7 +25,7 @@ public class GameofLife extends Cell{
 				liveCount++;
 			}
 		}
-		if (this.mystate == LIVE) {
+		if (this.mystate == LIVE) {  //TODO check if enum can be used here
 			switch(liveCount) {
 				case 0:
 				case 1:
@@ -44,6 +44,16 @@ public class GameofLife extends Cell{
 				this.mynextState = LIVE;
 			}
 		}
+	}
+
+	@Override
+	public boolean isNeighbor(Cell other) {
+		if (Math.abs(other.row() - this.row()) <= 1 && Math.abs(other.column() - this.column()) <= 1) {
+			if (!other.equals(this)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
