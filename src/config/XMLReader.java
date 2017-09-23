@@ -195,13 +195,15 @@ public class XMLReader {
 			Node currentRow = nList.item(i);
 
 			String row = ((Element) currentRow).getAttribute("cellStates");
-			List<String> colStates = Arrays.asList(row.toString().split(","));
+			List<String> colStates = Arrays.asList(row.toString().split("\\s*,\\s*"));
 			System.out.println(colStates);
 
 			// iterate through each column in for current row
 			for (int j = 0; j < numCols; j++) {
-				// can create cell grid
-				stateGrid[i][j] = Integer.parseInt(colStates.get(j));
+				
+				String trim = colStates.get(j).trim();
+				System.out.println(colStates.get(j));
+				stateGrid[i][j] = Integer.parseInt(trim);
 			}
 		}
 		// System.out.println(Arrays.deepToString(stateGrid));

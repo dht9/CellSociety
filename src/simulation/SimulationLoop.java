@@ -99,7 +99,7 @@ public class SimulationLoop {
 			// set index widths/height for grid
 
 			 ArrayList<Cell> cellList = manager.cellList();
-			 manager.update(); // DOES NOT UPDATE CORRECTLY
+			 // manager.update(); // DOES NOT UPDATE CORRECTLY
 			
 			 for (Cell cell: cellList) {
 			
