@@ -70,7 +70,7 @@ public class CellManager {
 		int[] gridSize = {row, col};
 		for (int i = 0; i < row; i++) {
 			for(int j = 0; j < col; j++) {
-				Cell current = createCell(row, col, stateArray[row][col], gridSize, type);
+				Cell current = createCell(row, col, stateArray[i][j], gridSize, type);
 				myCellList.add(current);
 			}
 		}

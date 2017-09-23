@@ -17,12 +17,17 @@ import javafx.scene.shape.Rectangle;
 public class VisualizeGrid {
 
 	private XMLReader myXML;
+	private GridPane myGrid;
 
 	
 	/**
 	 * Constructor for VisualizeGrid Class.
 	 */
 	public VisualizeGrid() {
+	}
+	
+	public GridPane getGrid() {
+		return myGrid;
 	}
 	
 	/**
@@ -35,11 +40,17 @@ public class VisualizeGrid {
 	 */
 
 	public GridPane makeGrid(XMLReader xml) {
-		GridPane myGrid = new GridPane();
-		Map<Integer, Color> myColorMap = xml.createColorMap();
+		myGrid = new GridPane();
 		
-
+		Map<Integer, Color> myColorMap = xml.createColorMap();
 		int[][] gridArray = xml.createCellGrid();
+		
+		colorGrid(myGrid, myColorMap, gridArray);
+		
+		return myGrid;
+	}
+
+	private void colorGrid(GridPane myGrid, Map<Integer, Color> myColorMap, int[][] gridArray) {
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray.length; j++) {
 
@@ -48,8 +59,6 @@ public class VisualizeGrid {
 				myGrid.add(new Rectangle(20,20, color), j, i);
 			}
 		}
-
-		return myGrid;
 	}
 
 }

@@ -1,5 +1,9 @@
 package simulation;
 
+import java.util.ArrayList;
+
+import cell.Cell;
+import cell.CellManager;
 import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -57,6 +61,19 @@ public class SimulationLoop {
 	public void step() {
 		
 		if (shouldRun && xmlReader != null) {
+			
+			
+			CellManager manager = new CellManager();
+			manager.update();
+			ArrayList<Cell> cellList = manager.cellList();
+			
+			for (Cell cell: cellList) {
+				int row = cell.row();
+				int col = cell.column();
+				int state = cell.state();
+				
+				
+			}
 			
 			// do stuff
 			System.out.println("running");

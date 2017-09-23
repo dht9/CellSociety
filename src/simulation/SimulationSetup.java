@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+import cell.CellManager;
 import javafx.scene.paint.Color;
 
 import config.XMLReader;
@@ -48,8 +49,6 @@ public class SimulationSetup extends Application {
 	 */
 	@Override
 	public void start(Stage s) {
-
-		System.out.println("11111");
 
 		Scene scene = setupScene(s, guiSize, guiSize);
 
@@ -136,9 +135,9 @@ public class SimulationSetup extends Application {
 	 * it on scene
 	 * 
 	 * @param s
-	 * 			Stage for file chooser window
+	 *            Stage for file chooser window
 	 * @param scene
-	 *            
+	 * 
 	 */
 	private void openXML(Stage s, Scene scene) {
 
@@ -160,6 +159,9 @@ public class SimulationSetup extends Application {
 		}
 
 		newGrid(scene);
+		// initialize myCellList
+		CellManager manager = new CellManager();
+		manager.initialize(xmlReader.createCellGrid(), xmlReader.setSimulationType());
 	}
 
 	/**

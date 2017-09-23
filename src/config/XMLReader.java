@@ -117,8 +117,12 @@ public class XMLReader {
 			Color color = Color.valueOf(eElement.getAttribute("color"));
 			colorMap.put(state, color);
 		}
-
-		System.out.println("Colormap: " + colorMap);
+		
+		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		}
+		
+//		System.out.println("Colormap: " + colorMap);
 		return colorMap;
 	}
 
