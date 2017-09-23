@@ -7,10 +7,17 @@ import cell.CellManager;
 import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import visualization.VisualizeGrid;
 
 /**
  * This class updates the GUI to simulate a CA model with parameters defined in
@@ -28,6 +35,7 @@ public class SimulationLoop {
 	private Scene myScene;
 	private boolean shouldRun;
 	private XMLReader xmlReader;
+	private VisualizeGrid myGrid;
 	
 	
 	/**
@@ -43,6 +51,10 @@ public class SimulationLoop {
 	
 	public void setXMLReader(XMLReader xmlReaderInput) {
 		xmlReader = xmlReaderInput;
+	}
+	
+	public void setVisualizeGrid(VisualizeGrid grid) {
+		myGrid = grid;
 	}
 
 	/**
@@ -63,19 +75,19 @@ public class SimulationLoop {
 		
 		if (shouldRun && xmlReader != null) {
 			
-			
 			CellManager manager = new CellManager();
 			manager.update();
 			ArrayList<Cell> cellList = manager.cellList();
+			System.out.println("Cell List: " + cellList);
 			
 			for (Cell cell: cellList) {
+				
 				int row = cell.row();
 				int col = cell.column();
 				int state = cell.state();
-				Color color = new XMLReader().createColorMap().get(state);
+				Color color = xmlReader.createColorMap().get(state);
 				
-				GridPane grid = new SimulationSetup().getGrid();
-				grid.add(new Rectangle(55,55))
+				colorRectangle(row, col, color);
 				
 			}
 			
@@ -84,6 +96,29 @@ public class SimulationLoop {
 		}
 		
 	}
+
+	/**
+	 * Removes and adds a new rectangle at a specified index in the grid.
+	 * 
+	 * @param row
+	 * @param col
+	 * @param color
+	 */
+	private void colorRectangle(int row, int col, Color color) {
+		
+		Node rect = myGrid.getRectWithCellPosition(row,col);
+		
+		myGrid.getChildren().remove(rect);
+
+        final Rectangle newRect = new Rectangle(0, 0, myGrid.getCellSize(), myGrid.getCellSize()); 
+        
+        newRect.setFill(color);
+        
+        //GridPane uses opposite indexes
+        myGrid.add(newRect, col, row); 
+		
+	}
+	
 
 	// start/resume the simulation
 	public void play() {

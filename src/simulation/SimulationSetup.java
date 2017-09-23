@@ -17,8 +17,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -42,7 +44,6 @@ public class SimulationSetup extends Application {
 	private Button pauseButton;
 	private Button stepButton;
 
-	private GridPane myGrid;
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
@@ -154,12 +155,13 @@ public class SimulationSetup extends Application {
 
 			mySimulationLoop.setXMLReader(xmlReader);
 
+			newGrid(scene);
+			
+			// initialize myCellList
+			CellManager manager = new CellManager();
+			manager.initialize(xmlReader.createCellGrid(), xmlReader.setSimulationType());
 		}
 
-		newGrid(scene);
-		// initialize myCellList
-		CellManager manager = new CellManager();
-		manager.initialize(xmlReader.createCellGrid(), xmlReader.setSimulationType());
 	}
 
 	/**
@@ -169,15 +171,19 @@ public class SimulationSetup extends Application {
 	 * 
 	 */
 	private void newGrid(Scene scene) {
-		VisualizeGrid newGrid = new VisualizeGrid();
-		myGrid = newGrid.makeGrid(xmlReader);
+		VisualizeGrid newGrid = new VisualizeGrid(xmlReader);
 		BorderPane root = (BorderPane) scene.getRoot();
-		root.setCenter(myGrid);
+		root.setCenter(newGrid);
+		
+		// set index widths/height for grid
+		for (int i = 0; i < newGrid.getGridSize(); i++) {
+			newGrid.getRowConstraints().add(new RowConstraints(newGrid.getCellSize()));
+			newGrid.getColumnConstraints().add(new ColumnConstraints(newGrid.getCellSize()));
+		}
+
+		mySimulationLoop.setVisualizeGrid(newGrid);
 	}
 
-	public GridPane getGrid() {
-		return myGrid;
-	}
 	// enable looping through step() in SimulationLoop
 	private void play() {
 		mySimulationLoop.play();
