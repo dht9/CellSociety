@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+import cell.CellManager;
 import javafx.scene.paint.Color;
 
 import config.XMLReader;
@@ -16,8 +17,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,15 +44,11 @@ public class SimulationSetup extends Application {
 	private Button pauseButton;
 	private Button stepButton;
 
-	private GridPane myGrid;
-
 	/**
 	 * Initialize stage, scene, and simulation loop.
 	 */
 	@Override
 	public void start(Stage s) {
-
-		System.out.println("11111");
 
 		Scene scene = setupScene(s, guiSize, guiSize);
 
@@ -62,8 +61,6 @@ public class SimulationSetup extends Application {
 		mySimulationLoop = new SimulationLoop(s, scene, guiSize, guiSize);
 
 		mySimulationLoop.start();
-
-		System.out.println("3333");
 	}
 
 	/**
@@ -85,8 +82,7 @@ public class SimulationSetup extends Application {
 		Node btnPanel = makeButtonPanel(s, scene);
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
-		
-		
+
 		return scene;
 	}
 
@@ -137,9 +133,9 @@ public class SimulationSetup extends Application {
 	 * it on scene
 	 * 
 	 * @param s
-	 * 			Stage for file chooser window
+	 *            Stage for file chooser window
 	 * @param scene
-	 *            
+	 * 
 	 */
 	private void openXML(Stage s, Scene scene) {
 
@@ -158,9 +154,13 @@ public class SimulationSetup extends Application {
 
 			mySimulationLoop.setXMLReader(xmlReader);
 
+			newGrid(scene);
+
+			// initialize myCellList
+			CellManager manager = new CellManager();
+			manager.initialize(xmlReader.createStateGrid(), xmlReader.setSimulationType());
 		}
 
-		newGrid(scene);
 	}
 
 	/**
@@ -170,11 +170,13 @@ public class SimulationSetup extends Application {
 	 * 
 	 */
 	private void newGrid(Scene scene) {
-		VisualizeGrid newGrid = new VisualizeGrid();
-		myGrid = newGrid.makeGrid(xmlReader);
-
+		VisualizeGrid newGrid = new VisualizeGrid(xmlReader);
 		BorderPane root = (BorderPane) scene.getRoot();
-		root.setCenter(myGrid);
+		root.setCenter(newGrid);
+
+		
+
+		mySimulationLoop.setVisualizeGrid(newGrid);
 	}
 
 	// enable looping through step() in SimulationLoop

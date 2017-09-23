@@ -74,8 +74,10 @@ public class CellManager {
 		myParaList = paraList;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				Cell current = createCell(row, col, stateArray[i][j]);
-				myCellList.add(current);
+			    if (stateArray[i][j] != -1) {
+    				Cell current = createCell(row, col, stateArray[i][j]);
+    				myCellList.add(current);
+			    }
 			}
 		}
 	}

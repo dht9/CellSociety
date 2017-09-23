@@ -3,15 +3,15 @@
 <simulation type = "PredatorPrey">
 
 	<colors>
-		<colormap cellState = "0" color = "BLUE"></colormap>
-		<colormap cellState = "1" color = "ORANGE"></colormap>
-		<colormap cellState = "2" color = "GRAY"></colormap>
+		<colormap cellState = "-1" color = "BLUE"></colormap>
+		<colormap cellState = "0" color = "ORANGE"></colormap>
+		<colormap cellState = "1" color = "GRAY"></colormap>
 	</colors>
 	
 	<states>
-		<statemap cellState = "0" name = "WATER"></statemap>
-		<statemap cellState = "1" name = "FISH"></statemap>
-		<statemap cellState = "2" name = "SHARK"></statemap>
+		<statemap cellState = "-1" name = "EMPTY"></statemap>
+		<statemap cellState = "0" name = "FISH"></statemap>
+		<statemap cellState = "1" name = "SHARK"></statemap>
 	</states>
 	
 	<parameters>
@@ -26,16 +26,16 @@
 	</edges>
 
 	<grid>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "-1,-1,-1,-1,-1, 0,-1, 0,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
 	</grid>
 	
 </simulation>
