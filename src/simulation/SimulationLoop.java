@@ -1,6 +1,7 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import cell.Cell;
 import cell.CellManager;
@@ -36,8 +37,15 @@ public class SimulationLoop {
 	private boolean shouldRun;
 	private XMLReader xmlReader;
 	private VisualizeGrid myGrid;
-	
-	
+	private Map<Integer, Color> colorMap;
+	private Map<Integer, String> stateNameMap;
+	private Map<String, Double> parameterMap;
+	private int[][] stateGrid;
+	private String simulationType;
+	private String edgeType;
+
+	private CellManager manager;
+
 	/**
 	 * Constructor, give simulation loop a scene
 	 */
@@ -48,11 +56,25 @@ public class SimulationLoop {
 		guiHeight = height;
 		shouldRun = false;
 	}
-	
+
+	/**
+	 * Initialize data and manager for each new simulation.
+	 * 
+	 * @param xmlReaderInput
+	 */
 	public void setXMLReader(XMLReader xmlReaderInput) {
 		xmlReader = xmlReaderInput;
+		colorMap = xmlReaderInput.createColorMap();
+		stateNameMap = xmlReaderInput.createStateNameMap();
+		parameterMap = xmlReaderInput.createParameterMap();
+		stateGrid = xmlReaderInput.createStateGrid();
+		edgeType = xmlReaderInput.setEdgeType();
+		simulationType = xmlReaderInput.setSimulationType();
+
+		manager = new CellManager();
+		manager.initialize(stateGrid, simulationType);
 	}
-	
+
 	public void setVisualizeGrid(VisualizeGrid grid) {
 		myGrid = grid;
 	}
@@ -72,59 +94,51 @@ public class SimulationLoop {
 	 * Primary loop for running each frame of the simulation.
 	 */
 	public void step() {
-		
+
 		if (shouldRun && xmlReader != null) {
+			// set index widths/height for grid
+
+			 ArrayList<Cell> cellList = manager.cellList();
+			 manager.update(); // DOES NOT UPDATE CORRECTLY
 			
-			CellManager manager = new CellManager();
-			manager.update();
-			ArrayList<Cell> cellList = manager.cellList();
-			System.out.println("Cell List: " + cellList);
+			 for (Cell cell: cellList) {
 			
-			for (Cell cell: cellList) {
-				
-				int row = cell.row();
-				int col = cell.column();
-				int state = cell.state();
-				Color color = xmlReader.createColorMap().get(state);
-				
-				colorRectangle(row, col, color);
-				
-			}
+			 int row = cell.row();
+			 int col = cell.column();
+			 int state = cell.state();
 			
-			// do stuff
-			System.out.println("running");
+			 Color color = colorMap.get(state);
+			
+			 colorRectangle(row, col, color);
+			
+			 }
+			 
+			 System.out.println("running");
 		}
-		
+
 	}
 
 	/**
-	 * Removes and adds a new rectangle at a specified index in the grid.
+	 * Removes and adds a new rectangle with a color at a specified index in the
+	 * grid.
 	 * 
 	 * @param row
 	 * @param col
 	 * @param color
 	 */
+	// There is a bug with this line
 	private void colorRectangle(int row, int col, Color color) {
-		
-		Node rect = myGrid.getRectWithCellPosition(row,col);
-		
-		myGrid.getChildren().remove(rect);
 
-        final Rectangle newRect = new Rectangle(0, 0, myGrid.getCellSize(), myGrid.getCellSize()); 
-        
-        newRect.setFill(color);
-        
-        //GridPane uses opposite indexes
-        myGrid.add(newRect, col, row); 
-		
+		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
+		rect.setFill(color);
 	}
-	
+
 
 	// start/resume the simulation
 	public void play() {
 		shouldRun = true;
 	}
-	
+
 	// pause the simulation
 	public void pause() {
 		shouldRun = false;

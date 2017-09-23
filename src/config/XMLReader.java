@@ -63,7 +63,7 @@ public class XMLReader {
 
 		parameterMap = createParameterMap();
 
-		stateGrid = createCellGrid();
+		stateGrid = createStateGrid();
 
 	}
 
@@ -181,7 +181,7 @@ public class XMLReader {
 	/**
 	 * Generate a grid of cell states.
 	 */
-	public int[][] createCellGrid() {
+	public int[][] createStateGrid() {
 
 		NodeList nList = doc.getElementsByTagName("row");
 

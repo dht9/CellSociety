@@ -7,7 +7,9 @@ import config.XMLReader;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -34,55 +36,68 @@ public class VisualizeGrid extends GridPane {
 	 * 
 	 * @return
 	 */
-	public VisualizeGrid(XMLReader xml){
+	public VisualizeGrid(XMLReader xml) {
 
 		Map<Integer, Color> myColorMap = xml.createColorMap();
-		int[][] gridArray = xml.createCellGrid();
+		int[][] gridArray = xml.createStateGrid();
 
-		colorGrid(this, myColorMap, gridArray);
-		
+		colorGrid(myColorMap, gridArray);
+
 		setGridLinesVisible(true);
 
 		setAlignment(Pos.CENTER);
-		
+
 		numRows = gridArray.length;
 		numCols = numRows;
+
+		// set index widths/height for grid
+		for (int i = 0; i < this.getSize(); i++) {
+			this.getRowConstraints().add(new RowConstraints(this.getCellSize()));
+			this.getColumnConstraints().add(new ColumnConstraints(this.getCellSize()));
+		}
 	}
 
-	private void colorGrid(GridPane myGrid, Map<Integer, Color> myColorMap, int[][] gridArray) {
+	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
+
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray.length; j++) {
 
 				Color color = myColorMap.get(gridArray[i][j]);
 
-				myGrid.add(new Rectangle(CELL_SIZE, CELL_SIZE, color), j, i);
+				this.add(new Rectangle(CELL_SIZE, CELL_SIZE, color), j, i);
 			}
 		}
 	}
-	
-	/** Get the rectangle with the same row/column index of a cell
+
+	/**
+	 * Get the rectangle with the same row/column index of a cell
 	 * 
-	 * @param row index of cell
-	 * @param column index of cell
-	 * @param gridPane contains 
+	 * @param row
+	 *            index of cell
+	 * @param column
+	 *            index of cell
+	 * @param gridPane
+	 *            contains
 	 * @return rectangle with the cell's coordinates
 	 */
-	public Node getRectWithCellPosition (int row, int column) {
-		
-        ObservableList<Node> children = this.getChildren();
-        for (Node child : children) {
-            if(GridPane.getRowIndex(child) == row && GridPane.getColumnIndex(child) == column) {
-                return child;
-            }
-        }
-        return null;
-    }
-	
+
+	public Node getRectWithCellPosition(int row, int column) {
+		Node rect = null;
+		ObservableList<Node> children = this.getChildren();
+		for (Node child : children) {
+			if (VisualizeGrid.getRowIndex(child) == row && VisualizeGrid.getColumnIndex(child) == column) {
+				rect = child;
+				break;
+			}
+		}
+		return rect;
+	}
+
 	public int getCellSize() {
 		return CELL_SIZE;
 	}
-	
-	public int getGridSize() {
+
+	public int getSize() {
 		return numRows;
 	}
 

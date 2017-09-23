@@ -44,7 +44,6 @@ public class SimulationSetup extends Application {
 	private Button pauseButton;
 	private Button stepButton;
 
-
 	/**
 	 * Initialize stage, scene, and simulation loop.
 	 */
@@ -156,10 +155,10 @@ public class SimulationSetup extends Application {
 			mySimulationLoop.setXMLReader(xmlReader);
 
 			newGrid(scene);
-			
+
 			// initialize myCellList
 			CellManager manager = new CellManager();
-			manager.initialize(xmlReader.createCellGrid(), xmlReader.setSimulationType());
+			manager.initialize(xmlReader.createStateGrid(), xmlReader.setSimulationType());
 		}
 
 	}
@@ -174,12 +173,8 @@ public class SimulationSetup extends Application {
 		VisualizeGrid newGrid = new VisualizeGrid(xmlReader);
 		BorderPane root = (BorderPane) scene.getRoot();
 		root.setCenter(newGrid);
+
 		
-		// set index widths/height for grid
-		for (int i = 0; i < newGrid.getGridSize(); i++) {
-			newGrid.getRowConstraints().add(new RowConstraints(newGrid.getCellSize()));
-			newGrid.getColumnConstraints().add(new ColumnConstraints(newGrid.getCellSize()));
-		}
 
 		mySimulationLoop.setVisualizeGrid(newGrid);
 	}
