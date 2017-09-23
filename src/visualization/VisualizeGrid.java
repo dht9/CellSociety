@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import config.XMLReader;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -11,12 +12,13 @@ import javafx.scene.shape.Rectangle;
 /**
  * This class initializes the grid for the simulation.
  * 
- * @author RyanChung
+ * @author RyanChung, DavidTran
  *
  */
 public class VisualizeGrid {
 
 	private XMLReader myXML;
+	private final int CELL_SIZE = 55; 
 
 	
 	/**
@@ -45,9 +47,13 @@ public class VisualizeGrid {
 
 				Color color = myColorMap.get(gridArray[i][j]);
 				
-				myGrid.add(new Rectangle(20,20, color), j, i);
+				myGrid.add(new Rectangle(CELL_SIZE,CELL_SIZE, color), j, i);
 			}
 		}
+		
+		myGrid.setGridLinesVisible(true);
+		
+		myGrid.setAlignment(Pos.CENTER);
 
 		return myGrid;
 	}

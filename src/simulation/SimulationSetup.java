@@ -85,7 +85,8 @@ public class SimulationSetup extends Application {
 		Node btnPanel = makeButtonPanel(s, scene);
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
-
+		
+		
 		return scene;
 	}
 
