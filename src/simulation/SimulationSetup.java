@@ -40,7 +40,7 @@ public class SimulationSetup extends Application {
 	private Button chooseXMLButton;
 	private Button startButton;
 	private Button pauseButton;
-	private Button stepButton;;
+	private Button stepButton;
 
 	private GridPane myGrid;
 
@@ -61,8 +61,6 @@ public class SimulationSetup extends Application {
 		mySimulationLoop = new SimulationLoop(s, scene, guiSize, guiSize);
 
 		mySimulationLoop.start();
-
-		System.out.println("3333");
 	}
 
 	/**
@@ -173,11 +171,13 @@ public class SimulationSetup extends Application {
 	private void newGrid(Scene scene) {
 		VisualizeGrid newGrid = new VisualizeGrid();
 		myGrid = newGrid.makeGrid(xmlReader);
-
 		BorderPane root = (BorderPane) scene.getRoot();
 		root.setCenter(myGrid);
 	}
 
+	public GridPane getGrid() {
+		return myGrid;
+	}
 	// enable looping through step() in SimulationLoop
 	private void play() {
 		mySimulationLoop.play();

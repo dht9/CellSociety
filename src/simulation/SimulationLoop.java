@@ -8,6 +8,7 @@ import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -71,7 +72,10 @@ public class SimulationLoop {
 				int row = cell.row();
 				int col = cell.column();
 				int state = cell.state();
+				Color color = new XMLReader().createColorMap().get(state);
 				
+				GridPane grid = new SimulationSetup().getGrid();
+				grid.add(new Rectangle(55,55))
 				
 			}
 			

@@ -32,6 +32,7 @@ public class XMLReader {
 	private String simulationType;
 	private String edgeType;
 	private Map<Integer, Color> colorMap;
+	private Map<Integer, String> stateNameMap;
 	private Map<String, Double> parameterMap;
 	private int[][] stateGrid;
 	private int numRows;
@@ -57,6 +58,8 @@ public class XMLReader {
 		System.out.println("Edge Type: " + edgeType);
 
 		colorMap = createColorMap();
+		
+		stateNameMap = createStateNameMap();
 
 		parameterMap = createParameterMap();
 
@@ -101,7 +104,7 @@ public class XMLReader {
 	}
 
 	/**
-	 * Generate a mapping of cell state and color.
+	 * Generate a mapping of cell state number and color.
 	 */
 	public Map<Integer, Color> createColorMap() {
 
@@ -124,6 +127,31 @@ public class XMLReader {
 		
 //		System.out.println("Colormap: " + colorMap);
 		return colorMap;
+	}
+	
+	/**
+	 * Generate a mapping of cell state number and name
+	 * 
+	 * @return
+	 */
+	public Map<Integer, String> createStateNameMap() {
+		stateNameMap = new HashMap<Integer,String>();
+		
+		NodeList nList = doc.getElementsByTagName("statemap");
+
+		for (int i = 0; i < nList.getLength(); i++) {
+
+			Node nNode = nList.item(i);
+			Element eElement = (Element) nNode;
+
+			Integer stateNum = Integer.parseInt(eElement.getAttribute("cellState"));
+			String stateName = eElement.getAttribute("name");
+			stateNameMap.put(stateNum, stateName);
+		}
+		
+		System.out.println("StateNameMap:" + stateNameMap);
+		return stateNameMap;
+		
 	}
 
 	/**
