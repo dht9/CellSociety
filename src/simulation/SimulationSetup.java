@@ -4,23 +4,29 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
+import javafx.scene.paint.Color;
+
 import config.XMLReader;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import visualization.VisualizeGrid;
 
 /**
  * This class initializes the interface for the simulation.
  * 
- * @author DavidTran
+ * @author DavidTran, RyanChung
  *
  */
 public class SimulationSetup extends Application {
@@ -33,13 +39,17 @@ public class SimulationSetup extends Application {
 	private Button chooseXMLButton;
 	private Button startButton;
 	private Button pauseButton;
-	private Button stepButton;;
+	private Button stepButton;
+
+	private GridPane myGrid;
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
 	 */
 	@Override
 	public void start(Stage s) {
+
+		System.out.println("11111");
 
 		Scene scene = setupScene(s, guiSize, guiSize);
 
@@ -53,6 +63,7 @@ public class SimulationSetup extends Application {
 
 		mySimulationLoop.start();
 
+		System.out.println("3333");
 	}
 
 	/**
@@ -69,11 +80,11 @@ public class SimulationSetup extends Application {
 
 		BorderPane root = new BorderPane();
 
-		Node btnPanel = makeButtonPanel(s);
+		Scene scene = new Scene(root, guiWidth, guiHeight);
+
+		Node btnPanel = makeButtonPanel(s, scene);
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
-
-		Scene scene = new Scene(root, guiWidth, guiHeight);
 
 		return scene;
 	}
@@ -81,18 +92,19 @@ public class SimulationSetup extends Application {
 	/**
 	 * Method inspired by makeNavigationPanel() in BrowserView.java by Robert Duvall
 	 * 
+	 * @param s
 	 * @param scene
 	 * @return
 	 */
-	private Node makeButtonPanel(Stage s) {
+	private Node makeButtonPanel(Stage s, Scene scene) {
 
 		HBox btnPanel = new HBox(75);
 
-		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s));
+		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s, scene));
 		startButton = makeButton("PlayCommand", event -> play());
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
-		
+
 		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton);
 
 		return btnPanel;
@@ -109,24 +121,27 @@ public class SimulationSetup extends Application {
 	 * @return
 	 */
 	private Button makeButton(String property, EventHandler<ActionEvent> handler) {
-		
+
 		Button btn = new Button();
 		String label = myResources.getString(property);
 		btn.setText(label);
 		btn.setOnAction(handler);
-		
+
 		return btn;
 	}
 
 	/**
-	 * Give user a window to select XML file and create instance of XMLReader if
-	 * file is valid.
+	 * Gives user a window to select XML file and creates instance of XMLReader if
+	 * file is valid. When valid file is loaded, creates a new grid and visualizes
+	 * it on scene
 	 * 
 	 * @param s
-	 *            Stage for file chooser window
+	 * 			Stage for file chooser window
+	 * @param scene
+	 *            
 	 */
-	private void openXML(Stage s) {
-		
+	private void openXML(Stage s, Scene scene) {
+
 		mySimulationLoop.pause();
 
 		FileChooser fileChooser = new FileChooser();
@@ -139,12 +154,28 @@ public class SimulationSetup extends Application {
 		if (file != null) {
 
 			xmlReader = new XMLReader(file);
-			
+
 			mySimulationLoop.setXMLReader(xmlReader);
-			
+
 		}
+
+		newGrid(scene);
 	}
-	
+
+	/**
+	 * Makes new grid.
+	 * 
+	 * @param scene
+	 * 
+	 */
+	private void newGrid(Scene scene) {
+		VisualizeGrid newGrid = new VisualizeGrid();
+		myGrid = newGrid.makeGrid(xmlReader);
+
+		BorderPane root = (BorderPane) scene.getRoot();
+		root.setCenter(myGrid);
+	}
+
 	// enable looping through step() in SimulationLoop
 	private void play() {
 		mySimulationLoop.play();
