@@ -39,7 +39,7 @@ public class SimulationSetup extends Application {
 	private Button chooseXMLButton;
 	private Button startButton;
 	private Button pauseButton;
-	private Button stepButton;;
+	private Button stepButton;
 
 	private GridPane myGrid;
 
@@ -85,7 +85,8 @@ public class SimulationSetup extends Application {
 		Node btnPanel = makeButtonPanel(s, scene);
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
-
+		
+		
 		return scene;
 	}
 
