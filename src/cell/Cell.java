@@ -57,7 +57,7 @@ public abstract class Cell {
 	
 	/**
 	 * check if the cell is at edge
-	 * @return
+	 * @return whether this cell is at edge
 	 */
 	public boolean isEdge() {
 		return (myrow == 1 || mycol == 1 || myrow == mygrid[0] || mycol == mygrid[1]);
@@ -79,5 +79,13 @@ public abstract class Cell {
 		mycol = mynextCol;
 		mystate = mynextState;
 	}
+	
+	/**
+	 * check if certain cell is the neighbor of this cell based on the rules
+	 * 
+	 * @param other
+	 * @return whether other cell is a neighbor
+	 */
+	public abstract boolean isNeighbor(Cell other);
 
 }
