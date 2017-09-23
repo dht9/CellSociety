@@ -12,11 +12,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import cell.Cell;
-import javafx.scene.paint.Color;
-
 import org.w3c.dom.Node;
+
+import javafx.scene.paint.Color;
 
 /**
  * This is the class that parses the input XML file.
@@ -34,6 +32,7 @@ public class XMLReader {
 	private String simulationType;
 	private String edgeType;
 	private Map<Integer, Color> colorMap;
+	private Map<Integer, String> stateNameMap;
 	private Map<String, Double> parameterMap;
 	private int[][] stateGrid;
 	private int numRows;
@@ -49,17 +48,19 @@ public class XMLReader {
 	public XMLReader(File xmlInput) {
 
 		xmlFile = xmlInput;
-		
+
 		initDOMParser();
-		
+
 		simulationType = setSimulationType();
 		System.out.println("Simulation Type: " + simulationType);
-		
+
 		edgeType = setEdgeType();
 		System.out.println("Edge Type: " + edgeType);
-		
+
 		colorMap = createColorMap();
 		
+		stateNameMap = createStateNameMap();
+
 		parameterMap = createParameterMap();
 
 		stateGrid = createCellGrid();
@@ -82,28 +83,28 @@ public class XMLReader {
 			// add more "error" code later
 		}
 	}
-	
+
 	/**
 	 * Retrieve the name of the simulation type.
 	 */
 	public String setSimulationType() {
-		
+
 		return doc.getDocumentElement().getNodeName();
 	}
-	
+
 	/**
 	 * Retrieve the name of the edge type.
 	 */
 	public String setEdgeType() {
-		
+
 		NodeList nList = doc.getElementsByTagName("edge");
 		Element element = (Element) nList.item(0);
-		
+
 		return element.getAttribute("type");
 	}
 
 	/**
-	 * Generate a mapping of cell state and color.
+	 * Generate a mapping of cell state number and color.
 	 */
 	public Map<Integer, Color> createColorMap() {
 
@@ -119,8 +120,34 @@ public class XMLReader {
 			Color color = Color.valueOf(eElement.getAttribute("color"));
 			colorMap.put(state, color);
 		}
-		
+
+		System.out.println("Colormap: " + colorMap);
 		return colorMap;
+	}
+	
+	/**
+	 * Generate a mapping of cell state number and name
+	 * 
+	 * @return
+	 */
+	public Map<Integer, String> createStateNameMap() {
+		stateNameMap = new HashMap<Integer,String>();
+		
+		NodeList nList = doc.getElementsByTagName("statemap");
+
+		for (int i = 0; i < nList.getLength(); i++) {
+
+			Node nNode = nList.item(i);
+			Element eElement = (Element) nNode;
+
+			Integer stateNum = Integer.parseInt(eElement.getAttribute("cellState"));
+			String stateName = eElement.getAttribute("name");
+			stateNameMap.put(stateNum, stateName);
+		}
+		
+		System.out.println("StateNameMap:" + stateNameMap);
+		return stateNameMap;
+		
 	}
 
 	/**
@@ -142,17 +169,16 @@ public class XMLReader {
 			Double value = Double.parseDouble(eElement.getAttribute("value"));
 			parameterMap.put(name, value);
 		}
-		
-		System.out.println(parameterMap);
+
+		System.out.println("Parameters: " + parameterMap);
 		return parameterMap;
 	}
-	
-	
+
 	/**
 	 * Generate a grid of cell states.
 	 */
 	public int[][] createCellGrid() {
-		
+
 		NodeList nList = doc.getElementsByTagName("row");
 
 		numRows = nList.getLength();
@@ -174,7 +200,7 @@ public class XMLReader {
 				stateGrid[i][j] = Integer.parseInt(colStates.get(j));
 			}
 		}
-//		System.out.println(Arrays.deepToString(stateGrid));
+		// System.out.println(Arrays.deepToString(stateGrid));
 
 		return stateGrid;
 	}
@@ -182,10 +208,10 @@ public class XMLReader {
 	/**
 	 * Tests the XML reader for parsing.
 	 */
-	public static void main(String args[]) {
-		File xml = new File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/segregation.xml");
-		XMLReader reader = new XMLReader(xml);
-	}
-	
-	
+	// public static void main(String args[]) {
+	// File xml = new
+	// File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/segregation.xml");
+	// XMLReader reader = new XMLReader(xml);
+	// }
+
 }
