@@ -17,6 +17,7 @@ public abstract class Cell {
 	protected int mynextRow;
 	protected int mynextCol;
 	protected int mynextState;
+	protected NeighborCell myNeighborCell;
 	
 	/**
 	 * constructor for cell superclass
@@ -24,6 +25,7 @@ public abstract class Cell {
 	 * @param column
 	 * @param state
 	 * @param gridSize is the {row, col} of current grid, used to determine whether on the edge
+	 * @param paraList, the list of parameters for simulation
 	 */
 	public Cell(int row, int column, int state, int[] gridSize, double[] paraList) {
 		myrow = row;
@@ -76,7 +78,7 @@ public abstract class Cell {
 	/**
 	 * execute the update information on the cell
 	 */
-	public void update() {
+	public void update(ArrayList<Cell> cellList) {
 		myrow = mynextRow;
 		mycol = mynextCol;
 		mystate = mynextState;
@@ -88,6 +90,19 @@ public abstract class Cell {
 	 * @param other
 	 * @return whether other cell is a neighbor
 	 */
-	public abstract boolean isNeighbor(Cell other);
+	public boolean isNeighbor(Cell other) {
+		return myNeighborCell.isNeighbor(other);
+	}
+	
+	/**
+	 * return a list of empty adjacent position in {row, col} that can be moved into
+	 * 
+	 * @param neighborlist
+	 * @return list of empty adjacent position
+	 */
+	protected ArrayList<int[]> emptyNeighbor (ArrayList<Cell> neighborlist) {
+		return myNeighborCell.emptyNeighbor(neighborlist);
+	}
+	
 
 }

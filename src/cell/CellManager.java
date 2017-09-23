@@ -54,7 +54,7 @@ public class CellManager {
 		}
 		cellIter = myCellList.iterator();
 		if(cellIter.hasNext()) {
-			cellIter.next().update();
+			cellIter.next().update(myCellList);
 		}
 	}
 	
@@ -63,6 +63,7 @@ public class CellManager {
 	 * 
 	 * @param stateArray
 	 * @param type
+	 * @param paraList
 	 */
 	public void initialize(int[][] stateArray, String type, double[] paraList) {
 		int row = stateArray.length;
@@ -91,7 +92,7 @@ public class CellManager {
 	 * @param type
 	 * @return cell
 	 */
-	private Cell createCell(int row, int col, int state) {
+	public Cell createCell(int row, int col, int state) {
 		Cell current;
 		switch(myType) {
 			case "GameOfLife":

@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
+	private static final int EIGHTADJACENT = 8;
 
 	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
 		super(row, column, state, gridSize, paraList);
-		// TODO Auto-generated constructor stub
+		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
 	}
 
 	@Override
@@ -48,12 +49,7 @@ public class GameofLife extends Cell{
 
 	@Override
 	public boolean isNeighbor(Cell other) {
-		if (Math.abs(other.row() - this.row()) <= 1 && Math.abs(other.column() - this.column()) <= 1) {
-			if (!other.equals(this)) {
-				return true;
-			}
-		}
-		return false;
+		return myNeighborCell.isNeighbor(other);
 	}
 
 }
