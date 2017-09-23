@@ -1,12 +1,13 @@
 package cell;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CellManager {
 	private ArrayList<Cell> myCellList;
 	private String myType;
+	private int[] myGridSize;
+	private double[] myParaList;
 	
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -63,14 +64,16 @@ public class CellManager {
 	 * @param stateArray
 	 * @param type
 	 */
-	public void initialize(int[][] stateArray, String type) {
+	public void initialize(int[][] stateArray, String type, double[] paraList) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
 		myType = type;
-		int[] gridSize = {row, col};
+		myGridSize[0] = row;
+		myGridSize[1] = col;
+		myParaList = paraList;
 		for (int i = 0; i < row; i++) {
-			for(int j = 0; j < col; j++) {
-				Cell current = createCell(row, col, stateArray[row][col], gridSize, type);
+			for (int j = 0; j < col; j++) {
+				Cell current = createCell(row, col, stateArray[i][j]);
 				myCellList.add(current);
 			}
 		}
@@ -86,14 +89,14 @@ public class CellManager {
 	 * @param type
 	 * @return cell
 	 */
-	private Cell createCell(int row, int col, int state, int[] gridSize, String type) {
+	private Cell createCell(int row, int col, int state) {
 		Cell current;
-		switch(type) {
+		switch(myType) {
 			case "GameOfLife":
-				current = new GameofLife(row, col, state, gridSize);
+				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
 			default:
-				current = new GameofLife(row, col, state, gridSize);
+				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
 		}
 		return current;

@@ -12,8 +12,8 @@ public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
 
-	public GameofLife(int row, int column, int state, int[] gridSize) {
-		super(row, column, state, gridSize);
+	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
+		super(row, column, state, gridSize, paraList);
 		// TODO Auto-generated constructor stub
 	}
 

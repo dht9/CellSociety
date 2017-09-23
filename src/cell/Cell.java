@@ -13,6 +13,7 @@ public abstract class Cell {
 	protected int mycol;
 	protected int mystate;
 	protected int[] mygrid;
+	protected double[] myParaList;
 	protected int mynextRow;
 	protected int mynextCol;
 	protected int mynextState;
@@ -24,11 +25,12 @@ public abstract class Cell {
 	 * @param state
 	 * @param gridSize is the {row, col} of current grid, used to determine whether on the edge
 	 */
-	public Cell(int row, int column, int state, int[] gridSize) {
+	public Cell(int row, int column, int state, int[] gridSize, double[] paraList) {
 		myrow = row;
 		mycol = column;
 		mystate = state;
 		mygrid = gridSize;
+		myParaList = paraList;
 	}
 	
 	/**
