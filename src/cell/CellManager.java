@@ -63,14 +63,14 @@ public class CellManager {
 	 * @param stateArray
 	 * @param type
 	 */
-	public void initialize(int[][] stateArray, String type) {
+	public void initialize(int[][] stateArray, String simulationType) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
-		myType = type;
+		myType = simulationType;
 		int[] gridSize = {row, col};
 		for (int i = 0; i < row; i++) {
 			for(int j = 0; j < col; j++) {
-				Cell current = createCell(row, col, stateArray[i][j], gridSize, type);
+				Cell current = createCell(i, j, stateArray[i][j], gridSize, simulationType);
 				myCellList.add(current);
 			}
 		}
@@ -86,9 +86,9 @@ public class CellManager {
 	 * @param type
 	 * @return cell
 	 */
-	private Cell createCell(int row, int col, int state, int[] gridSize, String type) {
+	private Cell createCell(int row, int col, int state, int[] gridSize, String simulationType) {
 		Cell current;
-		switch(type) {
+		switch(simulationType) {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, gridSize);
 				break;
