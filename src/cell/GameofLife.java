@@ -20,14 +20,16 @@ public class GameofLife extends Cell{
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist) {
+		mynextRow = myrow;
+		mynextCol = mycol;
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
 				liveCount++;
 			}
 		}
+		this.mynextState = this.mystate;
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here
-			System.out.println(1);
 			switch(liveCount) {
 				case 0:
 				case 1:

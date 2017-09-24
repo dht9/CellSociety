@@ -99,7 +99,7 @@ public class SimulationLoop {
 			// set index widths/height for grid
 
 			 ArrayList<Cell> cellList = manager.cellList();
-			 // manager.update(); // DOES NOT UPDATE CORRECTLY
+			 manager.update(); // DOES NOT UPDATE CORRECTLY
 			 for (Cell cell: cellList) {
 			
 			 int row = cell.row();
@@ -108,13 +108,13 @@ public class SimulationLoop {
 			
 			 Color color = colorMap.get(state);
 			 
-			 System.out.println(row);
+			 //System.out.println(row);
 			
 			 colorRectangle(row, col, color);
 			
 			 }
 			 
-			 System.out.println("running");
+			 //System.out.println("running");
 		}
 
 	}
