@@ -108,6 +108,15 @@ public class SimulationLoop {
 				 
 				 int row = cell.row();
 				 int col = cell.column();
+				 
+//				 System.out.print(row + " " + col + " " + state + " " + color);
+				
+				 colorRectangle(row, col, colorMap.get(-1));
+			 }
+			 for (Cell cell: cellList) {
+				 
+				 int row = cell.row();
+				 int col = cell.column();
 				 int state = cell.state();
 				
 				 Color color = colorMap.get(state);

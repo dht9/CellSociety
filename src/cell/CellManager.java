@@ -11,12 +11,14 @@ public class CellManager {
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private double[] myParaList;
+	private ArrayList<int[]> myEmptyPos;
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
 	 */
 	public CellManager() {
 		myCellList = new ArrayList<Cell>();
+		myEmptyPos = new ArrayList<int[]>();
 		// TODO change type to enum
 	}
 
@@ -42,13 +44,8 @@ public class CellManager {
 //				System.out.println("Cell neighbor: " + other.state());
 			}
 		}
-//		System.out.println("current");
-//		System.out.println(current.myrow);
-//		System.out.println(current.mycol);
-//		System.out.println("next");
+//		System.out.println("neighbor");
 //		System.out.println(neighborList.size());
-//		System.out.println(neighborList.get(0).myrow);
-//		System.out.println(neighborList.get(0).mycol);
 		return neighborList;
 	}
 
@@ -57,16 +54,18 @@ public class CellManager {
 	 */
 	public void update() {
 		ArrayList<Cell> newCellList = new ArrayList<Cell>();
+		ArrayList<Cell> removeCellList = new ArrayList<Cell>();
 		for (Cell current : myCellList) {
-			current.updateInfo(getNeighborList(current));
+			current.updateInfo(getNeighborList(current), myEmptyPos);
 		}
-		
-		Iterator<Cell> cellIter = myCellList.iterator();
-		while (cellIter.hasNext()) {
-			Cell current = cellIter.next();
-			current.update(cellIter, newCellList);
+		for (Cell current: myCellList) {
+			current.update(removeCellList, newCellList, myEmptyPos);
 		}
 		myCellList.addAll(newCellList);
+		myCellList.removeAll(removeCellList);
+		System.out.println("current");
+		System.out.println(myCellList.size());
+		
 	}
 
 
@@ -92,6 +91,10 @@ public class CellManager {
 				if (stateArray[i][j] != EMPTY) {
 					Cell current = createCell(i, j, stateArray[i][j]);
 					myCellList.add(current);
+				}
+				else {
+					int[] empty = {i,j};
+					myEmptyPos.add(empty);
 				}
 			}
 		}
