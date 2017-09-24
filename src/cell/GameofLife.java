@@ -20,6 +20,9 @@ public class GameofLife extends Cell{
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist) {
+		mynextState = mystate;
+		mynextRow = myrow;
+		mynextCol = mycol;
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {

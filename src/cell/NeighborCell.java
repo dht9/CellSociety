@@ -38,7 +38,7 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
-		int[] otherPos = {other.mycol, other.myrow};
+		int[] otherPos = {other.myrow, other.mycol};
 		return (adjacentPos().contains(otherPos));
 	}
 	

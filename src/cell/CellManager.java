@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CellManager {
+	private static final int EMPTY = -1;
+	
 	private ArrayList<Cell> myCellList;
 	private String myType;
-	private int[] myGridSize;
+	private int[] myGridSize = new int[2];
 	private double[] myParaList;
 	
 	/**
@@ -47,14 +49,11 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-		Iterator<Cell> cellIter = myCellList.iterator();
-		if (cellIter.hasNext()) {
-			Cell next = cellIter.next();
-			next.updateInfo(getNeighbor(next));
+		for (Cell current: myCellList) {
+			current.updateInfo(getNeighbor(current));
 		}
-		cellIter = myCellList.iterator();
-		if(cellIter.hasNext()) {
-			cellIter.next().update(myCellList);
+		for (Cell current: myCellList) {
+			current.update(myCellList);
 		}
 	}
 	
@@ -74,8 +73,10 @@ public class CellManager {
 		myParaList = paraList;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				Cell current = createCell(row, col, stateArray[i][j]);
-				myCellList.add(current);
+				if (stateArray[i][j] != EMPTY) {
+					Cell current = createCell(i, j, stateArray[i][j]);
+					myCellList.add(current);
+				}
 			}
 		}
 	}
@@ -96,6 +97,8 @@ public class CellManager {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
+			case "PredatorPrey":
+				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
