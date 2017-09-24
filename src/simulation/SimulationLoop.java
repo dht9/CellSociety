@@ -102,16 +102,15 @@ public class SimulationLoop {
 			 ArrayList<Cell> cellList = manager.cellList();
 			 manager.update(); // DOES NOT UPDATE CORRECTLY
 			 for (Cell cell: cellList) {
-			
-			 int row = cell.row();
-			 int col = cell.column();
-			 int state = cell.state();
-			
-			 Color color = colorMap.get(state);
-			 
-			 //System.out.println(row);
-			
-			 colorRectangle(row, col, color);
+				 int row = cell.row();
+				 int col = cell.column();
+				 int state = cell.state();
+				
+				 Color color = colorMap.get(state);
+				 
+				 //System.out.println(row);
+				
+				 colorRectangle(row, col, color);
 			
 			 }
 			 
