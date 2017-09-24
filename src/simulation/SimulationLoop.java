@@ -1,19 +1,25 @@
 package simulation;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import cell.Cell;
 import cell.CellManager;
 import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import visualization.VisualizeGrid;
 
 /**
  * This class updates the GUI to simulate a CA model with parameters defined in
@@ -31,8 +37,16 @@ public class SimulationLoop {
 	private Scene myScene;
 	private boolean shouldRun;
 	private XMLReader xmlReader;
-	
-	
+	private VisualizeGrid myGrid;
+	private Map<Integer, Color> colorMap;
+	private Map<Integer, String> stateNameMap;
+	private Map<String, Double> parameterMap;
+	private int[][] stateGrid;
+	private String simulationType;
+	private String edgeType;
+
+	private CellManager manager;
+
 	/**
 	 * Constructor, give simulation loop a scene
 	 */
@@ -43,9 +57,27 @@ public class SimulationLoop {
 		guiHeight = height;
 		shouldRun = false;
 	}
-	
-	public void setXMLReader(XMLReader xmlReaderInput) {
+
+	/**
+	 * Initialize data and manager for each new simulation.
+	 * 
+	 * @param xmlReaderInput
+	 */
+	public void setNewSimulationParameters(XMLReader xmlReaderInput) {
 		xmlReader = xmlReaderInput;
+		colorMap = xmlReaderInput.createColorMap();
+		stateNameMap = xmlReaderInput.createStateNameMap();
+		parameterMap = xmlReaderInput.createParameterMap();
+		stateGrid = xmlReaderInput.createStateGrid();
+		edgeType = xmlReaderInput.setEdgeType();
+		simulationType = xmlReaderInput.setSimulationType();
+
+		manager = new CellManager();
+		manager.initialize(stateGrid, simulationType, new double[0]);
+	}
+
+	public void setVisualizeGrid(VisualizeGrid grid) {
+		myGrid = grid;
 	}
 
 	/**
@@ -63,39 +95,52 @@ public class SimulationLoop {
 	 * Primary loop for running each frame of the simulation.
 	 */
 	public void step() {
-		
+
 		if (shouldRun && xmlReader != null) {
-			
-			
-			CellManager manager = new CellManager();
-			manager.update();
+			// set index widths/height for grid
+
 			ArrayList<Cell> cellList = manager.cellList();
-			ㄹㅁㄷㄹㅁㄷㅈㄹㅁㄷㅈㄹㅁWORK ON THIS
+//			ㄹㅁㄷㄹㅁㄷㅈㄹㅁㄷㅈㄹㅁWORK ON THIS
 			for (Cell cell: cellList) {
 				int row = cell.row();
 				int col = cell.column();
 				int state = cell.state();
 				SimulationSetup setup = new SimulationSetup();
 				
-				GridPane grid = setup.getGrid();
+//				GridPane grid = setup.getGrid();
 				
-				grid.add(new Rectangle(55,55,Color.WHITE),col,row);
+//				grid.add(new Rectangle(55,55,Color.WHITE),col,row);
 				BorderPane root = (BorderPane) myScene.getRoot();
-				root.getChildren().add(grid);
+//				root.getChildren().add(grid);
 //				root.setCenter(grid);
-			}
-			
-			// do stuff
+			manager.update(); // DOES NOT UPDATE CORRECTLY
+
 			System.out.println("running");
+			}
 		}
-		
+
+	}
+
+	/**
+	 * Removes and adds a new rectangle with a color at a specified index in the
+	 * grid.
+	 * 
+	 * @param row
+	 * @param col
+	 * @param color
+	 */
+	// There is a bug with this line
+	private void colorRectangle(int row, int col, Color color) {
+
+		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
+		rect.setFill(color);
 	}
 
 	// start/resume the simulation
 	public void play() {
 		shouldRun = true;
 	}
-	
+
 	// pause the simulation
 	public void pause() {
 		shouldRun = false;

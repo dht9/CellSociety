@@ -11,20 +11,27 @@ import java.util.ArrayList;
 public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
+	private static final int EIGHTADJACENT = 8;
 
-	public GameofLife(int row, int column, int state, int[] gridSize) {
-		super(row, column, state, gridSize);
-		// TODO Auto-generated constructor stub
+	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
+		super(row, column, state, gridSize, paraList);
+		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
 	}
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist) {
+		mynextState = mystate;
+		mynextRow = myrow;
+		mynextCol = mycol;
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
-				liveCount++;
+				liveCount++;	
 			}
 		}
+//		System.out.println("LiveCount=" +liveCount);
+		
+		this.mynextState = this.mystate;
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here
 			switch(liveCount) {
 				case 0:
@@ -33,6 +40,7 @@ public class GameofLife extends Cell{
 					break;
 				case 2:
 				case 3:
+					this.mynextState = LIVE;
 					break;
 				default:
 					this.mynextState = DIE;
@@ -48,12 +56,7 @@ public class GameofLife extends Cell{
 
 	@Override
 	public boolean isNeighbor(Cell other) {
-		if (Math.abs(other.row() - this.row()) <= 1 && Math.abs(other.column() - this.column()) <= 1) {
-			if (!other.equals(this)) {
-				return true;
-			}
-		}
-		return false;
+		return myNeighborCell.isNeighbor(other);
 	}
 
 }
