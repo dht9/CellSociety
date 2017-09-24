@@ -71,7 +71,7 @@ public class XMLReader {
 		stateGrid = createStateGrid();
 
 	}
-
+	
 	/**
 	 * Initialize XML file parser.
 	 */
@@ -87,6 +87,10 @@ public class XMLReader {
 			System.out.println("Error with XML File");
 			// add more "error" code later
 		}
+	}
+	
+	public File setFile() {
+		return xmlFile;
 	}
 
 	/**
