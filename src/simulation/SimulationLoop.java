@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -100,21 +101,23 @@ public class SimulationLoop {
 			// set index widths/height for grid
 
 			ArrayList<Cell> cellList = manager.cellList();
+//			ㄹㅁㄷㄹㅁㄷㅈㄹㅁㄷㅈㄹㅁWORK ON THIS
+			for (Cell cell: cellList) {
+				int row = cell.row();
+				int col = cell.column();
+				int state = cell.state();
+				SimulationSetup setup = new SimulationSetup();
+				
+//				GridPane grid = setup.getGrid();
+				
+//				grid.add(new Rectangle(55,55,Color.WHITE),col,row);
+				BorderPane root = (BorderPane) myScene.getRoot();
+//				root.getChildren().add(grid);
+//				root.setCenter(grid);
 			manager.update(); // DOES NOT UPDATE CORRECTLY
-			
-			 int row = cell.row();
-			 int col = cell.column();
-			 int state = cell.state();
-			
-			 Color color = colorMap.get(state);
-			 
-			 //System.out.println(row);
-			
-			 colorRectangle(row, col, color);
-			
-			 }
-			 
-			 //System.out.println("running");
+
+			System.out.println("running");
+			}
 		}
 
 	}
