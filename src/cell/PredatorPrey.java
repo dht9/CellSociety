@@ -16,7 +16,6 @@ public class PredatorPrey extends Cell{
 	
 	private double fishBreed;
 	private double sharkBreed;
-	private double fishDie;
 	private double sharkDie;
 	private int myBreedCount = 0;
 	private int myDieCount = 0;
@@ -37,8 +36,7 @@ public class PredatorPrey extends Cell{
 		myparaList = paraList;
 		fishBreed = paraList[0];
 		sharkBreed = paraList[1];
-		fishDie = paraList[2];
-		sharkDie = paraList[3];
+		sharkDie = paraList[2];
 		myNeighborCell = new NeighborCell(FOURADJACENT, true, this);
 	}
 
@@ -62,6 +60,7 @@ public class PredatorPrey extends Cell{
 		if (myIsBreed) {
 			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myparaList);
 			cellList.add(baby);
+			myBreedCount = 0;
 		}
 		super.update(cellList);
 	}
@@ -72,47 +71,83 @@ public class PredatorPrey extends Cell{
 	 * @param neighborlist
 	 */
 	private void fishUpdate(ArrayList<Cell> neighborlist) {
-		if (myDieCount == fishDie) {
-			myIsDie = true;
-		}
+		checkMove(neighborlist, fishBreed);
+	}
+
+	/**
+	 * check if there is empty adjacent position to move into 
+	 * 
+	 * also checks if the cell can reproduce
+	 * 
+	 * @param neighborlist
+	 * @param breedTime
+	 */
+	private void checkMove(ArrayList<Cell> neighborlist, double breedTime) {
 		ArrayList<int[]> movablePos = emptyNeighbor(neighborlist);
 		int posSize = movablePos.size();
 		if (posSize != 0) {
 			int[] nextPos = movablePos.get((int) (Math.random()*(posSize-1)));
-			mynextRow = nextPos[0];
-			mynextCol = nextPos[1];
-			if (myBreedCount == fishBreed) {
-				myIsBreed = true;
-				myBreedCount = 0;
-			}
+			this.mynextRow = nextPos[0];
+			this.mynextCol = nextPos[1];
+			checkBreed(breedTime);
 		}
 	}
 	
+	/**
+	 * updateinfo implementation for shark
+	 * 
+	 * the shark will use up a unit of energy at each update, and recover one unit for eating a fish
+	 * 
+	 * @param neighborlist
+	 */
 	private void sharkUpdate(ArrayList<Cell> neighborlist) {
+		myDieCount++;
+		ArrayList<Cell> availableFish = foodList(neighborlist);
+		int fishSize = availableFish.size();
+		if (fishSize != 0) {
+			PredatorPrey food = (PredatorPrey) availableFish.get((int) (Math.random()*(fishSize-1)));
+			food.consume();
+			this.mynextCol = food.column();
+			this.mynextRow = food.row();
+			myDieCount--;
+			checkBreed(sharkBreed);
+		}
+		else {
+			checkMove(neighborlist, sharkBreed);
+		}
+	}
+
+	/**
+	 * get the available fish list around shark
+	 * @param neighborlist
+	 * @return list of available fish
+	 */
+	private ArrayList<Cell> foodList(ArrayList<Cell> neighborlist) {
 		Iterator<Cell> neighborIter = neighborlist.iterator();
 		ArrayList<Cell> availableFish = new ArrayList<Cell>();
-		ArrayList<int[]> movablePos = emptyNeighbor(neighborlist);
 		if (neighborIter.hasNext()) {
 			Cell neighbor = neighborIter.next();
 			if (neighbor.state() == FISH) {
 				availableFish.add(neighbor);
 			}
 		}
-		int fishSize = availableFish.size();
-		int posSize = movablePos.size();
-		if (fishSize != 0) {
-			PredatorPrey food = (PredatorPrey) availableFish.get((int) (Math.random()*(fishSize-1)));
-			food.consume();
-			this.mynextCol = food.column();
-			this.mynextRow = food.row();
-		}
-		else if(posSize != 0) {
-			int[] nextPos = movablePos.get((int) (Math.random()*(posSize-1)));
-			mynextRow = nextPos[0];
-			mynextCol = nextPos[1];
+		return availableFish;
+	}
+
+	/**
+	 * check if the cell can reproduce
+	 * 
+	 * @param breedTime
+	 */
+	private void checkBreed(double breedTime) {
+		if (myBreedCount == breedTime) {
+			myIsBreed = true;
 		}
 	}
 	
+	/**
+	 * change the cell state when being consumed
+	 */
 	public void consume() {
 		myIsDie = true;
 	}
