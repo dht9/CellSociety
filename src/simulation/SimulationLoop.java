@@ -112,7 +112,6 @@ public class SimulationLoop {
 				
 				 colorRectangle(row, col, color);
 			 }
-			 //System.out.println("running");
 		}
 
 	}
