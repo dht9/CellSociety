@@ -72,7 +72,7 @@ public class SimulationLoop {
 		simulationType = xmlReaderInput.setSimulationType();
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, simulationType, new double[0]);
+		manager.initialize(stateGrid, edgeType, simulationType, new double[0]);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {

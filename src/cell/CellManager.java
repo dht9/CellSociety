@@ -8,6 +8,7 @@ public class CellManager {
 	
 	private ArrayList<Cell> myCellList;
 	private String mySimulationType;
+	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private double[] myParaList;
 
@@ -64,10 +65,11 @@ public class CellManager {
 	 * @param type
 	 * @param paraList
 	 */
-	public void initialize(int[][] stateArray, String simulationType, double[] paraList) {
+	public void initialize(int[][] stateArray, String edgeType, String simulationType, double[] paraList) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
 		mySimulationType = simulationType;
+		myEdgeType = edgeType;
 		myGridSize = new int[2];
 		myGridSize[0] = row;
 		myGridSize[1] = col;
