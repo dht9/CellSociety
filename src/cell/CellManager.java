@@ -35,11 +35,21 @@ public class CellManager {
 	 */
 	private ArrayList<Cell> getNeighbor(Cell current) {
 		ArrayList<Cell> neighborList = new ArrayList<Cell>();
-		Iterator<Cell> cellIter = myCellList.iterator();
-		if (cellIter.hasNext()) {
-			Cell next = cellIter.next();
-			if (current.isNeighbor(next)) {
-				neighborList.add(next);
+//		Iterator<Cell> cellIter = myCellList.iterator();
+//		if (cellIter.hasNext()) {
+//			Cell next = cellIter.next();
+//			if (current.isNeighbor(next)) {
+//				neighborList.add(next);
+//			}
+//		}
+		for (Cell other: myCellList) {
+			if (current.isNeighbor(other)) {
+//				System.out.println("here");
+//				System.out.println(current.myrow);
+//				System.out.println(current.mycol);
+//				System.out.println(other.myrow);
+//				System.out.println(other.mycol);
+				neighborList.add(other);
 			}
 		}
 		return neighborList;
