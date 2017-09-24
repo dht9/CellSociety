@@ -74,7 +74,7 @@ public class SimulationLoop {
 		double [] paraType = {5.0, 5.0, 3.0};
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, simulationType, paraType);
+		manager.initialize(stateGrid, edgeType, simulationType, paraType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -109,7 +109,7 @@ public class SimulationLoop {
 				
 				 Color color = colorMap.get(state);
 				 
-				 //System.out.println(row);
+				 System.out.println("row: " + row + " col: "+ col + " state: " + state);
 				
 				 colorRectangle(row, col, color);
 			 }
