@@ -100,24 +100,19 @@ public class SimulationLoop {
 		if (shouldRun && xmlReader != null) {
 			// set index widths/height for grid
 
-			ArrayList<Cell> cellList = manager.cellList();
-//			ㄹㅁㄷㄹㅁㄷㅈㄹㅁㄷㅈㄹㅁWORK ON THIS
-			for (Cell cell: cellList) {
-				int row = cell.row();
-				int col = cell.column();
-				int state = cell.state();
-				SimulationSetup setup = new SimulationSetup();
+			 ArrayList<Cell> cellList = manager.cellList();
+			 manager.update(); // DOES NOT UPDATE CORRECTLY
+			 for (Cell cell: cellList) {
+				 int row = cell.row();
+				 int col = cell.column();
+				 int state = cell.state();
 				
-//				GridPane grid = setup.getGrid();
+				 Color color = colorMap.get(state);
+				 
+				 //System.out.println(row);
 				
-//				grid.add(new Rectangle(55,55,Color.WHITE),col,row);
-				BorderPane root = (BorderPane) myScene.getRoot();
-//				root.getChildren().add(grid);
-//				root.setCenter(grid);
-			manager.update(); // DOES NOT UPDATE CORRECTLY
-
-			System.out.println("running");
-			}
+				 colorRectangle(row, col, color);
+			 }
 		}
 
 	}
