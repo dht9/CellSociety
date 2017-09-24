@@ -7,7 +7,7 @@ public class CellManager {
 	private static final int EMPTY = -1;
 	
 	private ArrayList<Cell> myCellList;
-	private String myType;
+	private String mySimulationType;
 	private int[] myGridSize = new int[2];
 	private double[] myParaList;
 
