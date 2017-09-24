@@ -31,7 +31,7 @@ public class GameofLife extends Cell{
 	}
 
 	@Override
-	public void updateInfo(ArrayList<Cell> neighborlist) {
+	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
 		mynextState = mystate;
 		mynextRow = myrow;
 		mynextCol = mycol;
@@ -72,7 +72,7 @@ public class GameofLife extends Cell{
 	}
 
 	@Override
-	public void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList) {
+	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
 		myrow = mynextRow;
 		mycol = mynextCol;
 		mystate = mynextState;
