@@ -10,15 +10,15 @@ public class CellManager {
 	private String myType;
 	private int[] myGridSize = new int[2];
 	private double[] myParaList;
-	
+
 	/**
 	 * constructor for cell manager, initialize mycelllist
 	 */
 	public CellManager() {
 		myCellList = new ArrayList<Cell>();
-		//TODO change type to enum
+		// TODO change type to enum
 	}
-	
+
 	/**
 	 * 
 	 * @return arraylist of of all current cells
@@ -26,7 +26,7 @@ public class CellManager {
 	public ArrayList<Cell> cellList() {
 		return myCellList;
 	}
-	
+
 	/**
 	 * get the neighbor cell list for input cell
 	 * 
@@ -35,30 +35,30 @@ public class CellManager {
 	 */
 	private ArrayList<Cell> getNeighbor(Cell current) {
 		ArrayList<Cell> neighborList = new ArrayList<Cell>();
-		Iterator<Cell> cellIter = myCellList.iterator();
-		if (cellIter.hasNext()) {
-			Cell next = cellIter.next();
-			if (current.isNeighbor(next)) {
-				neighborList.add(next);
+		for (Cell other : myCellList) {
+			if (current.isNeighbor(other)) {
+				neighborList.add(other);
+				System.out.println("Neighbor state: " + other.mystate);
 			}
 		}
 		return neighborList;
 	}
-	
+
 	/**
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-		for (Cell current: myCellList) {
+		for (Cell current : myCellList) {
 			current.updateInfo(getNeighbor(current));
 		}
-		for (Cell current: myCellList) {
+		for (Cell current : myCellList) {
 			current.update(myCellList);
 		}
 	}
-	
+
 	/**
-	 * initialize all cells based on the stateArray parsed by XML file and store them in mycelllist
+	 * initialize all cells based on the stateArray parsed by XML file and store
+	 * them in mycelllist
 	 * 
 	 * @param stateArray
 	 * @param type
@@ -81,7 +81,7 @@ public class CellManager {
 			}
 		}
 	}
-	
+
 	/**
 	 * create cell based on the designated type
 	 * 
