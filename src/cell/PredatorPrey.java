@@ -10,8 +10,8 @@ import java.util.Iterator;
  *
  */
 public class PredatorPrey extends Cell{
-	private static final int FISH = 1;
-	private static final int SHARK = 2;
+	private static final int FISH = 0;
+	private static final int SHARK = 1;
 	private static final int FOURADJACENT = 4;
 	
 	private double fishBreed;
@@ -38,6 +38,7 @@ public class PredatorPrey extends Cell{
 		sharkBreed = paraList[1];
 		sharkDie = paraList[2];
 		myNeighborCell = new NeighborCell(FOURADJACENT, true, this);
+		myAdjacent = myNeighborCell.adjacentPos();
 	}
 
 	@Override
@@ -53,16 +54,22 @@ public class PredatorPrey extends Cell{
 	}
 	
 	@Override
-	public void update(ArrayList<Cell> cellList) {
+	public void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList) {
 		if (myIsDie) {
-			cellList.remove(this);
+			cellIter.remove();
 		}
 		if (myIsBreed) {
 			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myparaList);
 			cellList.add(baby);
+			System.out.println("baby");
+			System.out.println(baby.myrow);
+			System.out.println(baby.mycol);
 			myBreedCount = 0;
 		}
-		super.update(cellList);
+		myrow = mynextRow;
+		mycol = mynextCol;
+		mystate = mynextState;
+		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
 	/**
@@ -86,7 +93,8 @@ public class PredatorPrey extends Cell{
 		ArrayList<int[]> movablePos = emptyNeighbor(neighborlist);
 		int posSize = movablePos.size();
 		if (posSize != 0) {
-			int[] nextPos = movablePos.get((int) (Math.random()*(posSize-1)));
+			int randomIndex = (int) (Math.random()*posSize);
+			int[] nextPos = movablePos.get(randomIndex);
 			this.mynextRow = nextPos[0];
 			this.mynextCol = nextPos[1];
 			checkBreed(breedTime);
@@ -114,6 +122,9 @@ public class PredatorPrey extends Cell{
 		}
 		else {
 			checkMove(neighborlist, sharkBreed);
+		}
+		if (myDieCount == sharkDie) {
+			myIsDie = true;
 		}
 	}
 

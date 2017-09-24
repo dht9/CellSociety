@@ -1,6 +1,7 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Game of Life implementation of Cell superclass
@@ -12,10 +13,21 @@ public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
 	private static final int EIGHTADJACENT = 8;
+	
 
+	/**
+	 * constructor for gameoflife cell
+	 * 
+	 * @param row
+	 * @param column
+	 * @param state
+	 * @param gridSize
+	 * @param paraList
+	 */
 	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
 		super(row, column, state, gridSize, paraList);
 		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
+		myAdjacent = myNeighborCell.adjacentPos();
 	}
 
 	@Override
@@ -57,6 +69,14 @@ public class GameofLife extends Cell{
 	@Override
 	public boolean isNeighbor(Cell other) {
 		return myNeighborCell.isNeighbor(other);
+	}
+
+	@Override
+	public void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList) {
+		myrow = mynextRow;
+		mycol = mynextCol;
+		mystate = mynextState;
+		
 	}
 
 }

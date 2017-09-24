@@ -70,9 +70,10 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
+		double [] paraType = {5.0, 5.0, 3.0};
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, simulationType, new double[0]);
+		manager.initialize(stateGrid, simulationType, paraType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -101,19 +102,19 @@ public class SimulationLoop {
 			ArrayList<Cell> cellList = manager.cellList();
 			manager.update(); // DOES NOT UPDATE CORRECTLY
 			
-			for (Cell cell : cellList) {
-
-				int row = cell.row();
-				int col = cell.column();
-				int state = cell.state();
-
-				Color color = colorMap.get(state);
-
-				colorRectangle(row, col, color);
-
-			}
-
-			System.out.println("running");
+			 int row = cell.row();
+			 int col = cell.column();
+			 int state = cell.state();
+			
+			 Color color = colorMap.get(state);
+			 
+			 //System.out.println(row);
+			
+			 colorRectangle(row, col, color);
+			
+			 }
+			 
+			 //System.out.println("running");
 		}
 
 	}
@@ -128,7 +129,6 @@ public class SimulationLoop {
 	 */
 	// There is a bug with this line
 	private void colorRectangle(int row, int col, Color color) {
-
 		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
 		rect.setFill(color);
 	}

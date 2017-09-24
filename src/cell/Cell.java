@@ -1,6 +1,7 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * This is the cell superclass that has abstract cell method shared by all cell subclass
@@ -18,6 +19,7 @@ public abstract class Cell {
 	protected int mynextCol;
 	protected int mynextState;
 	protected NeighborCell myNeighborCell;
+	protected ArrayList<int[]> myAdjacent;
 	
 	/**
 	 * constructor for cell superclass
@@ -78,11 +80,7 @@ public abstract class Cell {
 	/**
 	 * execute the update information on the cell
 	 */
-	public void update(ArrayList<Cell> cellList) {
-		myrow = mynextRow;
-		mycol = mynextCol;
-		mystate = mynextState;
-	}
+	public abstract void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList);
 	
 	/**
 	 * check if certain cell is the neighbor of this cell based on the rules
@@ -104,5 +102,13 @@ public abstract class Cell {
 		return myNeighborCell.emptyNeighbor(neighborlist);
 	}
 	
+	/**
+	 * get the adjacent position list, to accelerate speed
+	 * 
+	 * @return adjacent position list
+	 */
+	public ArrayList<int[]> adjacent() {
+		return myAdjacent;
+	}
 
 }
