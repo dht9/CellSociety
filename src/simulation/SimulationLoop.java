@@ -9,6 +9,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -67,16 +70,19 @@ public class SimulationLoop {
 			CellManager manager = new CellManager();
 			manager.update();
 			ArrayList<Cell> cellList = manager.cellList();
-			
+			ㄹㅁㄷㄹㅁㄷㅈㄹㅁㄷㅈㄹㅁWORK ON THIS
 			for (Cell cell: cellList) {
 				int row = cell.row();
 				int col = cell.column();
 				int state = cell.state();
-				Color color = new XMLReader().createColorMap().get(state);
+				SimulationSetup setup = new SimulationSetup();
 				
-				GridPane grid = new SimulationSetup().getGrid();
-				grid.add(new Rectangle(55,55))
+				GridPane grid = setup.getGrid();
 				
+				grid.add(new Rectangle(55,55,Color.WHITE),col,row);
+				BorderPane root = (BorderPane) myScene.getRoot();
+				root.getChildren().add(grid);
+//				root.setCenter(grid);
 			}
 			
 			// do stuff
