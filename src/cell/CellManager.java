@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class CellManager {
 	private ArrayList<Cell> myCellList;
-	private String myType;
+	private String mySimulationType;
 	private int[] myGridSize;
 	private double[] myParaList;
 	
@@ -65,17 +65,18 @@ public class CellManager {
 	 * @param type
 	 * @param paraList
 	 */
-	public void initialize(int[][] stateArray, String type, double[] paraList) {
+	public void initialize(int[][] stateArray, String simulationType, double[] paraList) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
-		myType = type;
+		mySimulationType = simulationType;
+		myGridSize = new int[2];
 		myGridSize[0] = row;
 		myGridSize[1] = col;
 		myParaList = paraList;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 			    if (stateArray[i][j] != -1) {
-    				Cell current = createCell(row, col, stateArray[i][j]);
+    				Cell current = createCell(i, j, stateArray[i][j]);
     				myCellList.add(current);
 			    }
 			}
@@ -94,7 +95,7 @@ public class CellManager {
 	 */
 	public Cell createCell(int row, int col, int state) {
 		Cell current;
-		switch(myType) {
+		switch(mySimulationType) {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
