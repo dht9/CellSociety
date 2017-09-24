@@ -104,14 +104,10 @@ public class SimulationLoop {
 
 			 ArrayList<Cell> cellList = manager.cellList();
 			 manager.update(); // DOES NOT UPDATE CORRECTLY
-			 for (Cell cell: cellList) {
-				 
-				 int row = cell.row();
-				 int col = cell.column();
-				 
-//				 System.out.print(row + " " + col + " " + state + " " + color);
-				
-				 colorRectangle(row, col, colorMap.get(-1));
+			 for (int i = 0; i < myGrid.getSize(); i++) {
+				 for (int j = 0; j < myGrid.getSize(); j++) {
+					 colorRectangle(i, j, colorMap.get(-1));
+				 }
 			 }
 			 for (Cell cell: cellList) {
 				 

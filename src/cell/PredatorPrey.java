@@ -59,7 +59,9 @@ public class PredatorPrey extends Cell{
 		}
 		int[] nextPos = {mynextRow, mynextCol};
 		int[] currentPos = {myrow, mycol};
-		emptyPos.add(currentPos);
+		if (!myGiveBirth) {
+			emptyPos.add(currentPos);
+		}
 		emptyPos.remove(nextPos);
 	}
 	
