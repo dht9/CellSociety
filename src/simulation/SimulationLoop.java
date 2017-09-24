@@ -108,6 +108,8 @@ public class SimulationLoop {
 		double[] paraType = { 5.0, 5.0, 3.0 };
 
 		manager = new CellManager();
+		System.out.println("current");
+		System.out.println(simulationType); 
 		manager.initialize(stateGrid, edgeType, simulationType, paraType);
 	}
 
@@ -134,8 +136,26 @@ public class SimulationLoop {
 		if (shouldRun && xmlReader != null) {
 			// set index widths/height for grid
 
-			ArrayList<Cell> cellList = manager.cellList();
-			manager.update(); // DOES NOT UPDATE CORRECTLY
+			 ArrayList<Cell> cellList = manager.cellList();
+			 manager.update(); // DOES NOT UPDATE CORRECTLY
+			 for (int row = 0; row < myGrid.getSize(); row++) {
+				 for (int col = 0; col < myGrid.getSize(); col++) {
+					 colorRectangle(row, col, colorMap.get(-1));
+				 }
+			 }
+			 for (Cell cell: cellList) {
+				 
+				 int row = cell.row();
+				 int col = cell.column();
+				 int state = cell.state();
+				
+				 Color color = colorMap.get(state);
+				 
+//				 System.out.print(row + " " + col + " " + state + " " + color);
+				
+				 colorRectangle(row, col, color);
+			 }
+		}
 
 			for (Cell cell : cellList) {
 				int row = cell.row();

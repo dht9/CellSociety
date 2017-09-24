@@ -11,12 +11,14 @@ public class CellManager {
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private double[] myParaList;
+	private ArrayList<int[]> myEmptyPos;
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
 	 */
 	public CellManager() {
 		myCellList = new ArrayList<Cell>();
+		myEmptyPos = new ArrayList<int[]>();
 		// TODO change type to enum
 	}
 
@@ -42,13 +44,8 @@ public class CellManager {
 //				System.out.println("Cell neighbor: " + other.state());
 			}
 		}
-//		System.out.println("current");
-//		System.out.println(current.myrow);
-//		System.out.println(current.mycol);
-//		System.out.println("next");
+//		System.out.println("neighbor");
 //		System.out.println(neighborList.size());
-//		System.out.println(neighborList.get(0).myrow);
-//		System.out.println(neighborList.get(0).mycol);
 		return neighborList;
 	}
 
@@ -56,15 +53,19 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
+		ArrayList<Cell> newCellList = new ArrayList<Cell>();
+		ArrayList<Cell> removeCellList = new ArrayList<Cell>();
+		for (Cell current : myCellList) {
+			current.updateInfo(getNeighborList(current), myEmptyPos);
+		}
 		for (Cell current: myCellList) {
-			current.updateInfo(getNeighborList(current));
+			current.update(removeCellList, newCellList, myEmptyPos);
 		}
+		myCellList.addAll(newCellList);
+		myCellList.removeAll(removeCellList);
+		System.out.println("current");
+		System.out.println(myCellList.size());
 		
-		Iterator<Cell> cellIter = myCellList.iterator();
-		
-		while (cellIter.hasNext()) {
-			cellIter.next().update(cellIter, myCellList);
-		}
 	}
 
 
@@ -91,6 +92,10 @@ public class CellManager {
 					Cell current = createCell(i, j, stateArray[i][j]);
 					myCellList.add(current);
 				}
+				else {
+					int[] empty = {i,j};
+					myEmptyPos.add(empty);
+				}
 			}
 		}
 	}
@@ -111,7 +116,7 @@ public class CellManager {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
-			case "predatorPrey":
+			case "PredatorPrey":
 				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
 				break;
 			default:
