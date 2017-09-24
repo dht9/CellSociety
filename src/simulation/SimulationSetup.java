@@ -152,13 +152,13 @@ public class SimulationSetup extends Application {
 
 			xmlReader = new XMLReader(file);
 
-			mySimulationLoop.setXMLReader(xmlReader);
+			mySimulationLoop.setNewSimulationParameters(xmlReader);
 
 			newGrid(scene);
 
 			// initialize myCellList
-			CellManager manager = new CellManager();
-			manager.initialize(xmlReader.createStateGrid(), xmlReader.setSimulationType());
+//			CellManager manager = new CellManager();
+//			manager.initialize(xmlReader.createStateGrid(), xmlReader.setSimulationType());
 		}
 
 	}

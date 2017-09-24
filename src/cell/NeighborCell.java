@@ -62,6 +62,8 @@ public class NeighborCell {
 	/**
 	 * get list of adjacent position
 	 * 
+	 * Currently only valid for eight/!torus/!move, four/torus
+	 * 
 	 * @return a list of adjacent positions in {row, col}
 	 */
 	private ArrayList<int[]> adjacentPos() {
@@ -88,16 +90,16 @@ public class NeighborCell {
 		int[] down = {myCell.myrow-1, myCell.mycol};
 		
 		if (myIsTorus && myCell.isEdge()) {
-			if (myCell.myrow == 1) {
+			if (myCell.myrow == 0) {
 				up[0] = myCell.mygrid[0];
 			}
-			else if (myCell.myrow == myCell.mygrid[0]) {
+			else if (myCell.myrow == myCell.mygrid[0]-1) {
 				down[0] = 1;
 			}
-			if (myCell.mycol == 1) {
+			if (myCell.mycol == 0) {
 				left[1] = myCell.mygrid[1];
 			}
-			else if (myCell.mycol == myCell.mygrid[1]) {
+			else if (myCell.mycol == myCell.mygrid[1]-1) {
 				right[1] = 1;
 			}
 		}

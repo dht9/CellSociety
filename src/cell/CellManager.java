@@ -64,10 +64,11 @@ public class CellManager {
 	 * @param type
 	 * @param paraList
 	 */
-	public void initialize(int[][] stateArray, String type, double[] paraList) {
+	public void initialize(int[][] stateArray, String simulationType, double[] paraList) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
-		myType = type;
+		mySimulationType = simulationType;
+		myGridSize = new int[2];
 		myGridSize[0] = row;
 		myGridSize[1] = col;
 		myParaList = paraList;
@@ -93,7 +94,7 @@ public class CellManager {
 	 */
 	public Cell createCell(int row, int col, int state) {
 		Cell current;
-		switch(myType) {
+		switch(mySimulationType) {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;

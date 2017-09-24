@@ -62,7 +62,7 @@ public class SimulationLoop {
 	 * 
 	 * @param xmlReaderInput
 	 */
-	public void setXMLReader(XMLReader xmlReaderInput) {
+	public void setNewSimulationParameters(XMLReader xmlReaderInput) {
 		xmlReader = xmlReaderInput;
 		colorMap = xmlReaderInput.createColorMap();
 		stateNameMap = xmlReaderInput.createStateNameMap();
@@ -72,7 +72,7 @@ public class SimulationLoop {
 		simulationType = xmlReaderInput.setSimulationType();
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, simulationType);
+		manager.initialize(stateGrid, simulationType, new double[0]);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -99,8 +99,7 @@ public class SimulationLoop {
 			// set index widths/height for grid
 
 			 ArrayList<Cell> cellList = manager.cellList();
-			 // manager.update(); // DOES NOT UPDATE CORRECTLY
-			
+			 manager.update(); // DOES NOT UPDATE CORRECTLY
 			 for (Cell cell: cellList) {
 			
 			 int row = cell.row();
@@ -108,6 +107,8 @@ public class SimulationLoop {
 			 int state = cell.state();
 			
 			 Color color = colorMap.get(state);
+			 
+			 System.out.println(state);
 			
 			 colorRectangle(row, col, color);
 			

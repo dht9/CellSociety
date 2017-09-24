@@ -29,6 +29,7 @@ public class GameofLife extends Cell{
 				liveCount++;
 			}
 		}
+		this.mynextState = this.mystate;
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here
 			switch(liveCount) {
 				case 0:
@@ -37,6 +38,7 @@ public class GameofLife extends Cell{
 					break;
 				case 2:
 				case 3:
+					this.mynextState = LIVE;
 					break;
 				default:
 					this.mynextState = DIE;
