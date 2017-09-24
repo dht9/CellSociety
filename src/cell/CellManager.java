@@ -39,6 +39,7 @@ public class CellManager {
 		for (Cell other: myCellList) {
 			if (current.isNeighbor(other)) {
 				neighborList.add(other);
+//				System.out.println("Cell neighbor: " + other.state());
 			}
 		}
 //		System.out.println("current");
@@ -55,14 +56,17 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-		for (Cell current : myCellList) {
+		for (Cell current: myCellList) {
 			current.updateInfo(getNeighborList(current));
 		}
+		
 		Iterator<Cell> cellIter = myCellList.iterator();
-		if (cellIter.hasNext()) {
+		
+		while (cellIter.hasNext()) {
 			cellIter.next().update(cellIter, myCellList);
 		}
 	}
+
 
 	/**
 	 * initialize all cells based on the stateArray parsed by XML file and store
@@ -104,7 +108,7 @@ public class CellManager {
 	public Cell createCell(int row, int col, int state) {
 		Cell current;
 		switch(mySimulationType) {
-			case "gameOfLife":
+			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
 			case "predatorPrey":
