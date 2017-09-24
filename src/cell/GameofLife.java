@@ -12,10 +12,17 @@ public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
 	private static final int EIGHTADJACENT = 8;
+	
 
 	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
 		super(row, column, state, gridSize, paraList);
 		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
+		myAdjacent = myNeighborCell.adjacentPos();
+//		System.out.println("here");
+//		System.out.println(myAdjacent.get(0)[0]);
+//		System.out.println(myAdjacent.get(0)[1]);
+//		System.out.println(myAdjacent.get(1)[0]);
+//		System.out.println(myAdjacent.get(1)[1]);
 	}
 
 	@Override

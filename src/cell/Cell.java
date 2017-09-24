@@ -18,6 +18,7 @@ public abstract class Cell {
 	protected int mynextCol;
 	protected int mynextState;
 	protected NeighborCell myNeighborCell;
+	protected ArrayList<int[]> myAdjacent;
 	
 	/**
 	 * constructor for cell superclass
@@ -104,5 +105,8 @@ public abstract class Cell {
 		return myNeighborCell.emptyNeighbor(neighborlist);
 	}
 	
+	public ArrayList<int[]> adjacent() {
+		return myAdjacent;
+	}
 
 }

@@ -38,8 +38,34 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
-		int[] otherPos = {other.mycol, other.myrow};
-		return (adjacentPos().contains(otherPos));
+		int[] otherPos = {other.myrow, other.mycol};
+//		System.out.println("here");
+//		System.out.println(myCell.myrow);
+//		System.out.println(myCell.mycol);
+//		System.out.println(otherPos[0]);
+//		System.out.println(otherPos[1]);
+		ArrayList<int[]> adjacentList = myCell.adjacent();
+//		System.out.println("here");
+//		System.out.println(adjacentList.get(0)[0]);
+//		System.out.println(adjacentList.get(0)[1]);
+//		System.out.println(adjacentList.get(1)[0]);
+//		System.out.println(adjacentList.get(1)[1]);
+		for (int[] adjacent: adjacentList) {
+//			System.out.println("here");
+//			System.out.println(adjacent[0]);
+//			System.out.println(adjacent[1]);
+//			System.out.println(otherPos[0]);
+//			System.out.println(otherPos[1]);
+			if (otherPos[0] == adjacent[0] && otherPos[1] == adjacent[1]) {
+//				System.out.println("here");
+//				System.out.println(myCell.myrow);
+//				System.out.println(myCell.mycol);
+//				System.out.println(otherPos[0]);
+//				System.out.println(otherPos[1]);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -66,7 +92,7 @@ public class NeighborCell {
 	 * 
 	 * @return a list of adjacent positions in {row, col}
 	 */
-	private ArrayList<int[]> adjacentPos() {
+	public ArrayList<int[]> adjacentPos() {
 		ArrayList<int[]> adjacentList;
 		if (myNeighborType == FOURADJACENT) {
 			adjacentList = fourAdjacent();
@@ -116,13 +142,25 @@ public class NeighborCell {
 	 */
 	private ArrayList<int[]> eightAdjacent() {
 		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
-		int[] pos = new int[2];
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				if (i != 0 && j != 0) {
+				if (i == 0 && j == 0) {
+					continue;
+				}
+				else {
+//					System.out.println("here");
+//					System.out.println(pos[0]);
+//					System.out.println(pos[1]);
+					int[] pos = new int[2];
 					pos[0] = myCell.myrow+i;
 					pos[1] = myCell.mycol+j;
 					adjacentList.add(pos);
+//					System.out.println("here");
+//					System.out.println(myCell.myrow);
+//					System.out.println(myCell.mycol);
+//					System.out.println("neighbor");
+//					System.out.println(pos[0]);
+//					System.out.println(pos[1]);
 				}
 			}
 		}
