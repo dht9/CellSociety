@@ -1,6 +1,7 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Game of Life implementation of Cell superclass
@@ -11,21 +12,39 @@ import java.util.ArrayList;
 public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
+	private static final int EIGHTADJACENT = 8;
+	
 
-	public GameofLife(int row, int column, int state, int[] gridSize) {
-		super(row, column, state, gridSize);
-		// TODO Auto-generated constructor stub
+	/**
+	 * constructor for gameoflife cell
+	 * 
+	 * @param row
+	 * @param column
+	 * @param state
+	 * @param gridSize
+	 * @param paraList
+	 */
+	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
+		super(row, column, state, gridSize, paraList);
+		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
+		myAdjacent = myNeighborCell.adjacentPos();
 	}
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist) {
+		mynextState = mystate;
+		mynextRow = myrow;
+		mynextCol = mycol;
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
-				liveCount++;
+				liveCount++;	
 			}
 		}
-		if (this.mystate == LIVE) {
+		System.out.println("LiveCount=" +liveCount);
+		
+		this.mynextState = this.mystate;
+		if (this.mystate == LIVE) {  //TODO check if enum can be used here
 			switch(liveCount) {
 				case 0:
 				case 1:
@@ -33,6 +52,7 @@ public class GameofLife extends Cell{
 					break;
 				case 2:
 				case 3:
+					this.mynextState = LIVE;
 					break;
 				default:
 					this.mynextState = DIE;
@@ -44,6 +64,19 @@ public class GameofLife extends Cell{
 				this.mynextState = LIVE;
 			}
 		}
+	}
+
+	@Override
+	public boolean isNeighbor(Cell other) {
+		return myNeighborCell.isNeighbor(other);
+	}
+
+	@Override
+	public void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList) {
+		myrow = mynextRow;
+		mycol = mynextCol;
+		mystate = mynextState;
+		
 	}
 
 }

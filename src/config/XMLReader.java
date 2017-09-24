@@ -32,6 +32,7 @@ public class XMLReader {
 	private String simulationType;
 	private String edgeType;
 	private Map<Integer, Color> colorMap;
+	private Map<Integer, String> stateNameMap;
 	private Map<String, Double> parameterMap;
 	private int[][] stateGrid;
 	private int numRows;
@@ -57,13 +58,20 @@ public class XMLReader {
 		System.out.println("Edge Type: " + edgeType);
 
 		colorMap = createColorMap();
+		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		}
+		
+		stateNameMap = createStateNameMap();
+		System.out.println("StateNameMap:" + stateNameMap);
 
 		parameterMap = createParameterMap();
+		System.out.println("Parameters: " + parameterMap);
 
-		stateGrid = createCellGrid();
+		stateGrid = createStateGrid();
 
 	}
-
+	
 	/**
 	 * Initialize XML file parser.
 	 */
@@ -80,13 +88,18 @@ public class XMLReader {
 			// add more "error" code later
 		}
 	}
+	
+	public File setFile() {
+		return xmlFile;
+	}
 
 	/**
 	 * Retrieve the name of the simulation type.
 	 */
 	public String setSimulationType() {
 
-		return doc.getDocumentElement().getNodeName();
+		Element typeElement = (Element) doc.getElementsByTagName("simulation").item(0);
+		return typeElement.getAttribute("type");
 	}
 
 	/**
@@ -101,7 +114,7 @@ public class XMLReader {
 	}
 
 	/**
-	 * Generate a mapping of cell state and color.
+	 * Generate a mapping of cell state number and color.
 	 */
 	public Map<Integer, Color> createColorMap() {
 
@@ -117,9 +130,36 @@ public class XMLReader {
 			Color color = Color.valueOf(eElement.getAttribute("color"));
 			colorMap.put(state, color);
 		}
+		
 
-		System.out.println("Colormap: " + colorMap);
+		
+//		System.out.println("Colormap: " + colorMap);
 		return colorMap;
+	}
+	
+	/**
+	 * Generate a mapping of cell state number and name
+	 * 
+	 * @return
+	 */
+	public Map<Integer, String> createStateNameMap() {
+		stateNameMap = new HashMap<Integer,String>();
+		
+		NodeList nList = doc.getElementsByTagName("statemap");
+
+		for (int i = 0; i < nList.getLength(); i++) {
+
+			Node nNode = nList.item(i);
+			Element eElement = (Element) nNode;
+
+			Integer stateNum = Integer.parseInt(eElement.getAttribute("cellState"));
+			String stateName = eElement.getAttribute("name");
+			stateNameMap.put(stateNum, stateName);
+		}
+		
+
+		return stateNameMap;
+		
 	}
 
 	/**
@@ -142,14 +182,13 @@ public class XMLReader {
 			parameterMap.put(name, value);
 		}
 
-		System.out.println("Parameters: " + parameterMap);
 		return parameterMap;
 	}
 
 	/**
 	 * Generate a grid of cell states.
 	 */
-	public int[][] createCellGrid() {
+	public int[][] createStateGrid() {
 
 		NodeList nList = doc.getElementsByTagName("row");
 
@@ -163,13 +202,14 @@ public class XMLReader {
 			Node currentRow = nList.item(i);
 
 			String row = ((Element) currentRow).getAttribute("cellStates");
-			List<String> colStates = Arrays.asList(row.toString().split(","));
+			List<String> colStates = Arrays.asList(row.toString().split("\\s*,\\s*"));
 			System.out.println(colStates);
 
 			// iterate through each column in for current row
 			for (int j = 0; j < numCols; j++) {
-				// can create cell grid
-				stateGrid[i][j] = Integer.parseInt(colStates.get(j));
+				
+				String trim = colStates.get(j).trim();
+				stateGrid[i][j] = Integer.parseInt(trim);
 			}
 		}
 		// System.out.println(Arrays.deepToString(stateGrid));

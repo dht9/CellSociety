@@ -3,15 +3,15 @@
 <simulation type = "Fire">
 	
 	<colors>
-		<colormap cellState = "0" color = "YELLOW"></colormap>
-		<colormap cellState = "1" color = "GREEN"></colormap>
-		<colormap cellState = "2" color = "RED"></colormap>
+		<colormap cellState = "-1" color = "YELLOW"></colormap>
+		<colormap cellState = "0" color = "GREEN"></colormap>
+		<colormap cellState = "1" color = "RED"></colormap>
 	</colors>
 	
 	<states>
-		<statemap cellState = "0" name = "EMPTY"></statemap>
-		<statemap cellState = "1" name = "TREE"></statemap>
-		<statemap cellState = "2" name = "BURNING"></statemap>
+		<statemap cellState = "-1" name = "EMPTY"></statemap>
+		<statemap cellState = "0" name = "TREE"></statemap>
+		<statemap cellState = "1" name = "BURNING"></statemap>
 	</states>
 	
 	<parameters>
@@ -23,16 +23,16 @@
 	</edges>
 
 	<grid>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "-1, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"></row>
+		<row cellStates = " 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"></row>
+		<row cellStates = "-1, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1"></row>
 	</grid>
 	
 </simulation>
