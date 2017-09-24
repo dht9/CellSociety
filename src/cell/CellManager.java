@@ -56,15 +56,17 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-		for (Cell current: myCellList) {
+		ArrayList<Cell> newCellList = new ArrayList<Cell>();
+		for (Cell current : myCellList) {
 			current.updateInfo(getNeighborList(current));
 		}
 		
 		Iterator<Cell> cellIter = myCellList.iterator();
-		
 		while (cellIter.hasNext()) {
-			cellIter.next().update(cellIter, myCellList);
+			Cell current = cellIter.next();
+			current.update(cellIter, newCellList);
 		}
+		myCellList.addAll(newCellList);
 	}
 
 
@@ -111,7 +113,7 @@ public class CellManager {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
-			case "predatorPrey":
+			case "PredatorPrey":
 				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
 				break;
 			default:

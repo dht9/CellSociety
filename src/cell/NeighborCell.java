@@ -57,15 +57,11 @@ public class NeighborCell {
 	public ArrayList<int[]> emptyNeighbor(ArrayList<Cell> neighborList) {
 		ArrayList<int[]> emptyList = adjacentPos();
 		Iterator<Cell> iter = neighborList.iterator();
-		if (iter.hasNext()) {
+		while (iter.hasNext()) {
 			Cell current = iter.next();
 			int[] currentPos = { current.myrow, current.mycol };
 			emptyList.remove(currentPos);
 		}
-		System.out.println("current");
-		System.out.println(emptyList.size());
-		System.out.println(emptyList.get(0)[0]);
-		System.out.println(emptyList.get(0)[1]);
 		return emptyList;
 	}
 
@@ -96,9 +92,8 @@ public class NeighborCell {
 		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
 		int[] right = { myCell.myrow, myCell.mycol + 1 };
 		int[] left = { myCell.myrow, myCell.mycol - 1 };
-		int[] up = { myCell.myrow + 1, myCell.mycol };
-		int[] down = { myCell.myrow - 1, myCell.mycol };
-
+		int[] up = { myCell.myrow - 1, myCell.mycol };
+		int[] down = { myCell.myrow + 1, myCell.mycol };
 		if (myIsTorus && myCell.isEdge()) {
 			if (myCell.myrow == 0) {
 				up[0] = myCell.mygrid[0]-1;

@@ -74,6 +74,8 @@ public class SimulationLoop {
 		double [] paraType = {5.0, 5.0, 3.0};
 
 		manager = new CellManager();
+		System.out.println("current");
+		System.out.println(simulationType);
 		manager.initialize(stateGrid, edgeType, simulationType, paraType);
 	}
 
