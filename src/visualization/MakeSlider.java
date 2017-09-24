@@ -15,15 +15,17 @@ public class MakeSlider {
 		animation = timeline;
 	}
 	
-	public Node initialize() {
-		Pane pane = new Pane();
-		mySlider = createSlider();
-		pane.getChildren().add(mySlider);
-		return pane;
-	}
+//	public Node initialize() {
+//		Pane pane = new Pane();
+//		mySlider = createSlider();
+//		pane.getChildren().add(mySlider);
+//		return pane;
+//	}
 	
-	public Slider createSlider() {
-		mySlider = new Slider(0,1,1);
+	public Slider createSlider(int fps) {
+		mySlider = new Slider(0,fps,1);
+		mySlider.setShowTickMarks(true);
+		mySlider.setShowTickLabels(true);
 		return mySlider;
 	}
 	
@@ -43,8 +45,9 @@ public class MakeSlider {
 		return animation;
 	}
 	
-	public void changeSpeed() {
-		double newSpeed = mySlider.getValue();
+	public void changeSpeed(int fps) {
+		double newSpeed = mySlider.getValue() / (double) fps;
+		System.out.println(newSpeed);
 		animation.setRate(newSpeed);
 	}
 }

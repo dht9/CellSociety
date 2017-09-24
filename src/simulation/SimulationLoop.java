@@ -35,7 +35,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int FRAMES_PER_SECOND = 60;
+	private int FRAMES_PER_SECOND = 20;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
@@ -105,6 +105,8 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
+		
+		// need to change this
 		double[] paraType = { 5.0, 5.0, 3.0 };
 
 		manager = new CellManager();
@@ -157,7 +159,7 @@ public class SimulationLoop {
 		
 		}
 		
-		myMakeSlider.changeSpeed();
+		myMakeSlider.changeSpeed(FRAMES_PER_SECOND);
 	}
 
 
@@ -183,6 +185,10 @@ public class SimulationLoop {
 	// pause the simulation
 	public void pause() {
 		shouldRun = false;
+	}
+	
+	public int getFPS() {
+		return FRAMES_PER_SECOND;
 	}
 
 }

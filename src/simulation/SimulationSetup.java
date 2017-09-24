@@ -110,7 +110,7 @@ public class SimulationSetup extends Application {
 		stepButton = makeButton("StepCommand", event -> step());
 
 		makeSlider = new MakeSlider(mySimulationLoop.getTimeline());
-		Slider slider = makeSlider.createSlider();
+		Slider slider = makeSlider.createSlider(mySimulationLoop.getFPS());
 		mySimulationLoop.setMakeSlider(makeSlider);
 
 		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, slider);
