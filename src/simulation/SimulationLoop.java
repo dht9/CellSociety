@@ -75,7 +75,7 @@ public class SimulationLoop {
 
 		manager = new CellManager();
 		System.out.println("current");
-		System.out.println(simulationType);
+		System.out.println(simulationType); 
 		manager.initialize(stateGrid, edgeType, simulationType, paraType);
 	}
 
@@ -104,14 +104,10 @@ public class SimulationLoop {
 
 			 ArrayList<Cell> cellList = manager.cellList();
 			 manager.update(); // DOES NOT UPDATE CORRECTLY
-			 for (Cell cell: cellList) {
-				 
-				 int row = cell.row();
-				 int col = cell.column();
-				 
-//				 System.out.print(row + " " + col + " " + state + " " + color);
-				
-				 colorRectangle(row, col, colorMap.get(-1));
+			 for (int row = 0; row < myGrid.getSize(); row++) {
+				 for (int col = 0; col < myGrid.getSize(); col++) {
+					 colorRectangle(row, col, colorMap.get(-1));
+				 }
 			 }
 			 for (Cell cell: cellList) {
 				 
