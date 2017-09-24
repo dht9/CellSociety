@@ -7,7 +7,7 @@ public class CellManager {
 	private static final int EMPTY = -1;
 	
 	private ArrayList<Cell> myCellList;
-	private String myType;
+	private String mySimulationType;
 	private int[] myGridSize = new int[2];
 	private double[] myParaList;
 	
@@ -35,23 +35,18 @@ public class CellManager {
 	 */
 	private ArrayList<Cell> getNeighbor(Cell current) {
 		ArrayList<Cell> neighborList = new ArrayList<Cell>();
-//		Iterator<Cell> cellIter = myCellList.iterator();
-//		if (cellIter.hasNext()) {
-//			Cell next = cellIter.next();
-//			if (current.isNeighbor(next)) {
-//				neighborList.add(next);
-//			}
-//		}
 		for (Cell other: myCellList) {
 			if (current.isNeighbor(other)) {
-//				System.out.println("here");
-//				System.out.println(current.myrow);
-//				System.out.println(current.mycol);
-//				System.out.println(other.myrow);
-//				System.out.println(other.mycol);
 				neighborList.add(other);
 			}
 		}
+//		System.out.println("current");
+//		System.out.println(current.myrow);
+//		System.out.println(current.mycol);
+//		System.out.println("next");
+//		System.out.println(neighborList.size());
+//		System.out.println(neighborList.get(0).myrow);
+//		System.out.println(neighborList.get(0).mycol);
 		return neighborList;
 	}
 	
@@ -62,8 +57,9 @@ public class CellManager {
 		for (Cell current: myCellList) {
 			current.updateInfo(getNeighbor(current));
 		}
-		for (Cell current: myCellList) {
-			current.update(myCellList);
+		Iterator<Cell> cellIter = myCellList.iterator();
+		if (cellIter.hasNext()) {
+			cellIter.next().update(cellIter, myCellList);
 		}
 	}
 	
@@ -110,6 +106,7 @@ public class CellManager {
 				break;
 			case "PredatorPrey":
 				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
+				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;

@@ -70,9 +70,10 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
+		double [] paraType = {5.0, 5.0, 3.0};
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, simulationType, new double[0]);
+		manager.initialize(stateGrid, simulationType, paraType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -129,7 +130,6 @@ public class SimulationLoop {
 	 */
 	// There is a bug with this line
 	private void colorRectangle(int row, int col, Color color) {
-
 		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
 		rect.setFill(color);
 	}
