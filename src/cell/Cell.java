@@ -80,7 +80,7 @@ public abstract class Cell {
 	/**
 	 * execute the update information on the cell
 	 */
-	public abstract void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList);
+	public abstract void update(Iterator<Cell> cellIter, ArrayList<Cell> newCellList);
 	
 	/**
 	 * check if certain cell is the neighbor of this cell based on the rules

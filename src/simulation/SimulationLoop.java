@@ -74,7 +74,9 @@ public class SimulationLoop {
 		double [] paraType = {5.0, 5.0, 3.0};
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, simulationType, paraType);
+		System.out.println("current");
+		System.out.println(simulationType);
+		manager.initialize(stateGrid, edgeType, simulationType, paraType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {

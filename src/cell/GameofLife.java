@@ -72,7 +72,7 @@ public class GameofLife extends Cell{
 	}
 
 	@Override
-	public void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList) {
+	public void update(Iterator<Cell> cellIter, ArrayList<Cell> newCellList) {
 		myrow = mynextRow;
 		mycol = mynextCol;
 		mystate = mynextState;

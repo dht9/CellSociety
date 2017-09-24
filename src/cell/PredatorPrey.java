@@ -21,6 +21,7 @@ public class PredatorPrey extends Cell{
 	private int myDieCount = 0;
 	private boolean myIsBreed = false;
 	private boolean myIsDie = false;
+	private boolean myGiveBirth = false;
 	private double[] myparaList;
 
 	/**
@@ -39,6 +40,7 @@ public class PredatorPrey extends Cell{
 		sharkDie = paraList[2];
 		myNeighborCell = new NeighborCell(FOURADJACENT, true, this);
 		myAdjacent = myNeighborCell.adjacentPos();
+		System.out.println("current");
 	}
 
 	@Override
@@ -54,17 +56,19 @@ public class PredatorPrey extends Cell{
 	}
 	
 	@Override
-	public void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList) {
+	public void update(Iterator<Cell> cellIter, ArrayList<Cell> newCellList) {
 		if (myIsDie) {
 			cellIter.remove();
 		}
-		if (myIsBreed) {
+		if (myGiveBirth) {
 			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myparaList);
-			cellList.add(baby);
+			newCellList.add(baby);
 			System.out.println("baby");
 			System.out.println(baby.myrow);
 			System.out.println(baby.mycol);
 			myBreedCount = 0;
+			myGiveBirth = false;
+			myIsBreed = false;
 		}
 		myrow = mynextRow;
 		mycol = mynextCol;
@@ -78,7 +82,8 @@ public class PredatorPrey extends Cell{
 	 * @param neighborlist
 	 */
 	private void fishUpdate(ArrayList<Cell> neighborlist) {
-		checkMove(neighborlist, fishBreed);
+		checkBreed(fishBreed);
+		checkMove(neighborlist);
 	}
 
 	/**
@@ -89,7 +94,7 @@ public class PredatorPrey extends Cell{
 	 * @param neighborlist
 	 * @param breedTime
 	 */
-	private void checkMove(ArrayList<Cell> neighborlist, double breedTime) {
+	private void checkMove(ArrayList<Cell> neighborlist) {
 		ArrayList<int[]> movablePos = emptyNeighbor(neighborlist);
 		int posSize = movablePos.size();
 		if (posSize != 0) {
@@ -97,7 +102,9 @@ public class PredatorPrey extends Cell{
 			int[] nextPos = movablePos.get(randomIndex);
 			this.mynextRow = nextPos[0];
 			this.mynextCol = nextPos[1];
-			checkBreed(breedTime);
+			if (myIsBreed) {
+				myGiveBirth = true;
+			}
 		}
 	}
 	
@@ -110,6 +117,10 @@ public class PredatorPrey extends Cell{
 	 */
 	private void sharkUpdate(ArrayList<Cell> neighborlist) {
 		myDieCount++;
+		if (myDieCount == sharkDie) {
+			myIsDie = true;
+		}
+		checkBreed(sharkBreed);
 		ArrayList<Cell> availableFish = foodList(neighborlist);
 		int fishSize = availableFish.size();
 		if (fishSize != 0) {
@@ -118,13 +129,12 @@ public class PredatorPrey extends Cell{
 			this.mynextCol = food.column();
 			this.mynextRow = food.row();
 			myDieCount--;
-			checkBreed(sharkBreed);
+			if (myIsBreed) {
+				myGiveBirth = true;
+			}
 		}
 		else {
-			checkMove(neighborlist, sharkBreed);
-		}
-		if (myDieCount == sharkDie) {
-			myIsDie = true;
+			checkMove(neighborlist);
 		}
 	}
 
