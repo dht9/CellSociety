@@ -27,6 +27,7 @@ public class GameofLife extends Cell{
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
 				liveCount++;
+				System.out.println(liveCount);
 			}
 		}
 		this.mynextState = this.mystate;
