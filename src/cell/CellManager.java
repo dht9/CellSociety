@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CellManager {
+	private static final int EMPTY = -1;
+	
 	private ArrayList<Cell> myCellList;
-	private String mySimulationType;
-	private int[] myGridSize;
+	private String myType;
+	private int[] myGridSize = new int[2];
 	private double[] myParaList;
 	
 	/**
@@ -82,10 +84,10 @@ public class CellManager {
 		myParaList = paraList;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-			    if (stateArray[i][j] != -1) {
-    				Cell current = createCell(i, j, stateArray[i][j]);
-    				myCellList.add(current);
-			    }
+				if (stateArray[i][j] != EMPTY) {
+					Cell current = createCell(i, j, stateArray[i][j]);
+					myCellList.add(current);
+				}
 			}
 		}
 	}
@@ -106,6 +108,8 @@ public class CellManager {
 			case "GameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
+			case "PredatorPrey":
+				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;

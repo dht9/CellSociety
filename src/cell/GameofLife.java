@@ -27,6 +27,7 @@ public class GameofLife extends Cell{
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist) {
+		mynextState = mystate;
 		mynextRow = myrow;
 		mynextCol = mycol;
 		int liveCount = 0;
@@ -44,6 +45,7 @@ public class GameofLife extends Cell{
 					break;
 				case 2:
 				case 3:
+					this.mynextState = LIVE;
 					break;
 				default:
 					this.mynextState = DIE;
