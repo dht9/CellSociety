@@ -58,10 +58,15 @@ public class XMLReader {
 		System.out.println("Edge Type: " + edgeType);
 
 		colorMap = createColorMap();
+		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		}
 		
 		stateNameMap = createStateNameMap();
+		System.out.println("StateNameMap:" + stateNameMap);
 
 		parameterMap = createParameterMap();
+		System.out.println("Parameters: " + parameterMap);
 
 		stateGrid = createStateGrid();
 
@@ -122,9 +127,7 @@ public class XMLReader {
 			colorMap.put(state, color);
 		}
 		
-		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
-			System.out.println(e.getKey() + ":" + e.getValue());
-		}
+
 		
 //		System.out.println("Colormap: " + colorMap);
 		return colorMap;
@@ -150,7 +153,7 @@ public class XMLReader {
 			stateNameMap.put(stateNum, stateName);
 		}
 		
-		System.out.println("StateNameMap:" + stateNameMap);
+
 		return stateNameMap;
 		
 	}
@@ -175,7 +178,6 @@ public class XMLReader {
 			parameterMap.put(name, value);
 		}
 
-		System.out.println("Parameters: " + parameterMap);
 		return parameterMap;
 	}
 
@@ -203,7 +205,6 @@ public class XMLReader {
 			for (int j = 0; j < numCols; j++) {
 				
 				String trim = colStates.get(j).trim();
-				System.out.println(colStates.get(j));
 				stateGrid[i][j] = Integer.parseInt(trim);
 			}
 		}
