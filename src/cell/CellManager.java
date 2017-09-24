@@ -47,18 +47,9 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-//		Iterator<Cell> cellIter = myCellList.iterator();
-//		if (cellIter.hasNext()) {
-//			Cell next = cellIter.next();
-//			next.updateInfo(getNeighbor(next));
-//		}
 		for (Cell current: myCellList) {
 			current.updateInfo(getNeighbor(current));
 		}
-//		cellIter = myCellList.iterator();
-//		if(cellIter.hasNext()) {
-//			cellIter.next().update(myCellList);
-//		}
 		for (Cell current: myCellList) {
 			current.update(myCellList);
 		}
