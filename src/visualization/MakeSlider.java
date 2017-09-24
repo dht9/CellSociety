@@ -42,4 +42,9 @@ public class MakeSlider {
 	public Timeline getTimeline() {
 		return animation;
 	}
+	
+	public void changeSpeed() {
+		double newSpeed = mySlider.getValue();
+		animation.setRate(newSpeed);
+	}
 }
