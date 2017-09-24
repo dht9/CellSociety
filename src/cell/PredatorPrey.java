@@ -29,7 +29,7 @@ public class PredatorPrey extends Cell{
 	 * @param column
 	 * @param state
 	 * @param gridSize
-	 * @param paraList
+	 * @param paraList: {fishBreed, sharkBreed, sharkDie}
 	 */
 	public PredatorPrey(int row, int column, int state, int[] gridSize, double[] paraList) {
 		super(row, column, state, gridSize, paraList);
