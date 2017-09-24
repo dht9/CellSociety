@@ -98,21 +98,22 @@ public class SimulationLoop {
 		if (shouldRun && xmlReader != null) {
 			// set index widths/height for grid
 
-			 ArrayList<Cell> cellList = manager.cellList();
-			 manager.update(); // DOES NOT UPDATE CORRECTLY
-			 for (Cell cell: cellList) {
+			ArrayList<Cell> cellList = manager.cellList();
+			manager.update(); // DOES NOT UPDATE CORRECTLY
 			
-			 int row = cell.row();
-			 int col = cell.column();
-			 int state = cell.state();
-			
-			 Color color = colorMap.get(state);
-			
-			 colorRectangle(row, col, color);
-			
-			 }
-			 
-			 System.out.println("running");
+			for (Cell cell : cellList) {
+
+				int row = cell.row();
+				int col = cell.column();
+				int state = cell.state();
+
+				Color color = colorMap.get(state);
+
+				colorRectangle(row, col, color);
+
+			}
+
+			System.out.println("running");
 		}
 
 	}
@@ -131,7 +132,6 @@ public class SimulationLoop {
 		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
 		rect.setFill(color);
 	}
-
 
 	// start/resume the simulation
 	public void play() {
