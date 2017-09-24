@@ -151,39 +151,13 @@ public class SimulationLoop {
 				
 				 Color color = colorMap.get(state);
 				 
-//				 System.out.print(row + " " + col + " " + state + " " + color);
 				
 				 colorRectangle(row, col, color);
 			 }
+		
 		}
-
-			for (Cell cell : cellList) {
-				int row = cell.row();
-				int col = cell.column();
-
-				colorRectangle(1, 5, Color.PINK);
-
-			}
-			for (Cell cell : cellList) {
-
-				int row = cell.row();
-				int col = cell.column();
-				int state = cell.state();
-
-				Color color = colorMap.get(state);
-
-				colorRectangle(row, col, color);
-			}
-		}
-		Slider slider = myMakeSlider.getSlider();
-		double newSpeed = slider.getValue();
-		Timeline animation = myMakeSlider.getTimeline();
-		animation.setRate(newSpeed);
-		System.out.println(newSpeed);
-
-		// animation.getKeyFrames().clear();
-		// animation.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / FPS), e ->
-		// step()));
+		
+		myMakeSlider.changeSpeed();
 	}
 
 

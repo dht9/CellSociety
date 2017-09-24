@@ -23,7 +23,7 @@ public class MakeSlider {
 	}
 	
 	public Slider createSlider() {
-		mySlider = new Slider(0.01,3,1);
+		mySlider = new Slider(0,1,1);
 		return mySlider;
 	}
 	
@@ -41,5 +41,10 @@ public class MakeSlider {
 	
 	public Timeline getTimeline() {
 		return animation;
+	}
+	
+	public void changeSpeed() {
+		double newSpeed = mySlider.getValue();
+		animation.setRate(newSpeed);
 	}
 }
