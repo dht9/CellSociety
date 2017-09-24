@@ -27,6 +27,7 @@ public class GameofLife extends Cell{
 			}
 		}
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here
+			System.out.println(1);
 			switch(liveCount) {
 				case 0:
 				case 1:

@@ -64,7 +64,7 @@ public abstract class Cell {
 	 * @return whether this cell is at edge
 	 */
 	public boolean isEdge() {
-		return (myrow == 1 || mycol == 1 || myrow == mygrid[0] || mycol == mygrid[1]);
+		return (myrow == 0 || mycol == 0 || myrow == mygrid[0]-1 || mycol == mygrid[1]-1);
 	}
 	
 	/**
