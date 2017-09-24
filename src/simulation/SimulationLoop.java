@@ -108,7 +108,7 @@ public class SimulationLoop {
 			
 			 Color color = colorMap.get(state);
 			 
-			 System.out.println(row);
+			 System.out.println(state);
 			
 			 colorRectangle(row, col, color);
 			
