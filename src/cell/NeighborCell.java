@@ -13,11 +13,11 @@ import java.util.Iterator;
 public class NeighborCell {
 	private static final int FOURADJACENT = 4;
 	private static final int EIGHTADJACENT = 8;
-	
+
 	private int myNeighborType;
 	private boolean myIsTorus;
 	private Cell myCell;
-	
+
 	/**
 	 * constructor for neighborcell class
 	 * 
@@ -30,7 +30,7 @@ public class NeighborCell {
 		myIsTorus = isTorus;
 		myCell = current;
 	}
-	
+
 	/**
 	 * check if a cell is a neighbor cell
 	 * 
@@ -47,7 +47,7 @@ public class NeighborCell {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * return list of adjacent empty position
 	 * 
@@ -59,7 +59,7 @@ public class NeighborCell {
 		Iterator<Cell> iter = neighborList.iterator();
 		if (iter.hasNext()) {
 			Cell current = iter.next();
-			int[] currentPos = {current.myrow, current.mycol};
+			int[] currentPos = { current.myrow, current.mycol };
 			emptyList.remove(currentPos);
 		}
 		System.out.println("current");
@@ -68,7 +68,7 @@ public class NeighborCell {
 		System.out.println(emptyList.get(0)[1]);
 		return emptyList;
 	}
-	
+
 	/**
 	 * get list of adjacent position
 	 * 
@@ -79,26 +79,26 @@ public class NeighborCell {
 	public ArrayList<int[]> adjacentPos() {
 		ArrayList<int[]> adjacentList;
 		if (myNeighborType == FOURADJACENT) {
-			adjacentList = fourAdjacent();
-		}
-		else {		//if (myNeighborType == EIGHTADJACENT)
-			adjacentList = eightAdjacent();
+			 adjacentList = getFourAdjacentPositions();
+		} else { // if (myNeighborType == EIGHTADJACENT)
+			 adjacentList = getEightAdjacentPositions();
 		}
 		return adjacentList;
 	}
-	
+
 	/**
 	 * implementation of adjacentPos for four adjacent
 	 * 
 	 * @return list of adjacent position
 	 */
-	private ArrayList<int[]> fourAdjacent() {
-		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
-		int[] right = {myCell.myrow, myCell.mycol+1};
-		int[] left = {myCell.myrow, myCell.mycol-1};
-		int[] up = {myCell.myrow+1, myCell.mycol};
-		int[] down = {myCell.myrow-1, myCell.mycol};
+	private ArrayList<int[]> getFourAdjacentPositions() {
 		
+		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
+		int[] right = { myCell.myrow, myCell.mycol + 1 };
+		int[] left = { myCell.myrow, myCell.mycol - 1 };
+		int[] up = { myCell.myrow + 1, myCell.mycol };
+		int[] down = { myCell.myrow - 1, myCell.mycol };
+
 		if (myIsTorus && myCell.isEdge()) {
 			if (myCell.myrow == 0) {
 				up[0] = myCell.mygrid[0]-1;
@@ -117,30 +117,34 @@ public class NeighborCell {
 //		System.out.println(adjacentList.size());
 		return adjacentList;
 	}
-	
+
 	/**
-	 * implementation of adjacentPos for eight adjacent 
+	 * implementation of adjacentPos for eight adjacent
 	 * 
 	 * do not include torus option right now
 	 * 
 	 * @return list of adjacent position
 	 */
-	private ArrayList<int[]> eightAdjacent() {
-		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
+	public ArrayList<int[]> getEightAdjacentPositions() {
+		ArrayList<int[]> adjacentPositionsList = new ArrayList<int[]>();
+		
+
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				if (i == 0 && j == 0) {
-					continue;
-				}
-				else {
+				if (i != 0 || j != 0) {
 					int[] pos = new int[2];
-					pos[0] = myCell.myrow+i;
-					pos[1] = myCell.mycol+j;
-					adjacentList.add(pos);
+					pos[0] = myCell.myrow + i;
+					pos[1] = myCell.mycol + j;
+					adjacentPositionsList.add(pos);
 				}
 			}
 		}
-		return adjacentList;
+//		System.out.println("adj: " + adjacentPositionsList.get(0)[0] + " " + adjacentPositionsList.get(7)[0]);
+		return adjacentPositionsList;
+	}
+
+	public int getNeighborType() {
+		return myNeighborType;
 	}
 
 }

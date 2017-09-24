@@ -111,10 +111,7 @@ public class SimulationLoop {
 				 //System.out.println(row);
 				
 				 colorRectangle(row, col, color);
-			
 			 }
-			 
-			 //System.out.println("running");
 		}
 
 	}
@@ -132,7 +129,6 @@ public class SimulationLoop {
 		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
 		rect.setFill(color);
 	}
-
 
 	// start/resume the simulation
 	public void play() {
