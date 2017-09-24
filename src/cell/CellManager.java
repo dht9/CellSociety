@@ -39,6 +39,7 @@ public class CellManager {
 		for (Cell other: myCellList) {
 			if (current.isNeighbor(other)) {
 				neighborList.add(other);
+//				System.out.println("Cell neighbor: " + other.state());
 			}
 		}
 //		System.out.println("current");
@@ -59,6 +60,7 @@ public class CellManager {
 		for (Cell current : myCellList) {
 			current.updateInfo(getNeighborList(current));
 		}
+		
 		Iterator<Cell> cellIter = myCellList.iterator();
 		while (cellIter.hasNext()) {
 			Cell current = cellIter.next();
@@ -66,6 +68,7 @@ public class CellManager {
 		}
 		myCellList.addAll(newCellList);
 	}
+
 
 	/**
 	 * initialize all cells based on the stateArray parsed by XML file and store
