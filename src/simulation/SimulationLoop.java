@@ -151,29 +151,10 @@ public class SimulationLoop {
 				
 				 Color color = colorMap.get(state);
 				 
-//				 System.out.print(row + " " + col + " " + state + " " + color);
 				
 				 colorRectangle(row, col, color);
 			 }
-		}
-
-			for (Cell cell : cellList) {
-				int row = cell.row();
-				int col = cell.column();
-
-				colorRectangle(1, 5, Color.PINK);
-
-			}
-			for (Cell cell : cellList) {
-
-				int row = cell.row();
-				int col = cell.column();
-				int state = cell.state();
-
-				Color color = colorMap.get(state);
-
-				colorRectangle(row, col, color);
-			}
+		
 		}
 		
 		myMakeSlider.changeSpeed();

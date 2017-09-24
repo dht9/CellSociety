@@ -23,7 +23,7 @@ public class MakeSlider {
 	}
 	
 	public Slider createSlider() {
-		mySlider = new Slider(0.01,3,1);
+		mySlider = new Slider(0,1,1);
 		return mySlider;
 	}
 	
