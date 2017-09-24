@@ -4,8 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import config.XMLReader;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -15,23 +19,16 @@ import javafx.scene.shape.Rectangle;
  * @author RyanChung, DavidTran
  *
  */
-public class VisualizeGrid {
+public class VisualizeGrid extends GridPane {
 
 	private XMLReader myXML;
-	private GridPane myGrid;
 	private final int CELL_SIZE = 55;
+	private int numRows;
+	private int numCols;
 
 	/**
 	 * Constructor for VisualizeGrid Class.
-	 */
-	public VisualizeGrid() {
-	}
-
-	public GridPane getGrid() {
-		return myGrid;
-	}
-
-	/**
+	 * 
 	 * iterates through CellGrid and returns a GridPane with corresponding
 	 * color(state) for each cell
 	 * 
@@ -39,30 +36,69 @@ public class VisualizeGrid {
 	 * 
 	 * @return
 	 */
+	public VisualizeGrid(XMLReader xml) {
 
-	public GridPane makeGrid(XMLReader xml) {
-		myGrid = new GridPane();
 		Map<Integer, Color> myColorMap = xml.createColorMap();
+		int[][] gridArray = xml.createStateGrid();
 
-		int[][] gridArray = xml.createCellGrid();
+		colorGrid(myColorMap, gridArray);
 
-		colorGrid(myGrid, myColorMap, gridArray);
-		myGrid.setGridLinesVisible(true);
+		setGridLinesVisible(true);
 
-		myGrid.setAlignment(Pos.CENTER);
+		setAlignment(Pos.CENTER);
 
-		return myGrid;
+		numRows = gridArray.length;
+		numCols = numRows;
+
+		// set index widths/height for grid
+		for (int i = 0; i < this.getSize(); i++) {
+			this.getRowConstraints().add(new RowConstraints(this.getCellSize()));
+			this.getColumnConstraints().add(new ColumnConstraints(this.getCellSize()));
+		}
 	}
 
-	private void colorGrid(GridPane myGrid, Map<Integer, Color> myColorMap, int[][] gridArray) {
+	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
+
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray.length; j++) {
 
 				Color color = myColorMap.get(gridArray[i][j]);
 
-				myGrid.add(new Rectangle(CELL_SIZE, CELL_SIZE, color), j, i);
+				this.add(new Rectangle(CELL_SIZE, CELL_SIZE, color), j, i);
 			}
 		}
+	}
+
+	/**
+	 * Get the rectangle with the same row/column index of a cell
+	 * 
+	 * @param row
+	 *            index of cell
+	 * @param column
+	 *            index of cell
+	 * @param gridPane
+	 *            contains
+	 * @return rectangle with the cell's coordinates
+	 */
+
+	public Node getRectWithCellPosition(int row, int column) {
+		Node rect = null;
+		ObservableList<Node> children = this.getChildren();
+		for (Node child : children) {
+			if (VisualizeGrid.getRowIndex(child) == row && VisualizeGrid.getColumnIndex(child) == column) {
+				rect = child;
+				break;
+			}
+		}
+		return rect;
+	}
+
+	public int getCellSize() {
+		return CELL_SIZE;
+	}
+
+	public int getSize() {
+		return numRows;
 	}
 
 }

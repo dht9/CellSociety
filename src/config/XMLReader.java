@@ -58,12 +58,17 @@ public class XMLReader {
 		System.out.println("Edge Type: " + edgeType);
 
 		colorMap = createColorMap();
+		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
+			System.out.println(e.getKey() + ":" + e.getValue());
+		}
 		
 		stateNameMap = createStateNameMap();
+		System.out.println("StateNameMap:" + stateNameMap);
 
 		parameterMap = createParameterMap();
+		System.out.println("Parameters: " + parameterMap);
 
-		stateGrid = createCellGrid();
+		stateGrid = createStateGrid();
 
 	}
 
@@ -121,9 +126,7 @@ public class XMLReader {
 			colorMap.put(state, color);
 		}
 		
-		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
-			System.out.println(e.getKey() + ":" + e.getValue());
-		}
+
 		
 //		System.out.println("Colormap: " + colorMap);
 		return colorMap;
@@ -149,7 +152,7 @@ public class XMLReader {
 			stateNameMap.put(stateNum, stateName);
 		}
 		
-		System.out.println("StateNameMap:" + stateNameMap);
+
 		return stateNameMap;
 		
 	}
@@ -174,14 +177,13 @@ public class XMLReader {
 			parameterMap.put(name, value);
 		}
 
-		System.out.println("Parameters: " + parameterMap);
 		return parameterMap;
 	}
 
 	/**
 	 * Generate a grid of cell states.
 	 */
-	public int[][] createCellGrid() {
+	public int[][] createStateGrid() {
 
 		NodeList nList = doc.getElementsByTagName("row");
 
@@ -195,13 +197,14 @@ public class XMLReader {
 			Node currentRow = nList.item(i);
 
 			String row = ((Element) currentRow).getAttribute("cellStates");
-			List<String> colStates = Arrays.asList(row.toString().split(","));
+			List<String> colStates = Arrays.asList(row.toString().split("\\s*,\\s*"));
 			System.out.println(colStates);
 
 			// iterate through each column in for current row
 			for (int j = 0; j < numCols; j++) {
-				// can create cell grid
-				stateGrid[i][j] = Integer.parseInt(colStates.get(j));
+				
+				String trim = colStates.get(j).trim();
+				stateGrid[i][j] = Integer.parseInt(trim);
 			}
 		}
 		// System.out.println(Arrays.deepToString(stateGrid));
