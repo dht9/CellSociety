@@ -40,7 +40,7 @@ public class VisualizeGrid extends GridPane {
 
 		Map<Integer, Color> myColorMap = xml.createColorMap();
 		int[][] gridArray = xml.createStateGrid();
-
+    
 		colorGrid(myColorMap, gridArray);
 
 		setGridLinesVisible(true);
