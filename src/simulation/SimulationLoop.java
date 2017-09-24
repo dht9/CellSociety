@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -70,9 +71,10 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
+		double [] paraType = {5.0, 5.0, 3.0};
 
 		manager = new CellManager();
-		manager.initialize(stateGrid, edgeType, simulationType, new double[0]);
+		manager.initialize(stateGrid, simulationType, paraType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -99,21 +101,23 @@ public class SimulationLoop {
 			// set index widths/height for grid
 
 			ArrayList<Cell> cellList = manager.cellList();
-			manager.update(); // DOES NOT UPDATE CORRECTLY
-			
-			for (Cell cell : cellList) {
-
+//			ㄹㅁㄷㄹㅁㄷㅈㄹㅁㄷㅈㄹㅁWORK ON THIS
+			for (Cell cell: cellList) {
 				int row = cell.row();
 				int col = cell.column();
 				int state = cell.state();
-
-				Color color = colorMap.get(state);
-
-				colorRectangle(row, col, color);
-
-			}
+				SimulationSetup setup = new SimulationSetup();
+				
+//				GridPane grid = setup.getGrid();
+				
+//				grid.add(new Rectangle(55,55,Color.WHITE),col,row);
+				BorderPane root = (BorderPane) myScene.getRoot();
+//				root.getChildren().add(grid);
+//				root.setCenter(grid);
+			manager.update(); // DOES NOT UPDATE CORRECTLY
 
 			System.out.println("running");
+			}
 		}
 
 	}
@@ -128,7 +132,6 @@ public class SimulationLoop {
 	 */
 	// There is a bug with this line
 	private void colorRectangle(int row, int col, Color color) {
-
 		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
 		rect.setFill(color);
 	}
