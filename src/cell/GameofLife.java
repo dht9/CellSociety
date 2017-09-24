@@ -26,10 +26,11 @@ public class GameofLife extends Cell{
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
-				liveCount++;
-				System.out.println(liveCount);
+				liveCount++;	
 			}
 		}
+//		System.out.println("LiveCount=" +liveCount);
+		
 		this.mynextState = this.mystate;
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here
 			switch(liveCount) {

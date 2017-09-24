@@ -33,14 +33,14 @@ public class CellManager {
 	 * @param current
 	 * @return arraylist of neighbor cell
 	 */
-	private ArrayList<Cell> getNeighbor(Cell current) {
+	private ArrayList<Cell> getNeighborList(Cell current) {
 		ArrayList<Cell> neighborList = new ArrayList<Cell>();
+		
 		for (Cell other : myCellList) {
-			if (current.isNeighbor(other)) {
+			if (other.isNeighbor(current))
 				neighborList.add(other);
-				System.out.println("Neighbor state: " + other.mystate);
-			}
 		}
+		
 		return neighborList;
 	}
 
@@ -49,7 +49,7 @@ public class CellManager {
 	 */
 	public void update() {
 		for (Cell current : myCellList) {
-			current.updateInfo(getNeighbor(current));
+			current.updateInfo(getNeighborList(current));
 		}
 		for (Cell current : myCellList) {
 			current.update(myCellList);
@@ -95,10 +95,10 @@ public class CellManager {
 	public Cell createCell(int row, int col, int state) {
 		Cell current;
 		switch(mySimulationType) {
-			case "GameOfLife":
+			case "gameOfLife":
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
 				break;
-			case "PredatorPrey":
+			case "predatorPrey":
 				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
