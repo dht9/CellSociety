@@ -38,16 +38,14 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
-		boolean result = false;
-		ArrayList<int[]> list = adjacentPos();
-		for (int[] pos : list) {
-			if (other.myrow == pos[0] && other.mycol == pos[1]) {
-				result = true;
-//				System.out.println("(" + pos[0] + "," + pos[1] + ") is neighbor");
-				return result;
+		int[] otherPos = {other.myrow, other.mycol};
+		ArrayList<int[]> adjacentList = myCell.adjacent();
+		for (int[] adjacent: adjacentList) {
+			if (otherPos[0] == adjacent[0] && otherPos[1] == adjacent[1]) {
+				return true;
 			}
 		}
-		return result;
+		return false;
 	}
 
 	/**
@@ -58,6 +56,7 @@ public class NeighborCell {
 	 */
 	public ArrayList<int[]> emptyNeighbor(ArrayList<Cell> neighborList) {
 		ArrayList<int[]> emptyList = adjacentPos();
+		System.out.println("current");
 		Iterator<Cell> iter = neighborList.iterator();
 		if (iter.hasNext()) {
 			Cell current = iter.next();
@@ -74,8 +73,8 @@ public class NeighborCell {
 	 * 
 	 * @return a list of adjacent positions in {row, col}
 	 */
-	private ArrayList<int[]> adjacentPos() {
-		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
+	public ArrayList<int[]> adjacentPos() {
+		ArrayList<int[]> adjacentList;
 		if (myNeighborType == FOURADJACENT) {
 			 adjacentList = getFourAdjacentPositions();
 		} else { // if (myNeighborType == EIGHTADJACENT)
@@ -110,6 +109,7 @@ public class NeighborCell {
 			}
 		}
 		adjacentList.addAll(new ArrayList<int[]>(Arrays.asList(right, left, up, down)));
+//		System.out.println(adjacentList.size());
 		return adjacentList;
 	}
 

@@ -98,7 +98,8 @@ public class XMLReader {
 	 */
 	public String setSimulationType() {
 
-		return doc.getDocumentElement().getNodeName();
+		Element typeElement = (Element) doc.getElementsByTagName("simulation").item(0);
+		return typeElement.getAttribute("type");
 	}
 
 	/**
