@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -24,6 +25,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import visualization.MakeSlider;
 import visualization.VisualizeGrid;
 
 /**
@@ -43,13 +45,14 @@ public class SimulationSetup extends Application {
 	private Button startButton;
 	private Button pauseButton;
 	private Button stepButton;
+	private MakeSlider makeSlider;
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
 	 */
 	@Override
 	public void start(Stage s) {
-
+		mySimulationLoop = new SimulationLoop();
 		Scene scene = setupScene(s, guiSize, guiSize);
 
 		s.setTitle("Cell Society");
@@ -58,7 +61,10 @@ public class SimulationSetup extends Application {
 
 		s.show();
 
-		mySimulationLoop = new SimulationLoop(s, scene, guiSize, guiSize);
+		mySimulationLoop.setStage(s);
+		mySimulationLoop.setScene(scene);
+		mySimulationLoop.setWidth(guiSize);
+		mySimulationLoop.setHeight(guiSize);
 
 		mySimulationLoop.start();
 	}
@@ -80,6 +86,7 @@ public class SimulationSetup extends Application {
 		Scene scene = new Scene(root, guiWidth, guiHeight);
 
 		Node btnPanel = makeButtonPanel(s, scene);
+
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
 
@@ -95,14 +102,18 @@ public class SimulationSetup extends Application {
 	 */
 	private Node makeButtonPanel(Stage s, Scene scene) {
 
-		HBox btnPanel = new HBox(75);
+		HBox btnPanel = new HBox(30);
 
 		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s, scene));
 		startButton = makeButton("PlayCommand", event -> play());
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
 
-		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton);
+		makeSlider = new MakeSlider(mySimulationLoop.getTimeline());
+		Slider slider = makeSlider.createSlider(mySimulationLoop.getFPS());
+		mySimulationLoop.setMakeSlider(makeSlider);
+
+		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, slider);
 
 		return btnPanel;
 
@@ -125,6 +136,10 @@ public class SimulationSetup extends Application {
 		btn.setOnAction(handler);
 
 		return btn;
+	}
+	
+	public MakeSlider getMakeSlider() {
+		return makeSlider;
 	}
 
 	/**
@@ -157,8 +172,9 @@ public class SimulationSetup extends Application {
 			newGrid(scene);
 
 			// initialize myCellList
-//			CellManager manager = new CellManager();
-//			manager.initialize(xmlReader.createStateGrid(), xmlReader.setSimulationType());
+			// CellManager manager = new CellManager();
+			// manager.initialize(xmlReader.createStateGrid(),
+			// xmlReader.setSimulationType());
 		}
 
 	}
@@ -173,8 +189,6 @@ public class SimulationSetup extends Application {
 		VisualizeGrid newGrid = new VisualizeGrid(xmlReader);
 		BorderPane root = (BorderPane) scene.getRoot();
 		root.setCenter(newGrid);
-
-		
 
 		mySimulationLoop.setVisualizeGrid(newGrid);
 	}
