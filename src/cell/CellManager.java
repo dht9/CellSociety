@@ -1,7 +1,6 @@
 package cell;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 
 public class CellManager {
@@ -11,8 +10,7 @@ public class CellManager {
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
-
-	Map<String,Double> myParaMap;
+	private Map<String,Double> myParaMap;
 	private ArrayList<int[]> myEmptyPos;
 
 	/**
@@ -43,11 +41,8 @@ public class CellManager {
 		for (Cell other: myCellList) {
 			if (current.isNeighbor(other)) {
 				neighborList.add(other);
-//				System.out.println("Cell neighbor: " + other.state());
 			}
 		}
-//		System.out.println("neighbor");
-//		System.out.println(neighborList.size());
 		return neighborList;
 	}
 

@@ -62,28 +62,31 @@ public class PredatorPrey extends Cell {
 			sharkUpdate(neighborlist, emptyPos);
 		}
 		int[] currentPos = { myrow, mycol };
-		if (!myGiveBirth || myIsDie) {
+		if (!myGiveBirth) {
 			emptyPos.add(currentPos);
 		}
 
-		if (!myIsDie) {
-			Iterator<int[]> emptyIter = emptyPos.iterator();
-			while(emptyIter.hasNext()) {
-				int[] nextEmpty = emptyIter.next();
-				if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
-					emptyIter.remove();
-				}
+		Iterator<int[]> emptyIter = emptyPos.iterator();
+		while(emptyIter.hasNext()) {
+			int[] nextEmpty = emptyIter.next();
+			if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
+				emptyIter.remove();
+				break;
 			}
 		}
-		System.out.println("empty");
-		System.out.println(emptyPos.size());
 	}
 
 	@Override
 	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
 		if (myIsDie) {
+			int[] nextPos = { mynextRow, mynextCol };
+			emptyPos.add(nextPos);
 			System.out.println("remove");
 			removeCellList.add(this);
+			if (myGiveBirth) {
+				int[] currentPos = { myrow, mycol };
+				emptyPos.add(currentPos);
+			}
 		}
 		else if (myGiveBirth) {
 			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myParaMap);
