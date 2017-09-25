@@ -38,10 +38,9 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
-		int[] otherPos = {other.myrow, other.mycol};
 		ArrayList<int[]> adjacentList = myCell.adjacent();
 		for (int[] adjacent: adjacentList) {
-			if (otherPos[0] == adjacent[0] && otherPos[1] == adjacent[1]) {
+			if (other.myrow == adjacent[0] && other.mycol == adjacent[1]) {
 				return true;
 			}
 		}
@@ -118,7 +117,6 @@ public class NeighborCell {
 			}
 		}
 		adjacentList.addAll(new ArrayList<int[]>(Arrays.asList(right, left, up, down)));
-//		System.out.println(adjacentList.size());
 		return adjacentList;
 	}
 
@@ -143,7 +141,6 @@ public class NeighborCell {
 				}
 			}
 		}
-//		System.out.println("adj: " + adjacentPositionsList.get(0)[0] + " " + adjacentPositionsList.get(7)[0]);
 		return adjacentPositionsList;
 	}
 

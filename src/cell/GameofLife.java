@@ -2,6 +2,7 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Game of Life implementation of Cell superclass
@@ -24,24 +25,21 @@ public class GameofLife extends Cell{
 	 * @param gridSize
 	 * @param paraList
 	 */
-	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
-		super(row, column, state, gridSize, paraList);
+	public GameofLife(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
+		super(row, column, state, gridSize, paraMap);
 		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
 		myAdjacent = myNeighborCell.adjacentPos();
 	}
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
-		mynextState = mystate;
-		mynextRow = myrow;
-		mynextCol = mycol;
+		super.updateInfo(neighborlist, emptyPos);
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
 				liveCount++;	
 			}
 		}
-		System.out.println("LiveCount=" +liveCount);
 		
 		this.mynextState = this.mystate;
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here
@@ -66,17 +64,6 @@ public class GameofLife extends Cell{
 		}
 	}
 
-	@Override
-	public boolean isNeighbor(Cell other) {
-		return myNeighborCell.isNeighbor(other);
-	}
 
-	@Override
-	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
-		myrow = mynextRow;
-		mycol = mynextCol;
-		mystate = mynextState;
-		
-	}
 
 }
