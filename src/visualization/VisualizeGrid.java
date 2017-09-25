@@ -56,6 +56,10 @@ public class VisualizeGrid extends GridPane {
 			this.getColumnConstraints().add(new ColumnConstraints(this.getCellSize()));
 		}
 	}
+	
+	private double getCellSize(double gridSize, double numRow) {
+		return  gridSize / numRow;
+	}
 
 	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
 
