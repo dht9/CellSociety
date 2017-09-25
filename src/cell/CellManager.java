@@ -95,6 +95,7 @@ public class CellManager {
 				else {
 					int[] empty = {i,j};
 					myEmptyPos.add(empty);
+					
 				}
 			}
 		}
