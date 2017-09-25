@@ -20,15 +20,15 @@
 	
 	<grid>
 		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,0,1,1,0,0,1,0,0,0"></row>
+		<row cellStates = "0,0,1,0,0,0,1,1,0,0"></row>
 		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "1,0,0,0,1,1,1,0,0,0"></row>
 		<row cellStates = "0,0,0,0,1,1,1,0,0,0"></row>
 		<row cellStates = "0,0,0,0,1,1,1,0,0,0"></row>
-		<row cellStates = "0,0,0,0,1,1,1,0,0,0"></row>
+		<row cellStates = "0,0,0,0,0,0,0,0,1,1"></row>
 		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
-		<row cellStates = "0,0,0,0,0,0,0,0,0,0"></row>
+		<row cellStates = "0,1,0,0,1,0,1,1,0,0"></row>
 	</grid>
 	
 </simulation>

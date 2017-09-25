@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +15,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 
 /**
@@ -24,6 +27,7 @@ import javafx.scene.paint.Color;
  */
 public class XMLReader {
 
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
 	private DocumentBuilderFactory dbFactory;
 	private DocumentBuilder dBuilder;
 	private Document doc;
@@ -37,8 +41,6 @@ public class XMLReader {
 	private int[][] stateGrid;
 	private int numRows;
 	private int numCols;
-
-	
 
 	/**
 	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType;
@@ -60,10 +62,10 @@ public class XMLReader {
 		System.out.println("Edge Type: " + edgeType);
 
 		colorMap = createColorMap();
-		for(Map.Entry<Integer, Color> e : colorMap.entrySet()) {
+		for (Map.Entry<Integer, Color> e : colorMap.entrySet()) {
 			System.out.println(e.getKey() + ":" + e.getValue());
 		}
-		
+
 		stateNameMap = createStateNameMap();
 		System.out.println("StateNameMap:" + stateNameMap);
 
@@ -73,7 +75,7 @@ public class XMLReader {
 		stateGrid = createStateGrid();
 
 	}
-	
+
 	/**
 	 * Initialize XML file parser.
 	 */
@@ -86,11 +88,17 @@ public class XMLReader {
 			doc.getDocumentElement().normalize();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Error with XML File");
-			// add more "error" code later
+			showError(e.getMessage());
 		}
 	}
-	
+
+	private void showError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(myResources.getString("ErrorTitleXML"));
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+
 	public File setFile() {
 		return xmlFile;
 	}
@@ -132,21 +140,19 @@ public class XMLReader {
 			Color color = Color.valueOf(eElement.getAttribute("color"));
 			colorMap.put(state, color);
 		}
-		
 
-		
-//		System.out.println("Colormap: " + colorMap);
+		// System.out.println("Colormap: " + colorMap);
 		return colorMap;
 	}
-	
+
 	/**
 	 * Generate a mapping of cell state number and name
 	 * 
 	 * @return
 	 */
 	public Map<Integer, String> createStateNameMap() {
-		stateNameMap = new HashMap<Integer,String>();
-		
+		stateNameMap = new HashMap<Integer, String>();
+
 		NodeList nList = doc.getElementsByTagName("statemap");
 
 		for (int i = 0; i < nList.getLength(); i++) {
@@ -158,10 +164,9 @@ public class XMLReader {
 			String stateName = eElement.getAttribute("name");
 			stateNameMap.put(stateNum, stateName);
 		}
-		
 
 		return stateNameMap;
-		
+
 	}
 
 	/**
@@ -209,7 +214,7 @@ public class XMLReader {
 
 			// iterate through each column in for current row
 			for (int j = 0; j < numCols; j++) {
-				
+
 				String trim = colStates.get(j).trim();
 				stateGrid[i][j] = Integer.parseInt(trim);
 			}
