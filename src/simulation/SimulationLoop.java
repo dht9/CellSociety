@@ -35,7 +35,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int FRAMES_PER_SECOND = 20;
+	private int FRAMES_PER_SECOND = 1;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
@@ -123,6 +123,10 @@ public class SimulationLoop {
 	 * Initializes and starts the simulation loop.
 	 */
 	public void start() {
+		KeyFrame frame = new KeyFrame(Duration.millis(1000 / FRAMES_PER_SECOND), e -> step());
+		Timeline animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(frame);
 		animation.play();
 	}
 
@@ -140,9 +144,9 @@ public class SimulationLoop {
 
 			 ArrayList<Cell> cellList = manager.cellList();
 			 manager.update(); // DOES NOT UPDATE CORRECTLY
-			 for (int row = 0; row < myGrid.getSize(); row++) {
-				 for (int col = 0; col < myGrid.getSize(); col++) {
-					 colorRectangle(row, col, colorMap.get(-1));
+			 for (int i = 0; i < myGrid.getSize(); i++) {
+				 for (int j = 0; j < myGrid.getSize(); j++) {
+					 colorRectangle(i, j, colorMap.get(-1));
 				 }
 			 }
 			 for (Cell cell: cellList) {

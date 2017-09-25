@@ -57,20 +57,24 @@ public class PredatorPrey extends Cell{
 		else if(mystate == SHARK) {
 			sharkUpdate(neighborlist, emptyPos);
 		}
-		int[] nextPos = {mynextRow, mynextCol};
 		int[] currentPos = {myrow, mycol};
-		emptyPos.add(currentPos);
-		emptyPos.remove(nextPos);
+		if (!myGiveBirth || myIsDie) {
+			emptyPos.add(currentPos);
+		}
+
+		Iterator<int[]> emptyIter = emptyPos.iterator();
+		while(emptyIter.hasNext()) {
+			int[] nextEmpty = emptyIter.next();
+			if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
+				emptyIter.remove();
+			}
+		}
 	}
 	
 	@Override
 	public void update(ArrayList<Cell>removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
 		if (myIsDie) {
 			removeCellList.add(this);
-			int[] currentPos = {myrow, mycol};
-			emptyPos.add(currentPos);
-			System.out.println("remove");
-			System.out.println(mystate);
 		}
 		if (myGiveBirth) {
 			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myparaList);
@@ -109,10 +113,15 @@ public class PredatorPrey extends Cell{
 	private void checkMove(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
 		ArrayList<int[]> movablePos = emptyNeighbor(neighborlist);
 		Iterator<int[]> posIter = movablePos.iterator();
+		outerloop:
 		while(posIter.hasNext()) {
-			if (!emptyPos.contains(posIter.next())) {
-				posIter.remove();
+			int[] pos = posIter.next();
+			for (int[] empty: emptyPos) {
+				if (pos[0] == empty[0] && pos[1] == empty[1]) {
+					continue outerloop;
+				}
 			}
+			posIter.remove();
 		}
 		int posSize = movablePos.size();
 		if (posSize != 0) {
@@ -160,8 +169,6 @@ public class PredatorPrey extends Cell{
 		else {
 			checkMove(neighborlist, emptyPos);
 		}
-//		System.out.println("currentdie");
-//		System.out.println(myDieCount);
 	}
 
 	/**

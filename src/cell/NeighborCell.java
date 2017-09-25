@@ -55,7 +55,7 @@ public class NeighborCell {
 	 * @return list of empty position
 	 */
 	public ArrayList<int[]> emptyNeighbor(ArrayList<Cell> neighborList) {
-		ArrayList<int[]> emptyList = adjacentPos();
+		ArrayList<int[]> emptyList = myCell.adjacent();
 //		Iterator<Cell> iter = neighborList.iterator();
 //		while (iter.hasNext()) {
 //			Cell current = iter.next();
@@ -63,8 +63,13 @@ public class NeighborCell {
 //			emptyList.remove(currentPos);
 //		}
 		for (Cell current: neighborList) {
-			int[] currentPos = {current.myrow, current.mycol};
-			emptyList.remove(currentPos);
+			Iterator<int[]> emptyIter = emptyList.iterator();
+			while (emptyIter.hasNext()) {
+				int[] empty = emptyIter.next();
+				if (empty[0] == current.myrow && empty[1] == current.mycol) {
+					emptyIter.remove();
+				}
+			}
 		}
 		return emptyList;
 	}
