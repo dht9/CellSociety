@@ -23,7 +23,7 @@ public class MakeSlider {
 //	}
 	
 	public Slider createSlider(int fps) {
-		mySlider = new Slider(0,fps,1);
+		mySlider = new Slider(0.1,fps,1);
 		mySlider.setShowTickMarks(true);
 		mySlider.setShowTickLabels(true);
 		return mySlider;
