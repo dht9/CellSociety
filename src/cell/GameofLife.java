@@ -40,7 +40,6 @@ public class GameofLife extends Cell{
 				liveCount++;	
 			}
 		}
-		System.out.println("LiveCount=" +liveCount);
 		
 		this.mynextState = this.mystate;
 		if (this.mystate == LIVE) {  //TODO check if enum can be used here

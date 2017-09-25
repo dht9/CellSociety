@@ -117,7 +117,6 @@ public class NeighborCell {
 			}
 		}
 		adjacentList.addAll(new ArrayList<int[]>(Arrays.asList(right, left, up, down)));
-//		System.out.println(adjacentList.size());
 		return adjacentList;
 	}
 
@@ -142,7 +141,6 @@ public class NeighborCell {
 				}
 			}
 		}
-//		System.out.println("adj: " + adjacentPositionsList.get(0)[0] + " " + adjacentPositionsList.get(7)[0]);
 		return adjacentPositionsList;
 	}
 
