@@ -51,9 +51,7 @@ public class PredatorPrey extends Cell {
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
-		mynextState = mystate;
-		mynextRow = myrow;
-		mynextCol = mycol;
+		super.updateInfo(neighborlist, emptyPos);
 		myDieCount++;
 		if (!myIsBreed) {
 			myBreedCount++;
@@ -68,11 +66,13 @@ public class PredatorPrey extends Cell {
 			emptyPos.add(currentPos);
 		}
 
-		Iterator<int[]> emptyIter = emptyPos.iterator();
-		while (emptyIter.hasNext()) {
-			int[] nextEmpty = emptyIter.next();
-			if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
-				emptyIter.remove();
+		if (!myIsDie) {
+			Iterator<int[]> emptyIter = emptyPos.iterator();
+			while(emptyIter.hasNext()) {
+				int[] nextEmpty = emptyIter.next();
+				if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
+					emptyIter.remove();
+				}
 			}
 		}
 	}
@@ -82,8 +82,8 @@ public class PredatorPrey extends Cell {
 		if (myIsDie) {
 			removeCellList.add(this);
 		}
-		if (myGiveBirth) {
-			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myParaMap);
+		else if (myGiveBirth) {
+			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myParaList);
 			newCellList.add(baby);
 			System.out.println("baby");
 			System.out.println(baby.myrow);
@@ -92,9 +92,7 @@ public class PredatorPrey extends Cell {
 			myGiveBirth = false;
 			myIsBreed = false;
 		}
-		myrow = mynextRow;
-		mycol = mynextCol;
-		mystate = mynextState;
+		super.update(removeCellList, newCellList, emptyPos);
 		myAdjacent = myNeighborCell.adjacentPos();
 	}
 

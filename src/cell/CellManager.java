@@ -65,9 +65,6 @@ public class CellManager {
 		}
 		myCellList.addAll(newCellList);
 		myCellList.removeAll(removeCellList);
-		System.out.println("current");
-		System.out.println(myCellList.size());
-		
 	}
 
 
@@ -121,6 +118,12 @@ public class CellManager {
 				break;
 			case "PredatorPrey":
 				current = new PredatorPrey(row, col, state, myGridSize, myParaMap);
+				break;
+			case "Segregation":
+				current = new Segregation(row, col, state, myGridSize, myParaList);
+				break;
+			case "Fire":
+				current = new Fire(row, col, state, myGridSize, myParaList);
 				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaMap);
