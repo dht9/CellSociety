@@ -35,9 +35,6 @@ public class Segregation extends Cell{
 			percent = 0;
 		}
 		if (percent < myThreshold) {
-			System.out.println("here");
-			System.out.println(mystate);
-			System.out.println(myThreshold);
 			int[] nextPos = randomMove(emptyPos);
 			mynextRow = nextPos[0];
 			mynextCol = nextPos[1];
@@ -50,10 +47,6 @@ public class Segregation extends Cell{
 					emptyIter.remove();
 				}
 			}
-		}
-		else {
-			System.out.println("stay");
-			System.out.println(mystate);
 		}
 	}
 	
