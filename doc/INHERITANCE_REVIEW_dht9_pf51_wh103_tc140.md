@@ -22,7 +22,3 @@
 
 
 ## Part 3
-
-1. slider to change speed of animation, changing color of cell, button to start/pause/step, putting initial states on grid, XML file loader.
-2. creating slider to change speed of animation.
-3. changing color of cell. 
