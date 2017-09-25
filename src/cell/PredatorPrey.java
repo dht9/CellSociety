@@ -81,7 +81,6 @@ public class PredatorPrey extends Cell {
 		if (myIsDie) {
 			int[] nextPos = { mynextRow, mynextCol };
 			emptyPos.add(nextPos);
-			System.out.println("remove");
 			removeCellList.add(this);
 			if (myGiveBirth) {
 				int[] currentPos = { myrow, mycol };
@@ -91,9 +90,6 @@ public class PredatorPrey extends Cell {
 		else if (myGiveBirth) {
 			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myParaMap);
 			newCellList.add(baby);
-			System.out.println("baby");
-			System.out.println(baby.myrow);
-			System.out.println(baby.mycol);
 			myBreedCount = 0;
 			myGiveBirth = false;
 			myIsBreed = false;
