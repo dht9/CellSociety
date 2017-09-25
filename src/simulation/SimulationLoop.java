@@ -32,7 +32,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int fps = 60;
+	private int fps = 1;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;

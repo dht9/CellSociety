@@ -63,8 +63,13 @@ public class NeighborCell {
 //			emptyList.remove(currentPos);
 //		}
 		for (Cell current: neighborList) {
-			int[] currentPos = {current.myrow, current.mycol};
-			emptyList.remove(currentPos);
+			Iterator<int[]> emptyIter = emptyList.iterator();
+			while (emptyIter.hasNext()) {
+				int[] empty = emptyIter.next();
+				if (empty[0] == current.myrow && empty[1] == current.mycol) {
+					emptyIter.remove();
+				}
+			}
 		}
 		return emptyList;
 	}
