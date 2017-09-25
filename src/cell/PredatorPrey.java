@@ -2,6 +2,7 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Game of Life implementation of Cell superclass
@@ -9,11 +10,11 @@ import java.util.Iterator;
  * @author estellehe
  *
  */
-public class PredatorPrey extends Cell{
+public class PredatorPrey extends Cell {
 	private static final int FISH = 0;
 	private static final int SHARK = 1;
 	private static final int FOURADJACENT = 4;
-	
+
 	private double fishBreed;
 	private double sharkBreed;
 	private double sharkDie;
@@ -22,22 +23,28 @@ public class PredatorPrey extends Cell{
 	private boolean myIsBreed = false;
 	private boolean myIsDie = false;
 	private boolean myGiveBirth = false;
-	private double[] myparaList;
 
 	/**
 	 * constructor for predatorprey cell
+	 * 
 	 * @param row
 	 * @param column
 	 * @param state
 	 * @param gridSize
-	 * @param paraList: {fishBreed, sharkBreed, sharkDie}
+	 * @param paraList:
+	 *            {fishBreed, sharkBreed, sharkDie}
 	 */
-	public PredatorPrey(int row, int column, int state, int[] gridSize, double[] paraList) {
-		super(row, column, state, gridSize, paraList);
-		myparaList = paraList;
-		fishBreed = paraList[0];
-		sharkBreed = paraList[1];
-		sharkDie = paraList[2];
+	public PredatorPrey(int row, int column, int state, int[] gridSize, Map<String, Double> paraMap) {
+		super(row, column, state, gridSize, paraMap);
+
+		for (String key : paraMap.keySet()) {
+			if (key.equalsIgnoreCase("fishbreedtime"))
+				fishBreed = paraMap.get(key);
+			else if (key.equalsIgnoreCase("sharkbreedtime"))
+				sharkBreed = paraMap.get(key);
+			else if (key.equalsIgnoreCase("sharkdietime"))
+				sharkDie = paraMap.get(key);
+		}
 		myNeighborCell = new NeighborCell(FOURADJACENT, true, this);
 		myAdjacent = myNeighborCell.adjacentPos();
 	}
@@ -53,31 +60,30 @@ public class PredatorPrey extends Cell{
 		}
 		if (mystate == FISH) {
 			fishUpdate(neighborlist, emptyPos);
-		}
-		else if(mystate == SHARK) {
+		} else if (mystate == SHARK) {
 			sharkUpdate(neighborlist, emptyPos);
 		}
-		int[] currentPos = {myrow, mycol};
+		int[] currentPos = { myrow, mycol };
 		if (!myGiveBirth || myIsDie) {
 			emptyPos.add(currentPos);
 		}
 
 		Iterator<int[]> emptyIter = emptyPos.iterator();
-		while(emptyIter.hasNext()) {
+		while (emptyIter.hasNext()) {
 			int[] nextEmpty = emptyIter.next();
 			if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
 				emptyIter.remove();
 			}
 		}
 	}
-	
+
 	@Override
-	public void update(ArrayList<Cell>removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
+	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
 		if (myIsDie) {
 			removeCellList.add(this);
 		}
 		if (myGiveBirth) {
-			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myparaList);
+			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myParaMap);
 			newCellList.add(baby);
 			System.out.println("baby");
 			System.out.println(baby.myrow);
@@ -91,9 +97,9 @@ public class PredatorPrey extends Cell{
 		mystate = mynextState;
 		myAdjacent = myNeighborCell.adjacentPos();
 	}
-	
+
 	/**
-	 * updateinfo implementation for fish 
+	 * updateinfo implementation for fish
 	 * 
 	 * @param neighborlist
 	 */
@@ -103,7 +109,7 @@ public class PredatorPrey extends Cell{
 	}
 
 	/**
-	 * check if there is empty adjacent position to move into 
+	 * check if there is empty adjacent position to move into
 	 * 
 	 * also checks if the cell can reproduce
 	 * 
@@ -113,10 +119,9 @@ public class PredatorPrey extends Cell{
 	private void checkMove(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
 		ArrayList<int[]> movablePos = emptyNeighbor(neighborlist);
 		Iterator<int[]> posIter = movablePos.iterator();
-		outerloop:
-		while(posIter.hasNext()) {
+		outerloop: while (posIter.hasNext()) {
 			int[] pos = posIter.next();
-			for (int[] empty: emptyPos) {
+			for (int[] empty : emptyPos) {
 				if (pos[0] == empty[0] && pos[1] == empty[1]) {
 					continue outerloop;
 				}
@@ -125,7 +130,7 @@ public class PredatorPrey extends Cell{
 		}
 		int posSize = movablePos.size();
 		if (posSize != 0) {
-			int randomIndex = (int) (Math.random()*posSize);
+			int randomIndex = (int) (Math.random() * posSize);
 			int[] nextPos = movablePos.get(randomIndex);
 			this.mynextRow = nextPos[0];
 			this.mynextCol = nextPos[1];
@@ -134,11 +139,12 @@ public class PredatorPrey extends Cell{
 			}
 		}
 	}
-	
+
 	/**
 	 * updateinfo implementation for shark
 	 * 
-	 * the shark will use up a unit of energy at each update, and recover one unit for eating a fish
+	 * the shark will use up a unit of energy at each update, and recover one unit
+	 * for eating a fish
 	 * 
 	 * @param neighborlist
 	 */
@@ -157,7 +163,7 @@ public class PredatorPrey extends Cell{
 		}
 		int fishSize = availableFish.size();
 		if (fishSize != 0) {
-			PredatorPrey food = (PredatorPrey) availableFish.get((int) (Math.random()*(fishSize-1)));
+			PredatorPrey food = (PredatorPrey) availableFish.get((int) (Math.random() * (fishSize - 1)));
 			food.consume();
 			this.mynextCol = food.column();
 			this.mynextRow = food.row();
@@ -165,14 +171,14 @@ public class PredatorPrey extends Cell{
 			if (myIsBreed) {
 				myGiveBirth = true;
 			}
-		}
-		else {
+		} else {
 			checkMove(neighborlist, emptyPos);
 		}
 	}
 
 	/**
 	 * get the available fish list around shark
+	 * 
 	 * @param neighborlist
 	 * @return list of available fish
 	 */
@@ -198,7 +204,7 @@ public class PredatorPrey extends Cell{
 			myIsBreed = true;
 		}
 	}
-	
+
 	/**
 	 * change the cell state when being consumed
 	 */

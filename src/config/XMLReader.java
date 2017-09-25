@@ -38,6 +38,8 @@ public class XMLReader {
 	private int numRows;
 	private int numCols;
 
+	
+
 	/**
 	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType;
 	 * 
