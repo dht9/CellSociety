@@ -15,7 +15,7 @@
 	</states>
 	
 	<parameters>
-		<parametermap name="satisfiedThreshold" value="0.5"></parametermap>
+		<parametermap name="satisfiedThreshold" value="0.5"></parametermap
 	</parameters>
 
 	<edges>
