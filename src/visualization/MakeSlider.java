@@ -22,8 +22,8 @@ public class MakeSlider {
 //		return pane;
 //	}
 	
-	public Slider createSlider(int fps) {
-		mySlider = new Slider(0.1,fps,1);
+	public Slider createSlider(int maxFPS) {
+		mySlider = new Slider(1,maxFPS,1);
 		mySlider.setShowTickMarks(true);
 		mySlider.setShowTickLabels(true);
 		return mySlider;
@@ -45,9 +45,9 @@ public class MakeSlider {
 		return animation;
 	}
 	
-	public void changeSpeed(int fps) {
-		double newSpeed = mySlider.getValue() / (double) fps;
-		System.out.println(newSpeed);
+	public void changeSpeed(int maxFPS) {
+		double newSpeed = mySlider.getValue() / (double) maxFPS;
+//		System.out.println(newSpeed);
 		animation.setRate(newSpeed);
 	}
 }

@@ -52,7 +52,9 @@ public class SimulationSetup extends Application {
 	 */
 	@Override
 	public void start(Stage s) {
+		
 		mySimulationLoop = new SimulationLoop();
+		
 		Scene scene = setupScene(s, guiSize, guiSize);
 
 		s.setTitle("Cell Society");
@@ -60,13 +62,8 @@ public class SimulationSetup extends Application {
 		s.setScene(scene);
 
 		s.show();
-
-		mySimulationLoop.setStage(s);
-		mySimulationLoop.setScene(scene);
-		mySimulationLoop.setWidth(guiSize);
-		mySimulationLoop.setHeight(guiSize);
-
-		mySimulationLoop.start();
+		
+		mySimulationLoop.setGUI(s, scene, guiSize, guiSize);
 	}
 
 	/**
@@ -167,14 +164,10 @@ public class SimulationSetup extends Application {
 
 			xmlReader = new XMLReader(file);
 
+			//initializes cell manager
 			mySimulationLoop.setNewSimulationParameters(xmlReader);
 
 			newGrid(scene);
-
-			// initialize myCellList
-			// CellManager manager = new CellManager();
-			// manager.initialize(xmlReader.createStateGrid(),
-			// xmlReader.setSimulationType());
 		}
 
 	}

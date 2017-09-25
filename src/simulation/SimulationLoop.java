@@ -35,7 +35,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int FRAMES_PER_SECOND = 1;
+	private int MAX_FRAMES_PER_SECOND = 20;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
@@ -57,13 +57,14 @@ public class SimulationLoop {
 	 * Constructor, give simulation loop a scene
 	 */
 	public SimulationLoop() {
-		frame = new KeyFrame(Duration.millis(1000 / FRAMES_PER_SECOND), e -> step());
+		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
+		animation.play();
 	}
 
-	public SimulationLoop(Stage s, Scene scene, int width, int height) {
+	public void setGUI(Stage s, Scene scene, int width, int height) {
 		myStage = s;
 		myScene = scene;
 		guiWidth = width;
@@ -73,23 +74,6 @@ public class SimulationLoop {
 
 	public void setMakeSlider(MakeSlider m) {
 		myMakeSlider = m;
-	}
-
-	public void setStage(Stage s) {
-		myStage = s;
-		shouldRun = false;
-	}
-
-	public void setScene(Scene scene) {
-		myScene = scene;
-	}
-
-	public void setWidth(int width) {
-		guiWidth = width;
-	}
-
-	public void setHeight(int height) {
-		guiHeight = height;
 	}
 
 	/**
@@ -123,8 +107,8 @@ public class SimulationLoop {
 	 * Initializes and starts the simulation loop.
 	 */
 	public void start() {
-		KeyFrame frame = new KeyFrame(Duration.millis(1000 / FRAMES_PER_SECOND), e -> step());
-		Timeline animation = new Timeline();
+		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
+		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
@@ -163,7 +147,7 @@ public class SimulationLoop {
 		
 		}
 		
-		myMakeSlider.changeSpeed(FRAMES_PER_SECOND);
+		myMakeSlider.changeSpeed(MAX_FRAMES_PER_SECOND);
 	}
 
 
@@ -192,7 +176,7 @@ public class SimulationLoop {
 	}
 	
 	public int getFPS() {
-		return FRAMES_PER_SECOND;
+		return MAX_FRAMES_PER_SECOND;
 	}
 
 }
