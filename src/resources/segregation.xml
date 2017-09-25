@@ -15,7 +15,7 @@
 	</states>
 	
 	<parameters>
-		<parametermap name="satisfiedThreshold" value="0.5"></parametermap>
+		<parametermap name="satisfiedThreshold" value="0.7"></parametermap>
 	</parameters>
 
 	<edges>
@@ -23,16 +23,16 @@
 	</edges>
 	
 	<grid>
-		<row cellStates = " 1,-1,-1,-1,-1, 0,-1, 0,-1, 1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1, 0,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"></row>
+		<row cellStates = " 1, 0,-1, 1, 0, 0, 0, 0, 1, 1"></row>
+		<row cellStates = " 1,-1, 0,-1, 1, 0, 1,-1, 0,-1"></row>
+		<row cellStates = " 1, 1, 1, 1, 1, 1, 0,-1, 1, 1"></row>
+		<row cellStates = " 0, 1, 0,-1, 0,-1, 0, 1, 0, 0"></row>
+		<row cellStates = "-1, 0,-1, 0, 1,-1, 1,-1, 1, 1"></row>
+		<row cellStates = "-1, 1, 0,-1, 1, 1,-1, 1, 1,-1"></row>
+		<row cellStates = "-1,-1, 0, 1,-1, 1, 0, 0,-1, 0"></row>
+		<row cellStates = " 1, 0,-1,-1, 1, 0, 1, 1, 1,-1"></row>
+		<row cellStates = " 0, 0, 0, 0, 1, 1,-1, 0,-1, 1"></row>
+		<row cellStates = " 0, 1, 1, 1,-1, 0, 1,-1, 1,-1"></row>
 	</grid>
 	
 </simulation>

@@ -18,7 +18,7 @@
 		<parametermap name="fishBreedTime" value="5"></parametermap>
 		<parametermap name="sharkBreedTime" value="5"></parametermap>
 		<parametermap name="fishDieTime" value="1"></parametermap>
-		<parametermap name="sharkDieTime" value="3"></parametermap></parameters>
+		<parametermap name="sharkDieTime" value="4"></parametermap></parameters>
 	
 	<edges>
 		<edge type = "toroidal"></edge>

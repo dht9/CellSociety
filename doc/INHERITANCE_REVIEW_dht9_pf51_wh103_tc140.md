@@ -18,11 +18,3 @@
 4. A pair or super/sub classes is the super Cell and the GameOfLife cell. There is room for improvement to be flexible for toroidal vs. straight edges. Right now, the cell parameter for straight edge is hard-coded in specific to GameOfLife cell. We will implement the parameter into the XML and parse it for the cell. What the classes have in common are getter methods for location and state. Also, they have an `isNeighbor` method to check if another cell is a neighbor. What varies between these two classes is the update and updateInfo classes. Updating info is specific to each subclass because they have different states and update differently.
 
 ## Part 3
-
-1. Using button to reset the simulation to initial states, storing undefined number of parameters from XML to be used by cell, defining possible states in xml, parsing a grid of varying size, parsing a map of color corresponding to state.
-2. Setting up the simulation to wait for user input and parse the XML file.
-3. Making sure that the parameters and parsing is accurate and flexible for all simulation types.
-
-1. slider to change speed of animation, changing color of cell, button to start/pause/step, putting initial states on grid, XML file loader.
-2. creating slider to change speed of animation.
-3. changing color of cell. 

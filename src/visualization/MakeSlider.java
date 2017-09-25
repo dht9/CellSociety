@@ -26,6 +26,8 @@ public class MakeSlider {
 		mySlider = new Slider(1,maxFPS,1);
 		mySlider.setShowTickMarks(true);
 		mySlider.setShowTickLabels(true);
+		mySlider.setMajorTickUnit(10);
+		mySlider.setMinorTickCount(1);
 		return mySlider;
 	}
 	

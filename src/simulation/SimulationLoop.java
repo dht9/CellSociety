@@ -35,7 +35,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int MAX_FRAMES_PER_SECOND = 20;
+	private int MAX_FRAMES_PER_SECOND = 30;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
