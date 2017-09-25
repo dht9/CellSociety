@@ -64,10 +64,6 @@ public class GameofLife extends Cell{
 		}
 	}
 
-	@Override
-	public boolean isNeighbor(Cell other) {
-		return myNeighborCell.isNeighbor(other);
-	}
 
 
 }

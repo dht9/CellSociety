@@ -63,7 +63,6 @@ public class CellManager {
 		}
 		myCellList.addAll(newCellList);
 		myCellList.removeAll(removeCellList);
-		
 	}
 
 
@@ -120,6 +119,9 @@ public class CellManager {
 				break;
 			case "Segregation":
 				current = new Segregation(row, col, state, myGridSize, myParaList);
+				break;
+			case "Fire":
+				current = new Fire(row, col, state, myGridSize, myParaList);
 				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaList);
