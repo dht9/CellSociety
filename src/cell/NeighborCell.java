@@ -38,10 +38,9 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
-		int[] otherPos = {other.myrow, other.mycol};
 		ArrayList<int[]> adjacentList = myCell.adjacent();
 		for (int[] adjacent: adjacentList) {
-			if (otherPos[0] == adjacent[0] && otherPos[1] == adjacent[1]) {
+			if (other.myrow == adjacent[0] && other.mycol == adjacent[1]) {
 				return true;
 			}
 		}
@@ -55,17 +54,22 @@ public class NeighborCell {
 	 * @return list of empty position
 	 */
 	public ArrayList<int[]> emptyNeighbor(ArrayList<Cell> neighborList) {
-		ArrayList<int[]> emptyList = adjacentPos();
-		Iterator<Cell> iter = neighborList.iterator();
-		if (iter.hasNext()) {
-			Cell current = iter.next();
-			int[] currentPos = { current.myrow, current.mycol };
-			emptyList.remove(currentPos);
+		ArrayList<int[]> emptyList = myCell.adjacent();
+//		Iterator<Cell> iter = neighborList.iterator();
+//		while (iter.hasNext()) {
+//			Cell current = iter.next();
+//			int[] currentPos = { current.myrow, current.mycol };
+//			emptyList.remove(currentPos);
+//		}
+		for (Cell current: neighborList) {
+			Iterator<int[]> emptyIter = emptyList.iterator();
+			while (emptyIter.hasNext()) {
+				int[] empty = emptyIter.next();
+				if (empty[0] == current.myrow && empty[1] == current.mycol) {
+					emptyIter.remove();
+				}
+			}
 		}
-		System.out.println("current");
-		System.out.println(emptyList.size());
-		System.out.println(emptyList.get(0)[0]);
-		System.out.println(emptyList.get(0)[1]);
 		return emptyList;
 	}
 
@@ -96,9 +100,8 @@ public class NeighborCell {
 		ArrayList<int[]> adjacentList = new ArrayList<int[]>();
 		int[] right = { myCell.myrow, myCell.mycol + 1 };
 		int[] left = { myCell.myrow, myCell.mycol - 1 };
-		int[] up = { myCell.myrow + 1, myCell.mycol };
-		int[] down = { myCell.myrow - 1, myCell.mycol };
-
+		int[] up = { myCell.myrow - 1, myCell.mycol };
+		int[] down = { myCell.myrow + 1, myCell.mycol };
 		if (myIsTorus && myCell.isEdge()) {
 			if (myCell.myrow == 0) {
 				up[0] = myCell.mygrid[0]-1;
@@ -114,7 +117,6 @@ public class NeighborCell {
 			}
 		}
 		adjacentList.addAll(new ArrayList<int[]>(Arrays.asList(right, left, up, down)));
-//		System.out.println(adjacentList.size());
 		return adjacentList;
 	}
 
@@ -139,7 +141,6 @@ public class NeighborCell {
 				}
 			}
 		}
-//		System.out.println("adj: " + adjacentPositionsList.get(0)[0] + " " + adjacentPositionsList.get(7)[0]);
 		return adjacentPositionsList;
 	}
 

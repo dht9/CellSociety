@@ -21,8 +21,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class VisualizeGrid extends GridPane {
 
-	private XMLReader myXML;
-	private final int CELL_SIZE = 55;
+	private final int GRID_SIZE = 550;
 	private int numRows;
 	private int numCols;
 
@@ -40,7 +39,7 @@ public class VisualizeGrid extends GridPane {
 
 		Map<Integer, Color> myColorMap = xml.createColorMap();
 		int[][] gridArray = xml.createStateGrid();
-
+    
 		colorGrid(myColorMap, gridArray);
 
 		setGridLinesVisible(true);
@@ -52,10 +51,11 @@ public class VisualizeGrid extends GridPane {
 
 		// set index widths/height for grid
 		for (int i = 0; i < this.getSize(); i++) {
-			this.getRowConstraints().add(new RowConstraints(this.getCellSize()));
-			this.getColumnConstraints().add(new ColumnConstraints(this.getCellSize()));
+			this.getRowConstraints().add(new RowConstraints(this.getCellSize(gridArray)));
+			this.getColumnConstraints().add(new ColumnConstraints(this.getCellSize(gridArray)));
 		}
 	}
+	
 
 	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
 
@@ -64,7 +64,7 @@ public class VisualizeGrid extends GridPane {
 
 				Color color = myColorMap.get(gridArray[i][j]);
 
-				this.add(new Rectangle(CELL_SIZE, CELL_SIZE, color), j, i);
+				this.add(new Rectangle(getCellSize(gridArray), getCellSize(gridArray), color), j, i);
 			}
 		}
 	}
@@ -93,10 +93,11 @@ public class VisualizeGrid extends GridPane {
 		return rect;
 	}
 
-	public int getCellSize() {
-		return CELL_SIZE;
+	public double getCellSize(int [][] gridArray) {
+		return GRID_SIZE / gridArray.length;
 	}
 
+	// assumes square grid
 	public int getSize() {
 		return numRows;
 	}

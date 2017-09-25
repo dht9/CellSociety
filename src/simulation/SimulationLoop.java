@@ -8,9 +8,11 @@ import cell.CellManager;
 import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.Animation;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
@@ -19,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import visualization.MakeSlider;
 import visualization.VisualizeGrid;
 
 /**
@@ -32,7 +35,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int fps = 60;
+	private int MAX_FRAMES_PER_SECOND = 20;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
@@ -44,18 +47,33 @@ public class SimulationLoop {
 	private int[][] stateGrid;
 	private String simulationType;
 	private String edgeType;
+	private Timeline animation;
+	private KeyFrame frame;
+	private MakeSlider myMakeSlider;
 
 	private CellManager manager;
 
 	/**
 	 * Constructor, give simulation loop a scene
 	 */
-	public SimulationLoop(Stage s, Scene scene, int width, int height) {
+	public SimulationLoop() {
+		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
+		animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(frame);
+		animation.play();
+	}
+
+	public void setGUI(Stage s, Scene scene, int width, int height) {
 		myStage = s;
 		myScene = scene;
 		guiWidth = width;
 		guiHeight = height;
 		shouldRun = false;
+	}
+
+	public void setMakeSlider(MakeSlider m) {
+		myMakeSlider = m;
 	}
 
 	/**
@@ -71,10 +89,10 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
-		double [] paraType = {5.0, 5.0, 3.0};
-
+		
 		manager = new CellManager();
-		manager.initialize(stateGrid, edgeType, simulationType, paraType);
+		
+		manager.initialize(stateGrid, edgeType, simulationType, parameterMap);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -85,11 +103,15 @@ public class SimulationLoop {
 	 * Initializes and starts the simulation loop.
 	 */
 	public void start() {
-		KeyFrame frame = new KeyFrame(Duration.millis(1000 / fps), e -> step());
-		Timeline animation = new Timeline();
+		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
+		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
+	}
+
+	public Timeline getTimeline() {
+		return animation;
 	}
 
 	/**
@@ -102,6 +124,11 @@ public class SimulationLoop {
 
 			 ArrayList<Cell> cellList = manager.cellList();
 			 manager.update(); // DOES NOT UPDATE CORRECTLY
+			 for (int i = 0; i < myGrid.getSize(); i++) {
+				 for (int j = 0; j < myGrid.getSize(); j++) {
+					 colorRectangle(i, j, colorMap.get(-1));
+				 }
+			 }
 			 for (Cell cell: cellList) {
 				 
 				 int row = cell.row();
@@ -110,13 +137,15 @@ public class SimulationLoop {
 				
 				 Color color = colorMap.get(state);
 				 
-//				 System.out.print(row + " " + col + " " + state + " " + color);
 				
 				 colorRectangle(row, col, color);
 			 }
+		
 		}
-
+		
+		myMakeSlider.changeSpeed(MAX_FRAMES_PER_SECOND);
 	}
+
 
 	/**
 	 * Removes and adds a new rectangle with a color at a specified index in the
@@ -140,6 +169,10 @@ public class SimulationLoop {
 	// pause the simulation
 	public void pause() {
 		shouldRun = false;
+	}
+	
+	public int getFPS() {
+		return MAX_FRAMES_PER_SECOND;
 	}
 
 }

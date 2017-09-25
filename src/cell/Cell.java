@@ -2,6 +2,7 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * This is the cell superclass that has abstract cell method shared by all cell subclass
@@ -15,6 +16,7 @@ public abstract class Cell {
 	protected int mystate;
 	protected int[] mygrid;
 	protected double[] myParaList;
+	protected Map<String,Double> myParaMap;
 	protected int mynextRow;
 	protected int mynextCol;
 	protected int mynextState;
@@ -29,12 +31,12 @@ public abstract class Cell {
 	 * @param gridSize is the {row, col} of current grid, used to determine whether on the edge
 	 * @param paraList, the list of parameters for simulation
 	 */
-	public Cell(int row, int column, int state, int[] gridSize, double[] paraList) {
+	public Cell(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
 		myrow = row;
 		mycol = column;
 		mystate = state;
 		mygrid = gridSize;
-		myParaList = paraList;
+		myParaMap = paraMap;
 	}
 	
 	/**
@@ -75,12 +77,20 @@ public abstract class Cell {
 	 * store update info
 	 * @param neighborlist
 	 */
-	public abstract void updateInfo(ArrayList<Cell> neighborlist);
+	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
+		mynextState = mystate;
+		mynextRow = myrow;
+		mynextCol = mycol;
+	}
 	
 	/**
 	 * execute the update information on the cell
 	 */
-	public abstract void update(Iterator<Cell> cellIter, ArrayList<Cell> cellList);
+	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
+		myrow = mynextRow;
+		mycol = mynextCol;
+		mystate = mynextState;
+	}
 	
 	/**
 	 * check if certain cell is the neighbor of this cell based on the rules
