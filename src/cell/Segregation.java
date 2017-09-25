@@ -2,15 +2,21 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Segregation extends Cell{
 	private static final int EIGHTADJACENT = 8;
 	
 	private double myThreshold;
 
-	public Segregation(int row, int column, int state, int[] gridSize, double[] paraList) {
-		super(row, column, state, gridSize, paraList);
-		myThreshold = paraList[0];
+	public Segregation(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
+		super(row, column, state, gridSize, paraMap);
+		
+		for (String key: paraMap.keySet()) {
+		    if (key.equalsIgnoreCase("satisfiedThreshold"))
+		    	myThreshold = paraMap.get(key);
+		    	
+		}
 		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
 		myAdjacent = myNeighborCell.adjacentPos();
 	}

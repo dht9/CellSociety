@@ -14,7 +14,15 @@
 ## Part 2
 1. My area extracts and supplies information used by the simulation and visualization.
 2. These dependencies are based on the other  class's behaviors or implementation because the other class's will need to request information of a certain type and format.
+3.
+4.
+5.
 
 (Could not finish the rest)
 
 
+## Part 3
+
+1. slider to change speed of animation, changing color of cell, button to start/pause/step, putting initial states on grid, XML file loader.
+2. creating slider to change speed of animation.
+3. changing color of cell. 

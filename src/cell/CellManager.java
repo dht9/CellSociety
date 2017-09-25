@@ -2,6 +2,7 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class CellManager {
 	private static final int EMPTY = -1;
@@ -10,7 +11,8 @@ public class CellManager {
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
-	private double[] myParaList;
+
+	Map<String,Double> myParaMap;
 	private ArrayList<int[]> myEmptyPos;
 
 	/**
@@ -74,7 +76,7 @@ public class CellManager {
 	 * @param type
 	 * @param paraList
 	 */
-	public void initialize(int[][] stateArray, String edgeType, String simulationType, double[] paraList) {
+	public void initialize(int[][] stateArray, String edgeType, String simulationType, Map<String,Double> paraMap) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
 		mySimulationType = simulationType;
@@ -82,7 +84,7 @@ public class CellManager {
 		myGridSize = new int[2];
 		myGridSize[0] = row;
 		myGridSize[1] = col;
-		myParaList = paraList;
+		myParaMap = paraMap;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (stateArray[i][j] != EMPTY) {
@@ -112,19 +114,19 @@ public class CellManager {
 		Cell current;
 		switch(mySimulationType) {
 			case "GameOfLife":
-				current = new GameofLife(row, col, state, myGridSize, myParaList);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap);
 				break;
 			case "PredatorPrey":
-				current = new PredatorPrey(row, col, state, myGridSize, myParaList);
+				current = new PredatorPrey(row, col, state, myGridSize, myParaMap);
 				break;
 			case "Segregation":
-				current = new Segregation(row, col, state, myGridSize, myParaList);
+				current = new Segregation(row, col, state, myGridSize, myParaMap);
 				break;
 			case "Fire":
-				current = new Fire(row, col, state, myGridSize, myParaList);
+				current = new Fire(row, col, state, myGridSize, myParaMap);
 				break;
 			default:
-				current = new GameofLife(row, col, state, myGridSize, myParaList);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap);
 				break;
 		}
 		return current;
