@@ -32,7 +32,7 @@ public class SimulationLoop {
 
 	private int guiWidth;
 	private int guiHeight;
-	private int fps = 1;
+	private int FRAMES_PER_SECOND = 1;
 	private Stage myStage;
 	private Scene myScene;
 	private boolean shouldRun;
@@ -87,7 +87,7 @@ public class SimulationLoop {
 	 * Initializes and starts the simulation loop.
 	 */
 	public void start() {
-		KeyFrame frame = new KeyFrame(Duration.millis(1000 / fps), e -> step());
+		KeyFrame frame = new KeyFrame(Duration.millis(1000 / FRAMES_PER_SECOND), e -> step());
 		Timeline animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
