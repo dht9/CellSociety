@@ -120,10 +120,10 @@ public class CellManager {
 				current = new PredatorPrey(row, col, state, myGridSize, myParaMap);
 				break;
 			case "Segregation":
-				current = new Segregation(row, col, state, myGridSize, myParaList);
+				current = new Segregation(row, col, state, myGridSize, myParaMap);
 				break;
 			case "Fire":
-				current = new Fire(row, col, state, myGridSize, myParaList);
+				current = new Fire(row, col, state, myGridSize, myParaMap);
 				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaMap);
