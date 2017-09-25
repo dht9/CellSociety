@@ -32,9 +32,7 @@ public class GameofLife extends Cell{
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
-		mynextState = mystate;
-		mynextRow = myrow;
-		mynextCol = mycol;
+		super.updateInfo(neighborlist, emptyPos);
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
 			if (neighbor.state() == LIVE) {
@@ -66,17 +64,6 @@ public class GameofLife extends Cell{
 		}
 	}
 
-	@Override
-	public boolean isNeighbor(Cell other) {
-		return myNeighborCell.isNeighbor(other);
-	}
 
-	@Override
-	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
-		myrow = mynextRow;
-		mycol = mynextCol;
-		mystate = mynextState;
-		
-	}
 
 }

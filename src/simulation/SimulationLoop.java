@@ -89,8 +89,6 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
-		
-		// need to change this
 		double[] paraType = { 5.0, 5.0, 3.0 };
 
 		manager = new CellManager();

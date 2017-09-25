@@ -75,12 +75,20 @@ public abstract class Cell {
 	 * store update info
 	 * @param neighborlist
 	 */
-	public abstract void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos);
+	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
+		mynextState = mystate;
+		mynextRow = myrow;
+		mynextCol = mycol;
+	}
 	
 	/**
 	 * execute the update information on the cell
 	 */
-	public abstract void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos);
+	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
+		myrow = mynextRow;
+		mycol = mynextCol;
+		mystate = mynextState;
+	}
 	
 	/**
 	 * check if certain cell is the neighbor of this cell based on the rules

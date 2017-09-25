@@ -22,7 +22,6 @@ public class PredatorPrey extends Cell{
 	private boolean myIsBreed = false;
 	private boolean myIsDie = false;
 	private boolean myGiveBirth = false;
-	private double[] myparaList;
 
 	/**
 	 * constructor for predatorprey cell
@@ -34,7 +33,6 @@ public class PredatorPrey extends Cell{
 	 */
 	public PredatorPrey(int row, int column, int state, int[] gridSize, double[] paraList) {
 		super(row, column, state, gridSize, paraList);
-		myparaList = paraList;
 		fishBreed = paraList[0];
 		sharkBreed = paraList[1];
 		sharkDie = paraList[2];
@@ -44,9 +42,7 @@ public class PredatorPrey extends Cell{
 
 	@Override
 	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
-		mynextState = mystate;
-		mynextRow = myrow;
-		mynextCol = mycol;
+		super.updateInfo(neighborlist, emptyPos);
 		myDieCount++;
 		if (!myIsBreed) {
 			myBreedCount++;
@@ -62,11 +58,13 @@ public class PredatorPrey extends Cell{
 			emptyPos.add(currentPos);
 		}
 
-		Iterator<int[]> emptyIter = emptyPos.iterator();
-		while(emptyIter.hasNext()) {
-			int[] nextEmpty = emptyIter.next();
-			if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
-				emptyIter.remove();
+		if (!myIsDie) {
+			Iterator<int[]> emptyIter = emptyPos.iterator();
+			while(emptyIter.hasNext()) {
+				int[] nextEmpty = emptyIter.next();
+				if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
+					emptyIter.remove();
+				}
 			}
 		}
 	}
@@ -76,8 +74,8 @@ public class PredatorPrey extends Cell{
 		if (myIsDie) {
 			removeCellList.add(this);
 		}
-		if (myGiveBirth) {
-			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myparaList);
+		else if (myGiveBirth) {
+			Cell baby = new PredatorPrey(myrow, mycol, mystate, mygrid, myParaList);
 			newCellList.add(baby);
 			System.out.println("baby");
 			System.out.println(baby.myrow);
@@ -86,9 +84,7 @@ public class PredatorPrey extends Cell{
 			myGiveBirth = false;
 			myIsBreed = false;
 		}
-		myrow = mynextRow;
-		mycol = mynextCol;
-		mystate = mynextState;
+		super.update(removeCellList, newCellList, emptyPos);
 		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
