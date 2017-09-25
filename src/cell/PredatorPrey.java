@@ -67,11 +67,14 @@ public class PredatorPrey extends Cell{
 				}
 			}
 		}
+		System.out.println("empty");
+		System.out.println(emptyPos.size());
 	}
 	
 	@Override
 	public void update(ArrayList<Cell>removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
 		if (myIsDie) {
+			System.out.println("remove");
 			removeCellList.add(this);
 		}
 		else if (myGiveBirth) {
