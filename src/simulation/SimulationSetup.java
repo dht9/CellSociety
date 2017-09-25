@@ -47,6 +47,7 @@ public class SimulationSetup extends Application {
 	private Button startButton;
 	private Button pauseButton;
 	private Button stepButton;
+	private Button resetButton;
 	private MakeSlider makeSlider;
 	private GridPane startingGrid;
 
@@ -88,9 +89,9 @@ public class SimulationSetup extends Application {
 		Node btnPanel = makeButtonPanel(s, scene);
 
 		root.setBottom(btnPanel);
-		
+
 		root.setMargin(btnPanel, new Insets(50));
-		
+
 		root.setCenter(makeEmptyGrid());
 
 		return scene;
@@ -105,18 +106,19 @@ public class SimulationSetup extends Application {
 	 */
 	private Node makeButtonPanel(Stage s, Scene scene) {
 
-		HBox btnPanel = new HBox(30);
+		HBox btnPanel = new HBox(10);
 
 		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s, scene));
 		startButton = makeButton("PlayCommand", event -> play());
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
+		resetButton = makeButton("ResetCommand", event -> reset(scene));
 
 		makeSlider = new MakeSlider(mySimulationLoop.getTimeline());
 		Slider slider = makeSlider.createSlider(mySimulationLoop.getFPS());
 		mySimulationLoop.setMakeSlider(makeSlider);
 
-		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, slider);
+		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, slider);
 
 		return btnPanel;
 
@@ -183,9 +185,9 @@ public class SimulationSetup extends Application {
 	 * 
 	 */
 	private GridPane makeEmptyGrid() {
-		
+
 		startingGrid = new GridPane();
-		
+
 		for (int i = 0; i < STARTING_ROWS; i++) {
 			for (int j = 0; j < STARTING_COLS; j++) {
 				startingGrid.add(new Rectangle(STARTING_CELL_SIZE, STARTING_CELL_SIZE, Color.WHITE), j, i);
@@ -193,7 +195,7 @@ public class SimulationSetup extends Application {
 		}
 		startingGrid.setGridLinesVisible(true);
 		startingGrid.setAlignment(Pos.CENTER);
-		
+
 		return startingGrid;
 	}
 
@@ -204,7 +206,7 @@ public class SimulationSetup extends Application {
 	 * 
 	 */
 	private void newGrid(Scene scene) {
-		
+
 		VisualizeGrid newGrid = new VisualizeGrid(xmlReader);
 		BorderPane root = (BorderPane) scene.getRoot();
 		root.setCenter(newGrid);
@@ -227,6 +229,15 @@ public class SimulationSetup extends Application {
 		mySimulationLoop.play();
 		mySimulationLoop.step();
 		mySimulationLoop.pause();
+	}
+
+	// reset grid to initial states
+	private void reset(Scene scene) {
+		if (xmlReader != null) {
+			mySimulationLoop.pause();
+			mySimulationLoop.setNewSimulationParameters(xmlReader);
+			newGrid(scene);
+		}
 	}
 
 	public void startSimulation(String[] args) {
