@@ -89,12 +89,10 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
-		double[] paraType = { 5.0, 5.0, 3.0 };
-
+		
 		manager = new CellManager();
-		System.out.println("current");
-		System.out.println(simulationType); 
-		manager.initialize(stateGrid, edgeType, simulationType, paraType);
+		
+		manager.initialize(stateGrid, edgeType, simulationType, parameterMap);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {

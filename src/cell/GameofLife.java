@@ -2,6 +2,7 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Game of Life implementation of Cell superclass
@@ -24,8 +25,8 @@ public class GameofLife extends Cell{
 	 * @param gridSize
 	 * @param paraList
 	 */
-	public GameofLife(int row, int column, int state, int[] gridSize, double[] paraList) {
-		super(row, column, state, gridSize, paraList);
+	public GameofLife(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
+		super(row, column, state, gridSize, paraMap);
 		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
 		myAdjacent = myNeighborCell.adjacentPos();
 	}
