@@ -21,7 +21,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class VisualizeGrid extends GridPane {
 
-	private XMLReader myXML;
 	private final int GRID_SIZE = 550;
 	private int numRows;
 	private int numCols;
@@ -98,6 +97,7 @@ public class VisualizeGrid extends GridPane {
 		return GRID_SIZE / gridArray.length;
 	}
 
+	// assumes square grid
 	public int getSize() {
 		return numRows;
 	}
