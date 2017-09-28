@@ -105,7 +105,7 @@ public class CellManager {
 	 * @param type
 	 * @return cell
 	 */
-	public Cell createCell(int row, int col, int state) {
+	private Cell createCell(int row, int col, int state) {
 		Cell current;
 		switch(mySimulationType) {
 			case "GameOfLife":
