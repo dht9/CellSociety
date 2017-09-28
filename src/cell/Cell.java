@@ -11,17 +11,21 @@ import java.util.Map;
  *
  */
 public abstract class Cell {
-	protected int myrow;
-	protected int mycol;
-	protected int mystate;
-	protected int[] mygrid;
-	protected double[] myParaList;
-	protected Map<String,Double> myParaMap;
-	protected int mynextRow;
-	protected int mynextCol;
-	protected int mynextState;
-	protected NeighborCell myNeighborCell;
-	protected ArrayList<int[]> myAdjacent;
+	private static final String TORUS = "torus";
+	private static final String NORMAL = "normal";
+	
+	private int myrow;
+	private int mycol;
+	private int mystate;
+	private int[] mygrid;
+	private Map<String,Double> myParaMap;
+	private int mynextRow;
+	private int mynextCol;
+	private int mynextState;
+	private NeighborCell myNeighborCell;
+	private ArrayList<int[]> myAdjacent;
+	private int myNeighborType;
+	private boolean myIsTorus;
 	
 	/**
 	 * constructor for cell superclass
@@ -31,12 +35,24 @@ public abstract class Cell {
 	 * @param gridSize is the {row, col} of current grid, used to determine whether on the edge
 	 * @param paraList, the list of parameters for simulation
 	 */
-	public Cell(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
+	public Cell(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType) {
 		myrow = row;
 		mycol = column;
 		mystate = state;
 		mygrid = gridSize;
 		myParaMap = paraMap;
+		myNeighborCell = new NeighborCell(myNeighborType, myIsTorus, this);
+		myAdjacent = myNeighborCell.adjacentPos();
+		switch(edgeType) {
+			case TORUS:
+				myIsTorus = true;
+				break;
+			case NORMAL:
+				myIsTorus = false;
+				break;
+			default:
+				myIsTorus = false;
+		}
 	}
 	
 	/**
@@ -45,6 +61,14 @@ public abstract class Cell {
 	 */
 	public int column() {
 		return mycol;
+	}
+	
+	/**
+	 * access grid size {row, col}
+	 * @return grid size
+	 */
+	public int[] grid() {
+		return mygrid;
 	}
 	
 	/**
@@ -61,6 +85,14 @@ public abstract class Cell {
 	 */
 	public int state() {
 		return mystate;
+	}
+	
+	/**
+	 * access next state
+	 * @return state
+	 */
+	public int nextstate() {
+		return mynextState;
 	}
 	
 	/**
@@ -90,6 +122,7 @@ public abstract class Cell {
 		myrow = mynextRow;
 		mycol = mynextCol;
 		mystate = mynextState;
+		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
 	/**

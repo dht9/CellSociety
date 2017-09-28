@@ -53,7 +53,6 @@ public class Segregation extends Cell{
 	@Override
 	public void update(ArrayList<Cell>removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
 		super.update(removeCellList, newCellList, emptyPos);
-		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
 	private int[] randomMove(ArrayList<int[]> emptyPos) {
