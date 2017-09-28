@@ -41,11 +41,11 @@ public class PredatorPrey extends Cell {
 		super(row, column, state, gridSize, paraMap);
 
 		for (String key : paraMap.keySet()) {
-			if (key.equalsIgnoreCase(myResources.getString("FishBreedTime")))
+			if (key.equalsIgnoreCase("fishBreedTime"))
 				fishBreed = paraMap.get(key);
-			else if (key.equalsIgnoreCase(myResources.getString("SharkBreedTime")))
+			else if (key.equalsIgnoreCase("sharkBreedTime")) 
 				sharkBreed = paraMap.get(key);
-			else if (key.equalsIgnoreCase(myResources.getString("SharkDieTime")))
+			else if (key.equalsIgnoreCase("sharkDieTime"))
 				sharkDie = paraMap.get(key);
 		}
 		myNeighborCell = new NeighborCell(FOURADJACENT, true, this);
