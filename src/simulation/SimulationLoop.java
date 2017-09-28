@@ -54,7 +54,7 @@ public class SimulationLoop {
 	private CellManager manager;
 
 	/**
-	 * Constructor, give simulation loop a scene
+	 * Constructor, initializes and starts the simulation loop.
 	 */
 	public SimulationLoop() {
 		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
@@ -102,13 +102,6 @@ public class SimulationLoop {
 	/**
 	 * Initializes and starts the simulation loop.
 	 */
-	public void start() {
-		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
-		animation = new Timeline();
-		animation.setCycleCount(Timeline.INDEFINITE);
-		animation.getKeyFrames().add(frame);
-		animation.play();
-	}
 
 	public Timeline getTimeline() {
 		return animation;

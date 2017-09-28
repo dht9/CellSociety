@@ -2,16 +2,24 @@ package cell;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import simulation.SimulationLoop;
 
 public class CellManager {
-	private static final int EMPTY = -1;
 	
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
+	
+	private static final int EMPTY = -1;
 	private ArrayList<Cell> myCellList;
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private Map<String,Double> myParaMap;
 	private ArrayList<int[]> myEmptyPos;
+	
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -121,10 +129,22 @@ public class CellManager {
 				current = new Fire(row, col, state, myGridSize, myParaMap);
 				break;
 			default:
-				current = new GameofLife(row, col, state, myGridSize, myParaMap);
+				current = new Fire(row, col, state, myGridSize, myParaMap);
+				// showError();
 				break;
 		}
 		return current;
+	}
+	
+	
+	/*
+	 * Display error message.
+	 */
+	private void showError() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setContentText(myResources.getString("ErrorSimulationType"));
+		alert.showAndWait();
 	}
 
 }
