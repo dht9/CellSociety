@@ -54,7 +54,7 @@ public class SimulationLoop {
 	private CellManager manager;
 
 	/**
-	 * Constructor, give simulation loop a scene
+	 * Constructor, initializes and starts the simulation loop.
 	 */
 	public SimulationLoop() {
 		setNewTimeline();
