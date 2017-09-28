@@ -3,7 +3,7 @@
 **Since we didn't have a lot of refactoring that need to be discussed (changing from arraylist to list and extracting into new method), we spent our time mostly on planing ahead for the complete implmenetation**
 
 ------
-Ryan Chung:
+Ryan Chung & David Tran:
 
 Refactoring:
 
