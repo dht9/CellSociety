@@ -1,7 +1,6 @@
 package cell;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,8 +10,8 @@ import java.util.Map;
  *
  */
 public abstract class Cell {
-	private static final String TORUS = "torus";
-	private static final String NORMAL = "normal";
+	private static final String TORUS = "toroidal";
+	private static final String NORMAL = "straight";
 	
 	private int myrow;
 	private int mycol;
@@ -23,9 +22,10 @@ public abstract class Cell {
 	private int mynextCol;
 	private int mynextState;
 	private NeighborCell myNeighborCell;
-	private ArrayList<int[]> myAdjacent;
-	private int myNeighborType;
+	private List<int[]> myAdjacent;
+	private int myNeighborType = 4;
 	private boolean myIsTorus;
+	private String myEdgeType;
 	
 	/**
 	 * constructor for cell superclass
@@ -40,19 +40,20 @@ public abstract class Cell {
 		mycol = column;
 		mystate = state;
 		mygrid = gridSize;
+		myEdgeType = edgeType;
 		myParaMap = paraMap;
+		switch(myEdgeType) {
+		case TORUS:
+			myIsTorus = true;
+			break;
+		case NORMAL:
+			myIsTorus = false;
+			break;
+		default:
+			myIsTorus = false;
+	}
 		myNeighborCell = new NeighborCell(myNeighborType, myIsTorus, this);
 		myAdjacent = myNeighborCell.adjacentPos();
-		switch(edgeType) {
-			case TORUS:
-				myIsTorus = true;
-				break;
-			case NORMAL:
-				myIsTorus = false;
-				break;
-			default:
-				myIsTorus = false;
-		}
 	}
 	
 	/**
@@ -80,6 +81,14 @@ public abstract class Cell {
 	}
 	
 	/**
+	 * access paraMap
+	 * @return paraMap
+	 */
+	public Map<String, Double> paraMap() {
+		return myParaMap;
+	}
+	
+	/**
 	 * access state
 	 * @return state
 	 */
@@ -89,10 +98,58 @@ public abstract class Cell {
 	
 	/**
 	 * access next state
-	 * @return state
+	 * @return next state
 	 */
 	public int nextstate() {
 		return mynextState;
+	}
+	
+	/**
+	 * access next row
+	 * @return next row
+	 */
+	public int nextrow() {
+		return mynextRow;
+	}
+	
+	/**
+	 * set next col
+	 * @param col
+	 */
+	protected void setNextCol(int col) {
+		mynextCol = col;
+	}
+	
+	/**
+	 * set next state
+	 * @param state
+	 */
+	protected void setNextState(int state) {
+		mynextState = state;
+	}
+	
+	/**
+	 * set next row
+	 * @param row
+	 */
+	protected void setNextRow(int row) {
+		mynextRow = row;
+	}
+	
+	/**
+	 * access next column
+	 * @return next column
+	 */
+	public int nextcol() {
+		return mynextCol;
+	}
+	
+	/**
+	 * access edge type
+	 * @return edge type
+	 */
+	public String edgeType() {
+		return myEdgeType;
 	}
 	
 	/**
@@ -109,7 +166,7 @@ public abstract class Cell {
 	 * store update info
 	 * @param neighborlist
 	 */
-	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
+	public void updateInfo(List<Cell> neighborlist, List<int[]> emptyPos) {
 		mynextState = mystate;
 		mynextRow = myrow;
 		mynextCol = mycol;
@@ -118,7 +175,7 @@ public abstract class Cell {
 	/**
 	 * execute the update information on the cell
 	 */
-	public void update(ArrayList<Cell> removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
+	public void update(List<Cell> removeCellList, List<Cell> newCellList, List<int[]> emptyPos) {
 		myrow = mynextRow;
 		mycol = mynextCol;
 		mystate = mynextState;
@@ -141,7 +198,7 @@ public abstract class Cell {
 	 * @param neighborlist
 	 * @return list of empty adjacent position
 	 */
-	protected ArrayList<int[]> emptyNeighbor (ArrayList<Cell> neighborlist) {
+	protected List<int[]> emptyNeighbor (List<Cell> neighborlist) {
 		return myNeighborCell.emptyNeighbor(neighborlist);
 	}
 	
@@ -150,7 +207,7 @@ public abstract class Cell {
 	 * 
 	 * @return adjacent position list
 	 */
-	public ArrayList<int[]> adjacent() {
+	public List<int[]> adjacent() {
 		return myAdjacent;
 	}
 

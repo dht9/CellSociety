@@ -1,17 +1,18 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CellManager {
 	private static final int EMPTY = -1;
 	
-	private ArrayList<Cell> myCellList;
+	private List<Cell> myCellList;
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private Map<String,Double> myParaMap;
-	private ArrayList<int[]> myEmptyPos;
+	private List<int[]> myEmptyPos;
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -26,7 +27,7 @@ public class CellManager {
 	 * 
 	 * @return arraylist of of all current cells
 	 */
-	public ArrayList<Cell> cellList() {
+	public List<Cell> cellList() {
 		return myCellList;
 	}
 
@@ -36,8 +37,8 @@ public class CellManager {
 	 * @param current
 	 * @return arraylist of neighbor cell
 	 */
-	private ArrayList<Cell> getNeighborList(Cell current) {
-		ArrayList<Cell> neighborList = new ArrayList<Cell>();
+	private List<Cell> getNeighborList(Cell current) {
+		List<Cell> neighborList = new ArrayList<Cell>();
 		for (Cell other: myCellList) {
 			if (current.isNeighbor(other)) {
 				neighborList.add(other);
@@ -50,8 +51,8 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-		ArrayList<Cell> newCellList = new ArrayList<Cell>();
-		ArrayList<Cell> removeCellList = new ArrayList<Cell>();
+		List<Cell> newCellList = new ArrayList<Cell>();
+		List<Cell> removeCellList = new ArrayList<Cell>();
 		for (Cell current : myCellList) {
 			current.updateInfo(getNeighborList(current), myEmptyPos);
 		}
@@ -109,19 +110,19 @@ public class CellManager {
 		Cell current;
 		switch(mySimulationType) {
 			case "GameOfLife":
-				current = new GameofLife(row, col, state, myGridSize, myParaMap);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			case "PredatorPrey":
-				current = new PredatorPrey(row, col, state, myGridSize, myParaMap);
+				current = new PredatorPrey(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			case "Segregation":
-				current = new Segregation(row, col, state, myGridSize, myParaMap);
+				current = new Segregation(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			case "Fire":
-				current = new Fire(row, col, state, myGridSize, myParaMap);
+				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			default:
-				current = new GameofLife(row, col, state, myGridSize, myParaMap);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 		}
 		return current;
