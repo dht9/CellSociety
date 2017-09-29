@@ -34,22 +34,24 @@ import visualization.VisualizeGrid;
  */
 public class SimulationSetup extends Application {
 
-	private final int STARTING_ROWS = 10;
-	private final int STARTING_COLS = 10;
-	private final int STARTING_CELL_SIZE = 55;
+	private static final int STARTING_ROWS = 10;
+	private static final int STARTING_COLS = 10;
+	private static final int STARTING_CELL_SIZE = 55;
+	private static final int guiSize = 700;
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
-	private final int guiSize = 700;
+
 	private SimulationLoop mySimulationLoop;
 	private XMLReader xmlReader;
+	private MakeSlider makeSlider;
+	private GridPane startingGrid;
 
 	private Button chooseXMLButton;
 	private Button startButton;
 	private Button pauseButton;
 	private Button stepButton;
 	private Button resetButton;
-	private MakeSlider makeSlider;
-	private GridPane startingGrid;
+
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
@@ -83,15 +85,11 @@ public class SimulationSetup extends Application {
 	public Scene setupScene(Stage s, int guiWidth, int guiHeight) {
 
 		BorderPane root = new BorderPane();
-
 		Scene scene = new Scene(root, guiWidth, guiHeight);
-
 		Node btnPanel = makeButtonPanel(s, scene);
-
+		
 		root.setBottom(btnPanel);
-
 		root.setMargin(btnPanel, new Insets(50));
-
 		root.setCenter(makeEmptyGrid());
 
 		return scene;

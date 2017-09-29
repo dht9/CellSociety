@@ -15,13 +15,6 @@ public class MakeSlider {
 		animation = timeline;
 	}
 	
-//	public Node initialize() {
-//		Pane pane = new Pane();
-//		mySlider = createSlider();
-//		pane.getChildren().add(mySlider);
-//		return pane;
-//	}
-	
 	public Slider createSlider(int maxFPS) {
 		mySlider = new Slider(1,maxFPS,1);
 		mySlider.setShowTickMarks(true);
