@@ -1,6 +1,6 @@
 package simulation;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import cell.Cell;
@@ -8,15 +8,7 @@ import cell.CellManager;
 import config.XMLReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.Animation;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -122,7 +114,7 @@ public class SimulationLoop {
 		if (shouldRun && xmlReader != null) {
 			// set index widths/height for grid
 
-			 ArrayList<Cell> cellList = manager.cellList();
+			 List<Cell> cellList = manager.cellList();
 			 manager.update(); // DOES NOT UPDATE CORRECTLY
 			 for (int i = 0; i < myGrid.getSize(); i++) {
 				 for (int j = 0; j < myGrid.getSize(); j++) {
