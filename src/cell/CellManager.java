@@ -18,6 +18,7 @@ public class CellManager {
 
 	private String mySimulationType;
 	private String myEdgeType;
+	private int myNeighborType;
 	private int[] myGridSize = new int[2];
 	private Map<String,Double> myParaMap;
 
@@ -82,7 +83,7 @@ public class CellManager {
 	 * @param type
 	 * @param paraList
 	 */
-	public void initialize(int[][] stateArray, String edgeType, String simulationType, Map<String,Double> paraMap) {
+	public void initialize(int[][] stateArray, String edgeType, String simulationType, Map<String,Double> paraMap, int neighborType) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
 		mySimulationType = simulationType;
@@ -91,6 +92,7 @@ public class CellManager {
 		myGridSize[0] = row;
 		myGridSize[1] = col;
 		myParaMap = paraMap;
+		myNeighborType = neighborType;
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (stateArray[i][j] != EMPTY) {
@@ -120,19 +122,19 @@ public class CellManager {
 		Cell current;
 		switch(mySimulationType) {
 			case "GameOfLife":
-				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				break;
 			case "PredatorPrey":
-				current = new PredatorPrey(row, col, state, myGridSize, myParaMap, myEdgeType);
+				current = new PredatorPrey(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				break;
 			case "Segregation":
-				current = new Segregation(row, col, state, myGridSize, myParaMap, myEdgeType);
+				current = new Segregation(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				break;
 			case "Fire":
-				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType);
+				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				break;
 			default:
-				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				//showError();
 				break;
 		}

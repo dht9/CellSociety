@@ -12,8 +12,8 @@ public class Fire extends Cell{
 	private boolean myIsEmpty = false;
 	private boolean myIsProbBurn = false;
 
-	public Fire(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType) {
-		super(row, column, state, gridSize, paraMap, edgeType);
+	public Fire(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 		for (String key : paraMap.keySet()) {
 			if (key.equalsIgnoreCase("probCatch"))
 				myProbCatch = paraMap.get(key);

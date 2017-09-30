@@ -24,8 +24,8 @@ public class GameofLife extends Cell{
 	 * @param gridSize
 	 * @param paraList
 	 */
-	public GameofLife(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType) {
-		super(row, column, state, gridSize, paraMap, edgeType);
+	public GameofLife(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 	}
 
 	@Override

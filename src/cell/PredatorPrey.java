@@ -37,8 +37,8 @@ public class PredatorPrey extends Cell {
 	 * @param paraList:
 	 *            {fishBreed, sharkBreed, sharkDie}
 	 */
-	public PredatorPrey(int row, int column, int state, int[] gridSize, Map<String, Double> paraMap, String edgeType) {
-		super(row, column, state, gridSize, paraMap, edgeType);
+	public PredatorPrey(int row, int column, int state, int[] gridSize, Map<String, Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 
 		for (String key : paraMap.keySet()) {
 			if (key.equalsIgnoreCase("fishBreedTime"))
@@ -89,7 +89,7 @@ public class PredatorPrey extends Cell {
 			}
 		}
 		else if (myGiveBirth) {
-			Cell baby = new PredatorPrey(this.row(), this.column(), this.state(), this.grid(), this.paraMap(), this.edgeType());
+			Cell baby = new PredatorPrey(this.row(), this.column(), this.state(), this.grid(), this.paraMap(), this.edgeType(), this.neighborType());
 			newCellList.add(baby);
 			myBreedCount = 0;
 			myGiveBirth = false;
