@@ -11,24 +11,19 @@ import simulation.SimulationLoop;
 
 public class CellManager {
 	
-<<<<<<< HEAD
+
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
 	
 	private static final int EMPTY = -1;
-	private ArrayList<Cell> myCellList;
-=======
 	private List<Cell> myCellList;
->>>>>>> Integration
+
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private Map<String,Double> myParaMap;
-<<<<<<< HEAD
-	private ArrayList<int[]> myEmptyPos;
-	
-=======
+
 	private List<int[]> myEmptyPos;
->>>>>>> Integration
+
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -138,12 +133,8 @@ public class CellManager {
 				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			default:
-<<<<<<< HEAD
-				current = new Fire(row, col, state, myGridSize, myParaMap);
-				// showError();
-=======
 				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
->>>>>>> Integration
+				//showError();
 				break;
 		}
 		return current;
@@ -151,7 +142,7 @@ public class CellManager {
 	
 	
 	/*
-	 * Display error message.
+	 * Display error message. Does not work yet.
 	 */
 	private void showError() {
 		Alert alert = new Alert(AlertType.ERROR);
