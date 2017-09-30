@@ -1,6 +1,7 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -10,16 +11,24 @@ import simulation.SimulationLoop;
 
 public class CellManager {
 	
+<<<<<<< HEAD
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
 	
 	private static final int EMPTY = -1;
 	private ArrayList<Cell> myCellList;
+=======
+	private List<Cell> myCellList;
+>>>>>>> Integration
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private Map<String,Double> myParaMap;
+<<<<<<< HEAD
 	private ArrayList<int[]> myEmptyPos;
 	
+=======
+	private List<int[]> myEmptyPos;
+>>>>>>> Integration
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -34,7 +43,7 @@ public class CellManager {
 	 * 
 	 * @return arraylist of of all current cells
 	 */
-	public ArrayList<Cell> cellList() {
+	public List<Cell> cellList() {
 		return myCellList;
 	}
 
@@ -44,8 +53,8 @@ public class CellManager {
 	 * @param current
 	 * @return arraylist of neighbor cell
 	 */
-	private ArrayList<Cell> getNeighborList(Cell current) {
-		ArrayList<Cell> neighborList = new ArrayList<Cell>();
+	private List<Cell> getNeighborList(Cell current) {
+		List<Cell> neighborList = new ArrayList<Cell>();
 		for (Cell other: myCellList) {
 			if (current.isNeighbor(other)) {
 				neighborList.add(other);
@@ -58,8 +67,8 @@ public class CellManager {
 	 * update every cell created and stored in myCellList
 	 */
 	public void update() {
-		ArrayList<Cell> newCellList = new ArrayList<Cell>();
-		ArrayList<Cell> removeCellList = new ArrayList<Cell>();
+		List<Cell> newCellList = new ArrayList<Cell>();
+		List<Cell> removeCellList = new ArrayList<Cell>();
 		for (Cell current : myCellList) {
 			current.updateInfo(getNeighborList(current), myEmptyPos);
 		}
@@ -117,20 +126,24 @@ public class CellManager {
 		Cell current;
 		switch(mySimulationType) {
 			case "GameOfLife":
-				current = new GameofLife(row, col, state, myGridSize, myParaMap);
+				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			case "PredatorPrey":
-				current = new PredatorPrey(row, col, state, myGridSize, myParaMap);
+				current = new PredatorPrey(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			case "Segregation":
-				current = new Segregation(row, col, state, myGridSize, myParaMap);
+				current = new Segregation(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			case "Fire":
-				current = new Fire(row, col, state, myGridSize, myParaMap);
+				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType);
 				break;
 			default:
+<<<<<<< HEAD
 				current = new Fire(row, col, state, myGridSize, myParaMap);
 				// showError();
+=======
+				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
+>>>>>>> Integration
 				break;
 		}
 		return current;
