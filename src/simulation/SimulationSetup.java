@@ -62,11 +62,8 @@ public class SimulationSetup extends Application {
 		mySimulationLoop = new SimulationLoop();
 
 		Scene scene = setupScene(s, guiSize, guiSize);
-
 		s.setTitle("Cell Society");
-
 		s.setScene(scene);
-
 		s.show();
 
 		mySimulationLoop.setGUI(s, scene, guiSize, guiSize);
@@ -104,18 +101,17 @@ public class SimulationSetup extends Application {
 	 */
 	private Node makeButtonPanel(Stage s, Scene scene) {
 
-		HBox btnPanel = new HBox(10);
-
 		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s, scene));
 		startButton = makeButton("PlayCommand", event -> play());
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
 		resetButton = makeButton("ResetCommand", event -> reset(scene));
 
-		makeSlider = new MakeSlider(mySimulationLoop.getTimeline());
-		Slider slider = makeSlider.createSlider(mySimulationLoop.getFPS());
+		makeSlider = new MakeSlider(mySimulationLoop.getFPS());
+		Slider slider = makeSlider.getSlider();
 		mySimulationLoop.setMakeSlider(makeSlider);
 
+		HBox btnPanel = new HBox(10);
 		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, slider);
 
 		return btnPanel;
@@ -169,10 +165,7 @@ public class SimulationSetup extends Application {
 		if (file != null) {
 
 			xmlReader = new XMLReader(file);
-
-			// initializes cell manager
 			mySimulationLoop.setNewSimulationParameters(xmlReader);
-
 			newGrid(scene);
 		}
 

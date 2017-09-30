@@ -25,7 +25,7 @@
 	<grid>
 		<row stateNum = "0,0,0,0,0,0,0,0,0,0"></row>
 		<row stateNum = "0,0,1,1,0,0,1,0,0,0"></row>
-		<row stateNum = "0,0,1,0,0,0,1,1,0,0"></row>
+		<row stateNum = "0,0,1,0,0,0,0,1,0,0"></row>
 		<row stateNum = "0,0,0,0,0,0,0,0,0,0"></row>
 		<row stateNum = "1,0,0,0,1,1,1,0,0,0"></row>
 		<row stateNum = "0,0,0,0,1,1,1,0,0,0"></row>

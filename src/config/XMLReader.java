@@ -44,6 +44,7 @@ public class XMLReader {
 	private int[][] stateGrid;
 	private int numRows;
 	private int numCols;
+	private int neighborType;
 
 	/**
 	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType;
@@ -64,6 +65,9 @@ public class XMLReader {
 		edgeType = setEdgeType();
 		System.out.println("Edge Type: " + edgeType);
 
+		neighborType = setNeighborType();
+		System.out.println("Neighbor Type: " + neighborType);
+		
 		colorMap = createColorMap();
 		for (Map.Entry<Integer, Color> e : colorMap.entrySet()) {
 			System.out.println(e.getKey() + ":" + e.getValue());
@@ -131,6 +135,17 @@ public class XMLReader {
 		Element element = (Element) nList.item(0);
 
 		return element.getAttribute("type");
+	}
+	
+	/**
+	 * Retrieve the neighbor type.
+	 */
+	public int setNeighborType() {
+
+		NodeList nList = doc.getElementsByTagName("neighbor");
+		Element element = (Element) nList.item(0);
+		
+		return Integer.parseInt(element.getAttribute("type"));
 	}
 
 	/**

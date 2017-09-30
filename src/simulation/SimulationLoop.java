@@ -25,23 +25,28 @@ import visualization.VisualizeGrid;
  */
 public class SimulationLoop {
 
+	private static final int MAX_FRAMES_PER_SECOND = 30;
+	
 	private int guiWidth;
 	private int guiHeight;
-	private int MAX_FRAMES_PER_SECOND = 30;
 	private Stage myStage;
 	private Scene myScene;
+	private Timeline animation;
+	private KeyFrame frame;
 	private boolean shouldRun;
+	private MakeSlider myMakeSlider;
+	
 	private XMLReader xmlReader;
-	private VisualizeGrid myGrid;
+	private String simulationType;
+	private String edgeType;
+	private int neighborType;
+	
 	private Map<Integer, Color> colorMap;
 	private Map<Integer, String> stateNameMap;
 	private Map<String, Double> parameterMap;
+	
 	private int[][] stateGrid;
-	private String simulationType;
-	private String edgeType;
-	private Timeline animation;
-	private KeyFrame frame;
-	private MakeSlider myMakeSlider;
+	private VisualizeGrid myGrid;
 
 	private CellManager manager;
 
@@ -64,8 +69,8 @@ public class SimulationLoop {
 		shouldRun = false;
 	}
 
-	public void setMakeSlider(MakeSlider m) {
-		myMakeSlider = m;
+	public void setMakeSlider(MakeSlider mSlider) {
+		myMakeSlider = mSlider;
 	}
 
 	/**
@@ -81,9 +86,11 @@ public class SimulationLoop {
 		stateGrid = xmlReaderInput.createStateGrid();
 		edgeType = xmlReaderInput.setEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
+		neighborType = xmlReaderInput.setNeighborType();
 		
 		manager = new CellManager();
 		
+		//need to add neighborType in constructor?
 		manager.initialize(stateGrid, edgeType, simulationType, parameterMap);
 	}
 
@@ -91,13 +98,6 @@ public class SimulationLoop {
 		myGrid = grid;
 	}
 
-	/**
-	 * Initializes and starts the simulation loop.
-	 */
-
-	public Timeline getTimeline() {
-		return animation;
-	}
 
 	/**
 	 * Primary loop for running each frame of the simulation.
@@ -105,30 +105,30 @@ public class SimulationLoop {
 	public void step() {
 
 		if (shouldRun && xmlReader != null) {
-			// set index widths/height for grid
-
-			 List<Cell> cellList = manager.cellList();
-			 manager.update(); // DOES NOT UPDATE CORRECTLY
+			
+			 manager.update();
+			 
+			 // update all rectangles to empty color
 			 for (int i = 0; i < myGrid.getSize(); i++) {
 				 for (int j = 0; j < myGrid.getSize(); j++) {
 					 colorRectangle(i, j, colorMap.get(-1));
 				 }
 			 }
+			 
+			 // update appropriate rectangles to non-empty color
+			 List<Cell> cellList = manager.cellList();
 			 for (Cell cell: cellList) {
 				 
 				 int row = cell.row();
 				 int col = cell.column();
 				 int state = cell.state();
-				
 				 Color color = colorMap.get(state);
 				 
-				
 				 colorRectangle(row, col, color);
 			 }
 		
 		}
-		
-		myMakeSlider.changeSpeed(MAX_FRAMES_PER_SECOND);
+		animation.setRate( myMakeSlider.getValue() / MAX_FRAMES_PER_SECOND);
 	}
 
 
