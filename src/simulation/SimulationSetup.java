@@ -34,22 +34,24 @@ import visualization.VisualizeGrid;
  */
 public class SimulationSetup extends Application {
 
-	private final int STARTING_ROWS = 10;
-	private final int STARTING_COLS = 10;
-	private final int STARTING_CELL_SIZE = 55;
+	private static final int STARTING_ROWS = 10;
+	private static final int STARTING_COLS = 10;
+	private static final int STARTING_CELL_SIZE = 55;
+	private static final int guiSize = 700;
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
-	private final int guiSize = 700;
+
 	private SimulationLoop mySimulationLoop;
 	private XMLReader xmlReader;
+	private MakeSlider makeSlider;
+	private GridPane startingGrid;
 
 	private Button chooseXMLButton;
 	private Button startButton;
 	private Button pauseButton;
 	private Button stepButton;
 	private Button resetButton;
-	private MakeSlider makeSlider;
-	private GridPane startingGrid;
+
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
@@ -60,11 +62,8 @@ public class SimulationSetup extends Application {
 		mySimulationLoop = new SimulationLoop();
 
 		Scene scene = setupScene(s, guiSize, guiSize);
-
 		s.setTitle("Cell Society");
-
 		s.setScene(scene);
-
 		s.show();
 
 		mySimulationLoop.setGUI(s, scene, guiSize, guiSize);
@@ -83,15 +82,11 @@ public class SimulationSetup extends Application {
 	public Scene setupScene(Stage s, int guiWidth, int guiHeight) {
 
 		BorderPane root = new BorderPane();
-
 		Scene scene = new Scene(root, guiWidth, guiHeight);
-
 		Node btnPanel = makeButtonPanel(s, scene);
-
+		
 		root.setBottom(btnPanel);
-
 		root.setMargin(btnPanel, new Insets(50));
-
 		root.setCenter(makeEmptyGrid());
 
 		return scene;
@@ -106,18 +101,17 @@ public class SimulationSetup extends Application {
 	 */
 	private Node makeButtonPanel(Stage s, Scene scene) {
 
-		HBox btnPanel = new HBox(10);
-
 		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s, scene));
 		startButton = makeButton("PlayCommand", event -> play());
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
 		resetButton = makeButton("ResetCommand", event -> reset(scene));
 
-		makeSlider = new MakeSlider(mySimulationLoop.getTimeline());
-		Slider slider = makeSlider.createSlider(mySimulationLoop.getFPS());
+		makeSlider = new MakeSlider(mySimulationLoop.getFPS());
+		Slider slider = makeSlider.getSlider();
 		mySimulationLoop.setMakeSlider(makeSlider);
 
+		HBox btnPanel = new HBox(10);
 		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, slider);
 
 		return btnPanel;
@@ -162,7 +156,7 @@ public class SimulationSetup extends Application {
 		mySimulationLoop.pause();
 
 		FileChooser fileChooser = new FileChooser();
-		String currentPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/src/resources";
+		String currentPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/data";
 		fileChooser.setInitialDirectory(new File(currentPath));
 		FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter("(*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extentionFilter);
@@ -171,10 +165,7 @@ public class SimulationSetup extends Application {
 		if (file != null) {
 
 			xmlReader = new XMLReader(file);
-
-			// initializes cell manager
 			mySimulationLoop.setNewSimulationParameters(xmlReader);
-
 			newGrid(scene);
 		}
 

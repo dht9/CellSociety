@@ -3,16 +3,26 @@ package cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class CellManager {
-	private static final int EMPTY = -1;
 	
+
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
+	
+	private static final int EMPTY = -1;
 	private List<Cell> myCellList;
+
 	private String mySimulationType;
 	private String myEdgeType;
 	private int[] myGridSize = new int[2];
 	private Map<String,Double> myParaMap;
+
 	private List<int[]> myEmptyPos;
+
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -106,7 +116,7 @@ public class CellManager {
 	 * @param type
 	 * @return cell
 	 */
-	public Cell createCell(int row, int col, int state) {
+	private Cell createCell(int row, int col, int state) {
 		Cell current;
 		switch(mySimulationType) {
 			case "GameOfLife":
@@ -123,9 +133,21 @@ public class CellManager {
 				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType);
+				//showError();
 				break;
 		}
 		return current;
+	}
+	
+	
+	/*
+	 * Display error message. Does not work yet.
+	 */
+	private void showError() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setContentText(myResources.getString("ErrorSimulationType"));
+		alert.showAndWait();
 	}
 
 }

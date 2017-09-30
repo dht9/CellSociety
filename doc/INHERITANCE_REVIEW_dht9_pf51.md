@@ -1,7 +1,7 @@
 # Inheritance Review Questions
 
 #### Discussion Participants:
-  * David Tran [dht9], Paulo Flecha [pf51], Estelle He [wh103], Ryan Chung [tc140]
+  * David Tran [dht9], Paulo Flecha [pf51]
 
 ## Part 1
 
@@ -22,7 +22,3 @@
 1. Using button to reset the simulation to initial states, storing undefined number of parameters from XML to be used by cell, defining possible states in xml, parsing a grid of varying size, parsing a map of color corresponding to state.
 2. Setting up the simulation to wait for user input and parse the XML file.
 3. Making sure that the parameters and parsing is accurate and flexible for all simulation types.
-
-1. slider to change speed of animation, changing color of cell, button to start/pause/step, putting initial states on grid, XML file loader.
-2. creating slider to change speed of animation.
-3. changing color of cell. 
