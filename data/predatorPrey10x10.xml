@@ -3,15 +3,15 @@
 <simulation type = "PredatorPrey">
 
 	<colors>
-		<colormap cellState = "-1" color = "BLUE"></colormap>
-		<colormap cellState = "0" color = "ORANGE"></colormap>
-		<colormap cellState = "1" color = "GRAY"></colormap>
+		<colormap stateNum = "-1" color = "BLUE"></colormap>
+		<colormap stateNum = "0" color = "ORANGE"></colormap>
+		<colormap stateNum = "1" color = "GRAY"></colormap>
 	</colors>
 	
 	<states>
-		<statemap cellState = "-1" name = "EMPTY"></statemap>
-		<statemap cellState = "0" name = "FISH"></statemap>
-		<statemap cellState = "1" name = "SHARK"></statemap>
+		<statemap stateNum = "-1" name = "EMPTY"></statemap>
+		<statemap stateNum = "0" name = "FISH"></statemap>
+		<statemap stateNum = "1" name = "SHARK"></statemap>
 	</states>
 	
 	<parameters>
@@ -24,18 +24,22 @@
 	<edges>
 		<edge type = "toroidal"></edge>
 	</edges>
+	
+	<neighbors>
+		<neighbor type = "8"></neighbor>
+	</neighbors>
 
 	<grid>
-		<row cellStates = "-1, 0,-1, 0,-1, 0,-1, 0,-1,-1"></row>
-		<row cellStates = " 0,-1, 1,-1,-1, 1, 0, 1,-1,-1"></row>
-		<row cellStates = " 0,-1,-1, 0,-1,-1,-1, 0, 0,-1"></row>
-		<row cellStates = "-1, 0, 0,-1,-1,-1,-1, 1,-1, 1"></row>
-		<row cellStates = "-1, 0,-1,-1,-1, 0, 0, 0, 0,-1"></row>
-		<row cellStates = " 0, 0,-1, 0,-1,-1,-1, 0,-1,-1"></row>
-		<row cellStates = "-1,-1,-1,-1, 1, 0, 0, 0,-1,-1"></row>
-		<row cellStates = " 0,-1,-1, 0,-1, 0, 1,-1, 0, 0"></row>
-		<row cellStates = "-1, 0, 1,-1,-1, 1,-1, 1,-1,-1"></row>
-		<row cellStates = " 0,-1, 0,-1, 0, 0,-1, 0, 0,-1"></row>
+		<row stateNum = "-1, 0,-1, 0,-1, 0,-1, 0,-1,-1"></row>
+		<row stateNum = " 0,-1, 1,-1,-1, 1, 0, 1,-1,-1"></row>
+		<row stateNum = " 0,-1,-1, 0,-1,-1,-1, 0, 0,-1"></row>
+		<row stateNum = "-1, 0, 0,-1,-1,-1,-1, 1,-1, 1"></row>
+		<row stateNum = "-1, 0,-1,-1,-1, 0, 0, 0, 0,-1"></row>
+		<row stateNum = " 0, 0,-1, 0,-1,-1,-1, 0,-1,-1"></row>
+		<row stateNum = "-1,-1,-1,-1, 1, 0, 0, 0,-1,-1"></row>
+		<row stateNum = " 0,-1,-1, 0,-1, 0, 1,-1, 0, 0"></row>
+		<row stateNum = "-1, 0, 1,-1,-1, 1,-1, 1,-1,-1"></row>
+		<row stateNum = " 0,-1, 0,-1, 0, 0,-1, 0, 0,-1"></row>
 	</grid>
 	
 </simulation>

@@ -160,7 +160,7 @@ public class SimulationSetup extends Application {
 		mySimulationLoop.pause();
 
 		FileChooser fileChooser = new FileChooser();
-		String currentPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/src/resources";
+		String currentPath = Paths.get(".").toAbsolutePath().normalize().toString() + "/data";
 		fileChooser.setInitialDirectory(new File(currentPath));
 		FileChooser.ExtensionFilter extentionFilter = new FileChooser.ExtensionFilter("(*.xml)", "*.xml");
 		fileChooser.getExtensionFilters().add(extentionFilter);

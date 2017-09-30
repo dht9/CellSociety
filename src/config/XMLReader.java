@@ -92,13 +92,14 @@ public class XMLReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 			showError(e.getMessage());
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			showError(e.getMessage());
+		} catch (SAXException e) {
+			e.printStackTrace();
+			showError(e.getMessage());
 		}
+
 	}
 
 	private void showError(String message) {
@@ -137,17 +138,21 @@ public class XMLReader {
 	 */
 	public Map<Integer, Color> createColorMap() {
 
-		colorMap = new HashMap<Integer, Color>();
-		NodeList nList = doc.getElementsByTagName("colormap");
+		try {
+			colorMap = new HashMap<Integer, Color>();
+			NodeList nList = doc.getElementsByTagName("colormap");
 
-		for (int i = 0; i < nList.getLength(); i++) {
+			for (int i = 0; i < nList.getLength(); i++) {
 
-			Node nNode = nList.item(i);
-			Element eElement = (Element) nNode;
+				Node nNode = nList.item(i);
+				Element eElement = (Element) nNode;
 
-			Integer state = Integer.parseInt(eElement.getAttribute("cellState"));
-			Color color = Color.valueOf(eElement.getAttribute("color"));
-			colorMap.put(state, color);
+				Integer state = Integer.parseInt(eElement.getAttribute("stateNum"));
+				Color color = Color.valueOf(eElement.getAttribute("color"));
+				colorMap.put(state, color);
+			}
+		} catch (NumberFormatException e) {
+			showError(e.getMessage() + "; the string does not contain a parsable integer for tag 'stateNum'");
 		}
 
 		// System.out.println("Colormap: " + colorMap);
@@ -160,18 +165,21 @@ public class XMLReader {
 	 * @return
 	 */
 	public Map<Integer, String> createStateNameMap() {
-		stateNameMap = new HashMap<Integer, String>();
+		try {
+			stateNameMap = new HashMap<Integer, String>();
+			NodeList nList = doc.getElementsByTagName("statemap");
 
-		NodeList nList = doc.getElementsByTagName("statemap");
+			for (int i = 0; i < nList.getLength(); i++) {
 
-		for (int i = 0; i < nList.getLength(); i++) {
+				Node nNode = nList.item(i);
+				Element eElement = (Element) nNode;
 
-			Node nNode = nList.item(i);
-			Element eElement = (Element) nNode;
-
-			Integer stateNum = Integer.parseInt(eElement.getAttribute("cellState"));
-			String stateName = eElement.getAttribute("name");
-			stateNameMap.put(stateNum, stateName);
+				Integer stateNum = Integer.parseInt(eElement.getAttribute("stateNum"));
+				String stateName = eElement.getAttribute("name");
+				stateNameMap.put(stateNum, stateName);
+			}
+		} catch (NumberFormatException e) {
+			showError(e.getMessage() + "; the string does not contain a parsable integer for tag 'stateNum'");
 		}
 
 		return stateNameMap;
@@ -184,18 +192,21 @@ public class XMLReader {
 	 * @return
 	 */
 	public Map<String, Double> createParameterMap() {
+		try {
+			parameterMap = new HashMap<String, Double>();
+			NodeList nList = doc.getElementsByTagName("parametermap");
 
-		parameterMap = new HashMap<String, Double>();
-		NodeList nList = doc.getElementsByTagName("parametermap");
+			for (int i = 0; i < nList.getLength(); i++) {
 
-		for (int i = 0; i < nList.getLength(); i++) {
+				Node nNode = nList.item(i);
+				Element eElement = (Element) nNode;
 
-			Node nNode = nList.item(i);
-			Element eElement = (Element) nNode;
-
-			String name = eElement.getAttribute("name");
-			Double value = Double.parseDouble(eElement.getAttribute("value"));
-			parameterMap.put(name, value);
+				String name = eElement.getAttribute("name");
+				Double value = Double.parseDouble(eElement.getAttribute("value"));
+				parameterMap.put(name, value);
+			}
+		} catch (NumberFormatException e) {
+			showError(e.getMessage() + "; the string does not contain a parsable integer for tag 'value'");
 		}
 
 		return parameterMap;
@@ -217,7 +228,7 @@ public class XMLReader {
 
 			Node currentRow = nList.item(i);
 
-			String row = ((Element) currentRow).getAttribute("cellStates");
+			String row = ((Element) currentRow).getAttribute("stateNum");
 			List<String> colStates = Arrays.asList(row.toString().split("\\s*,\\s*"));
 			System.out.println(colStates);
 
