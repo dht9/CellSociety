@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import simulation.SimulationLoop;
 
 public class CellManager {
 	
