@@ -2,24 +2,24 @@
 
 <simulation type = "PredatorPrey">
 
-	<colors>
-		<colormap stateNum = "-1" color = "BLUE"></colormap>
-		<colormap stateNum = "0" color = "ORANGE"></colormap>
-		<colormap stateNum = "1" color = "GRAY"></colormap>
-	</colors>
+	<colormap>
+		<color stateNum = "-1" color = "BLUE"></color>
+		<color stateNum = "0" color = "ORANGE"></color>
+		<color stateNum = "1" color = "GRAY"></color>
+	</colormap>
 	
-	<states>
-		<statemap stateNum = "-1" name = "EMPTY"></statemap>
-		<statemap stateNum = "0" name = "FISH"></statemap>
-		<statemap stateNum = "1" name = "SHARK"></statemap>
-	</states>
+	<statemap>
+		<state stateNum = "-1" name = "EMPTY"></state>
+		<state stateNum = "0" name = "FISH"></state>
+		<state stateNum = "1" name = "SHARK"></state>
+	</statemap>
 	
-	<parameters>
-		<parametermap name="fishBreedTime" value="5"></parametermap>
-		<parametermap name="sharkBreedTime" value="5"></parametermap>
-		<parametermap name="fishDieTime" value="1"></parametermap>
-		<parametermap name="sharkDieTime" value="4"></parametermap>
-	</parameters>
+	<parametermap>
+		<parameter name="fishBreedTime" value="5"></parameter>
+		<parameter name="sharkBreedTime" value="5"></parameter>
+		<parameter name="fishDieTime" value="1"></parameter>
+		<parameter name="sharkDieTime" value="4"></parameter>
+	</parametermap>
 	
 	<edges>
 		<edge type = "toroidal"></edge>

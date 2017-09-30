@@ -145,7 +145,13 @@ public class XMLReader {
 		NodeList nList = doc.getElementsByTagName("neighbor");
 		Element element = (Element) nList.item(0);
 		
-		return Integer.parseInt(element.getAttribute("type"));
+		try {
+			neighborType = Integer.parseInt(element.getAttribute("type"));
+		}
+		catch (NumberFormatException e) {
+			showError(e.getMessage() + "; the string does not contain a parsable integer for tag 'stateNum'");
+		}
+		return neighborType;
 	}
 
 	/**
@@ -155,7 +161,7 @@ public class XMLReader {
 
 		try {
 			colorMap = new HashMap<Integer, Color>();
-			NodeList nList = doc.getElementsByTagName("colormap");
+			NodeList nList = doc.getElementsByTagName("color");
 
 			for (int i = 0; i < nList.getLength(); i++) {
 
@@ -182,7 +188,7 @@ public class XMLReader {
 	public Map<Integer, String> createStateNameMap() {
 		try {
 			stateNameMap = new HashMap<Integer, String>();
-			NodeList nList = doc.getElementsByTagName("statemap");
+			NodeList nList = doc.getElementsByTagName("state");
 
 			for (int i = 0; i < nList.getLength(); i++) {
 
@@ -209,7 +215,7 @@ public class XMLReader {
 	public Map<String, Double> createParameterMap() {
 		try {
 			parameterMap = new HashMap<String, Double>();
-			NodeList nList = doc.getElementsByTagName("parametermap");
+			NodeList nList = doc.getElementsByTagName("parameter");
 
 			for (int i = 0; i < nList.getLength(); i++) {
 
