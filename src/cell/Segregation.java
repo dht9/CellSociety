@@ -9,8 +9,8 @@ public class Segregation extends Cell{
 	
 	private double myThreshold;
 
-	public Segregation(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType) {
-		super(row, column, state, gridSize, paraMap, edgeType);
+	public Segregation(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 		
 		for (String key: paraMap.keySet()) {
 		    if (key.equalsIgnoreCase("satisfiedThreshold"))

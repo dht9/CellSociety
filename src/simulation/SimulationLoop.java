@@ -91,7 +91,7 @@ public class SimulationLoop {
 		manager = new CellManager();
 		
 		//need to add neighborType in constructor?
-		manager.initialize(stateGrid, edgeType, simulationType, parameterMap);
+		manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {

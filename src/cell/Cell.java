@@ -23,7 +23,7 @@ public abstract class Cell {
 	private int mynextState;
 	private NeighborCell myNeighborCell;
 	private List<int[]> myAdjacent;
-	private int myNeighborType = 4;
+	private int myNeighborType;
 	private boolean myIsTorus;
 	private String myEdgeType;
 	
@@ -35,13 +35,14 @@ public abstract class Cell {
 	 * @param gridSize is the {row, col} of current grid, used to determine whether on the edge
 	 * @param paraList, the list of parameters for simulation
 	 */
-	public Cell(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType) {
+	public Cell(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
 		myrow = row;
 		mycol = column;
 		mystate = state;
 		mygrid = gridSize;
 		myEdgeType = edgeType;
 		myParaMap = paraMap;
+		myNeighborType = neighborType;
 		switch(myEdgeType) {
 		case TORUS:
 			myIsTorus = true;
@@ -78,6 +79,14 @@ public abstract class Cell {
 	 */
 	public int row() {
 		return myrow;
+	}
+	
+	/**
+	 * access neighborType
+	 * @return neighborType
+	 */
+	public int neighborType() {
+		return myNeighborType;
 	}
 	
 	/**
