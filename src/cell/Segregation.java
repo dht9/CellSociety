@@ -1,32 +1,30 @@
 package cell;
 
-import java.util.ArrayList;
+
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class Segregation extends Cell{
-	private static final int EIGHTADJACENT = 8;
 	
 	private double myThreshold;
 
-	public Segregation(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
-		super(row, column, state, gridSize, paraMap);
+	public Segregation(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 		
 		for (String key: paraMap.keySet()) {
 		    if (key.equalsIgnoreCase("satisfiedThreshold"))
 		    	myThreshold = paraMap.get(key);
 		    	
 		}
-		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
-		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
 	@Override
-	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
+	public void updateInfo(List<Cell> neighborlist, List<int[]> emptyPos) {
 		super.updateInfo(neighborlist, emptyPos);
 		double sameCount = 0;
 		for (Cell neighbor: neighborlist) {
-			if (mystate == neighbor.mystate) {
+			if (this.state() == neighbor.state()) {
 				sameCount += 1;
 			}
 		}
@@ -36,14 +34,14 @@ public class Segregation extends Cell{
 		}
 		if (percent < myThreshold) {
 			int[] nextPos = randomMove(emptyPos);
-			mynextRow = nextPos[0];
-			mynextCol = nextPos[1];
-			int[] currentPos = {myrow, mycol};
+			this.setNextRow(nextPos[0]);
+			this.setNextCol(nextPos[1]);
+			int[] currentPos = {this.row(), this.column()};
 			emptyPos.add(currentPos);
 			Iterator<int[]> emptyIter = emptyPos.iterator();
 			while(emptyIter.hasNext()) {
 				int[] nextEmpty = emptyIter.next();
-				if (nextEmpty[0] == mynextRow && nextEmpty[1] == mynextCol) {
+				if (nextEmpty[0] == this.nextrow() && nextEmpty[1] == this.nextcol()) {
 					emptyIter.remove();
 				}
 			}
@@ -51,12 +49,11 @@ public class Segregation extends Cell{
 	}
 	
 	@Override
-	public void update(ArrayList<Cell>removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
+	public void update(List<Cell>removeCellList, List<Cell> newCellList, List<int[]> emptyPos) {
 		super.update(removeCellList, newCellList, emptyPos);
-		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
-	private int[] randomMove(ArrayList<int[]> emptyPos) {
+	private int[] randomMove(List<int[]> emptyPos) {
 		int randomIndex = (int) (Math.random()*(emptyPos.size()));
 		int[] randomPos = emptyPos.get(randomIndex);
 		return randomPos;
