@@ -224,6 +224,11 @@ public abstract class Cell {
 		return myAdjacent;
 	}
 	
+	/**
+	 * get random index
+	 * @param size
+	 * @return random index
+	 */
 	public int randomIndex(int size) {
 		return myNeighborCell.randomIndex(size);
 	}

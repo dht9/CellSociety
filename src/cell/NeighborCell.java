@@ -38,6 +38,9 @@ public class NeighborCell {
 		setRadius();
 	}
 
+	/**
+	 * assign neighboring radius based on neighbor type
+	 */
 	private void setRadius() {
 		switch(myNeighborType) {
 			case FOURADJACENT:
@@ -114,29 +117,41 @@ public class NeighborCell {
 //		return adjacentList;
 //	}
 	
+	/**
+	 * get a list of adjacent position
+	 * @return list of adjacent position
+	 */
 	public List<int[]> adjacentPos() {
 		List<int[]> adjacentList = new ArrayList<int[]>();
 		double sqR = myRadius*myRadius;
 		for (int i = (int) Math.floor(myRadius); i*i <= sqR; i--) {
 			for (int j = (int) Math.floor(Math.sqrt(sqR-(i*i))); j*j <= sqR-(i*i); j--) {
 				if (i != 0 || j != 0) {
-					int[] pos = new int[2];
-					pos[0] = myCell.row() + i;
-					//System.out.println(pos[0]);
-					if (myIsTorus && (pos[0] < 0 || pos[0] > myCell.grid()[0]-1)) {
-						System.out.println(pos[0]);
-						pos[0] = myCell.grid()[0] - Math.abs(pos[0]);
-						System.out.println(pos[0]);
-					}
-					pos[1] = myCell.column() + j;
-					if (myIsTorus && (pos[1] < 0 || pos[1] > myCell.grid()[1]-1)) {
-						pos[1] = myCell.grid()[1] - Math.abs(pos[1]);
-					}
+					int[] pos = getPos(i, j);
 					adjacentList.add(pos);
 				}
 			}
 		}
 		return adjacentList;
+	}
+
+	/**
+	 * helper method for getting position and checking torus
+	 * @param i
+	 * @param j
+	 * @return adjacent position
+	 */
+	private int[] getPos(int i, int j) {
+		int[] pos = new int[2];
+		pos[0] = myCell.row() + i;
+		if (myIsTorus && (pos[0] < 0 || pos[0] > myCell.grid()[0]-1)) {
+			pos[0] = myCell.grid()[0] - Math.abs(pos[0]);
+		}
+		pos[1] = myCell.column() + j;
+		if (myIsTorus && (pos[1] < 0 || pos[1] > myCell.grid()[1]-1)) {
+			pos[1] = myCell.grid()[1] - Math.abs(pos[1]);
+		}
+		return pos;
 	}
 
 //	/**
@@ -193,10 +208,19 @@ public class NeighborCell {
 //		return adjacentPositionsList;
 //	}
 
+	/**
+	 * helper method for getting random index
+	 * @param size of list
+	 * @return random index
+	 */
 	public int randomIndex(int size) {
 		return (int) (Math.random() * size);
 	}
 	
+	/**
+	 * access the neighborType
+	 * @return myNeighborType
+	 */
 	public int getNeighborType() {
 		return myNeighborType;
 	}

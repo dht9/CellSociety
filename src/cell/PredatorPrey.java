@@ -89,13 +89,21 @@ public class PredatorPrey extends Cell {
 			}
 		}
 		else if (myGiveBirth) {
-			Cell baby = new PredatorPrey(this.row(), this.column(), this.state(), this.grid(), this.paraMap(), this.edgeType(), this.neighborType());
-			newCellList.add(baby);
-			myBreedCount = 0;
-			myGiveBirth = false;
-			myIsBreed = false;
+			getBaby(newCellList);
 		}
 		super.update(removeCellList, newCellList, emptyPos);
+	}
+
+	/**
+	 * give birth to new baby while resetting status
+	 * @param newCellList
+	 */
+	private void getBaby(List<Cell> newCellList) {
+		Cell baby = new PredatorPrey(this.row(), this.column(), this.state(), this.grid(), this.paraMap(), this.edgeType(), this.neighborType());
+		newCellList.add(baby);
+		myBreedCount = 0;
+		myGiveBirth = false;
+		myIsBreed = false;
 	}
 
 	/**
@@ -117,6 +125,26 @@ public class PredatorPrey extends Cell {
 	 * @param breedTime
 	 */
 	private void checkMove(List<Cell> neighborlist, List<int[]> emptyPos) {
+		List<int[]> movablePos = getMovable(neighborlist, emptyPos);
+		int posSize = movablePos.size();
+		if (posSize != 0) {
+			int randomIndex = (int) (this.randomIndex(posSize));
+			int[] nextPos = movablePos.get(randomIndex);
+			this.setNextRow(nextPos[0]);
+			this.setNextCol(nextPos[1]);
+			if (myIsBreed) {
+				myGiveBirth = true;
+			}
+		}
+	}
+
+	/**
+	 * get rid of preoccupied posiiton from the empty neighbor list
+	 * @param neighborlist
+	 * @param emptyPos
+	 * @return list of movable position
+	 */
+	private List<int[]> getMovable(List<Cell> neighborlist, List<int[]> emptyPos) {
 		List<int[]> movablePos = emptyNeighbor(neighborlist);
 		Iterator<int[]> posIter = movablePos.iterator();
 		outerloop: while (posIter.hasNext()) {
@@ -128,16 +156,7 @@ public class PredatorPrey extends Cell {
 			}
 			posIter.remove();
 		}
-		int posSize = movablePos.size();
-		if (posSize != 0) {
-			int randomIndex = (int) (this.randomIndex(posSize));
-			int[] nextPos = movablePos.get(randomIndex);
-			this.setNextRow(nextPos[0]);
-			this.setNextCol(nextPos[1]);
-			if (myIsBreed) {
-				myGiveBirth = true;
-			}
-		}
+		return movablePos;
 	}
 
 	/**
@@ -153,6 +172,38 @@ public class PredatorPrey extends Cell {
 			myIsDie = true;
 		}
 		checkBreed(sharkBreed);
+		List<Cell> availableFish = getAvailableFish(neighborlist);
+		int fishSize = availableFish.size();
+		if (fishSize != 0) {
+			eatFish(availableFish, fishSize);
+		} 
+		else {
+			checkMove(neighborlist, emptyPos);
+		}
+	}
+
+	/**
+	 * update info when shark eats a fish
+	 * @param availableFish
+	 * @param fishSize
+	 */
+	private void eatFish(List<Cell> availableFish, int fishSize) {
+		PredatorPrey food = (PredatorPrey) availableFish.get(this.randomIndex(fishSize));
+		food.consume();
+		this.setNextCol(food.column());
+		this.setNextRow(food.row());
+		myDieCount--;
+		if (myIsBreed) {
+			myGiveBirth = true;
+		}
+	}
+
+	/**
+	 * get list of fish that is still available
+	 * @param neighborlist
+	 * @return list of available fish
+	 */
+	private List<Cell> getAvailableFish(List<Cell> neighborlist) {
 		List<Cell> availableFish = foodList(neighborlist);
 		Iterator<Cell> fishIter = availableFish.iterator();
 		while (fishIter.hasNext()) {
@@ -161,19 +212,7 @@ public class PredatorPrey extends Cell {
 				fishIter.remove();
 			}
 		}
-		int fishSize = availableFish.size();
-		if (fishSize != 0) {
-			PredatorPrey food = (PredatorPrey) availableFish.get(this.randomIndex(fishSize));
-			food.consume();
-			this.setNextCol(food.column());
-			this.setNextRow(food.row());
-			myDieCount--;
-			if (myIsBreed) {
-				myGiveBirth = true;
-			}
-		} else {
-			checkMove(neighborlist, emptyPos);
-		}
+		return availableFish;
 	}
 
 	/**
