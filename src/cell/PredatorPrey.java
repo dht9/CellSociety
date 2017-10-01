@@ -3,6 +3,7 @@ package cell;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Game of Life implementation of Cell superclass
@@ -11,6 +12,8 @@ import java.util.Map;
  *
  */
 public class PredatorPrey extends Cell {
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
+	
 	private static final int FISH = 0;
 	private static final int SHARK = 1;
 	private static final int FOURADJACENT = 4;
@@ -40,7 +43,7 @@ public class PredatorPrey extends Cell {
 		for (String key : paraMap.keySet()) {
 			if (key.equalsIgnoreCase("fishBreedTime"))
 				fishBreed = paraMap.get(key);
-			else if (key.equalsIgnoreCase("sharkBreedTime"))
+			else if (key.equalsIgnoreCase("sharkBreedTime")) 
 				sharkBreed = paraMap.get(key);
 			else if (key.equalsIgnoreCase("sharkDieTime"))
 				sharkDie = paraMap.get(key);
