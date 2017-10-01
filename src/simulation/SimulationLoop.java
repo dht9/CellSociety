@@ -55,6 +55,10 @@ public class SimulationLoop {
 	 * Constructor, initializes and starts the simulation loop.
 	 */
 	public SimulationLoop() {
+		setNewTimeline();
+	}
+
+	private void setNewTimeline() {
 		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
