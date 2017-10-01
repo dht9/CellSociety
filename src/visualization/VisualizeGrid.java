@@ -24,7 +24,6 @@ public class VisualizeGrid extends GridPane {
 	private final int GRID_SIZE = 550;
 	private int numRows;
 	private int numCols;
-	private int[][] gridArray;
 
 	/**
 	 * Constructor for VisualizeGrid Class.
@@ -39,7 +38,8 @@ public class VisualizeGrid extends GridPane {
 	public VisualizeGrid(XMLReader xml) {
 
 		Map<Integer, Color> myColorMap = xml.createColorMap();
-		int[][] gridArray = xml.getStateGrid();
+		int[][] gridArray = xml.createStateGrid();
+    
 		colorGrid(myColorMap, gridArray);
 
 		setGridLinesVisible(true);
@@ -47,26 +47,24 @@ public class VisualizeGrid extends GridPane {
 		setAlignment(Pos.CENTER);
 
 		numRows = gridArray.length;
-		numCols = gridArray[0].length;
+		numCols = numRows;
 
 		// set index widths/height for grid
-		for (int i = 0; i < this.getRowSize(); i++) {
-			this.getRowConstraints().add(new RowConstraints(this.getCellHeight(gridArray)));
-
-		}
-		for (int i = 0; i < this.getColSize(); i++) {
-			this.getColumnConstraints().add(new ColumnConstraints(this.getCellWidth(gridArray)));
+		for (int i = 0; i < this.getSize(); i++) {
+			this.getRowConstraints().add(new RowConstraints(this.getCellSize(gridArray)));
+			this.getColumnConstraints().add(new ColumnConstraints(this.getCellSize(gridArray)));
 		}
 	}
+	
 
 	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
 
 		for (int i = 0; i < gridArray.length; i++) {
-			for (int j = 0; j < gridArray[0].length; j++) {
+			for (int j = 0; j < gridArray.length; j++) {
 
 				Color color = myColorMap.get(gridArray[i][j]);
 
-				this.add(new RectangleCell(getCellWidth(gridArray), getCellHeight(gridArray), color, gridArray[i][j]), j, i);
+				this.add(new Rectangle(getCellSize(gridArray), getCellSize(gridArray), color), j, i);
 			}
 		}
 	}
@@ -95,34 +93,13 @@ public class VisualizeGrid extends GridPane {
 		return rect;
 	}
 
-	private double getCellWidth(int[][] gridArray) {
-		return GRID_SIZE / gridArray[0].length;
-	}
-	
-	private double getCellHeight(int[][] gridArray) {
+	public double getCellSize(int [][] gridArray) {
 		return GRID_SIZE / gridArray.length;
 	}
 
-	public int getRowSize() {
+	// assumes square grid
+	public int getSize() {
 		return numRows;
-	}
-
-	public int getColSize() {
-		return numCols;
-	}
-
-	/**
-	 * Removes and adds a new rectangle with a color at a specified index in the
-	 * grid.
-	 * 
-	 * @param row
-	 * @param col
-	 * @param color
-	 */
-	public void colorRectangle(int row, int col, Color color, int state) {
-		RectangleCell rect = (RectangleCell) this.getRectWithCellPosition(row, col);
-		rect.setState(state);
-		rect.setFill(color);
 	}
 
 }
