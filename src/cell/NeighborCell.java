@@ -15,6 +15,7 @@ public class NeighborCell {
 	private static final int FOURADJACENT = 4;
 	private static final int EIGHTADJACENT = 8;
 	private static final int THREEADJACENT = 3;
+	private static final int TWELVEADJACENT = 12;
 	private static final double FOURRADIUS = 1;
 	private static final double EIGHTRADIUS = Math.sqrt(2);
 	private static final double THREERADIUS = 1;

@@ -133,6 +133,9 @@ public class CellManager {
 			case "Fire":
 				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				break;
+			case "RPS":
+				current = new RockPaperScissors(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				//showError();
