@@ -2,6 +2,7 @@ package simulation;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -20,12 +21,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import visualization.MakeSlider;
@@ -60,6 +64,9 @@ public class SimulationSetup extends Application {
 	private Button resetButton;
 	private Button saveButton;
 	private Button randomizeButton;
+	private Button gridOutlineButton;
+	
+	private VBox vbox;
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
@@ -91,15 +98,28 @@ public class SimulationSetup extends Application {
 
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene(root, guiWidth, guiHeight);
-		Node btnPanel = makeButtonPanel(s, scene);
-
+		startingGrid = makeEmptyGrid();
+		Node btnPanel = makeButtonPanel(s, scene, startingGrid);
+		
+		
+		Node popPanel = makePopulationPanel(s,scene);
+		root.setRight(popPanel);
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
-		root.setCenter(makeEmptyGrid());
+		root.setCenter(startingGrid);
 
 		return scene;
 	}
 
+	
+	private Node makePopulationPanel (Stage s, Scene scene) {
+		
+		vbox = new VBox(8);
+		mySimulationLoop.setVBox(vbox);
+		
+		return vbox;
+		
+	}
 	/**
 	 * Method inspired by makeNavigationPanel() in BrowserView.java by Robert Duvall
 	 * 
@@ -107,7 +127,7 @@ public class SimulationSetup extends Application {
 	 * @param scene
 	 * @return
 	 */
-	private Node makeButtonPanel(Stage s, Scene scene) {
+	private Node makeButtonPanel(Stage s, Scene scene, GridPane grid) {
 
 		chooseXMLButton = makeButton("ChooseXMLCommand", event -> openXML(s, scene));
 		startButton = makeButton("PlayCommand", event -> play());
@@ -116,6 +136,7 @@ public class SimulationSetup extends Application {
 		resetButton = makeButton("ResetCommand", event -> reset(scene));
 		saveButton = makeButton("SaveCommand", event -> save());
 		randomizeButton = makeButton("RandomizeCommand", event -> randomize(scene));
+//		gridOutlineButton = makeButton("gridOutlineCommand", event -> pause());
 
 		makeSlider = new MakeSlider(mySimulationLoop.getFPS());
 		Slider slider = makeSlider.getSlider();
@@ -190,6 +211,15 @@ public class SimulationSetup extends Application {
 			newGrid(scene);
 		}
 
+	}
+	
+	private void outline(GridPane grid) {
+		if (grid.isGridLinesVisible()) {
+			grid.setGridLinesVisible(false);
+		}
+		else {
+			grid.setGridLinesVisible(true);
+		}
 	}
 
 	/**
