@@ -1,7 +1,6 @@
 package cell;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,14 +24,12 @@ public class GameofLife extends Cell{
 	 * @param gridSize
 	 * @param paraList
 	 */
-	public GameofLife(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
-		super(row, column, state, gridSize, paraMap);
-		myNeighborCell = new NeighborCell(EIGHTADJACENT, false, this);
-		myAdjacent = myNeighborCell.adjacentPos();
+	public GameofLife(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 	}
 
 	@Override
-	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
+	public void updateInfo(List<Cell> neighborlist, List<int[]> emptyPos) {
 		super.updateInfo(neighborlist, emptyPos);
 		int liveCount = 0;
 		for (Cell neighbor: neighborlist) {
@@ -40,26 +37,24 @@ public class GameofLife extends Cell{
 				liveCount++;	
 			}
 		}
-		
-		this.mynextState = this.mystate;
-		if (this.mystate == LIVE) {  //TODO check if enum can be used here
+		if (this.state() == LIVE) {  //TODO check if enum can be used here
 			switch(liveCount) {
 				case 0:
 				case 1:
-					this.mynextState = DIE;
+					this.setNextState(DIE);
 					break;
 				case 2:
 				case 3:
-					this.mynextState = LIVE;
+					this.setNextState(LIVE);
 					break;
 				default:
-					this.mynextState = DIE;
+					this.setNextState(DIE);
 					break;
 			}
 		}
 		else {
 			if (liveCount == 3) {
-				this.mynextState = LIVE;
+				this.setNextState(LIVE);
 			}
 		}
 	}

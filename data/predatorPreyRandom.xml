@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "PredatorPrey">
+
+	<colormap>
+		<color stateNum = "-1" color = "BLUE"></color>
+		<color stateNum = "0" color = "ORANGE"></color>
+		<color stateNum = "1" color = "GRAY"></color>
+	</colormap>
+	
+	<statemap>
+		<state stateNum = "-1" name = "EMPTY"></state>
+		<state stateNum = "0" name = "FISH"></state>
+		<state stateNum = "1" name = "SHARK"></state>
+	</statemap>
+	
+	<parametermap>
+		<parameter name="fishBreedTime" value="0"></parameter>
+		<parameter name="sharkBreedTime" value="0"></parameter>
+		<parameter name="fishDieTime" value="0"></parameter>
+		<parameter name="sharkDieTime" value="0"></parameter>
+	</parametermap>
+	
+	<edges>
+		<edge type = "toroidal"></edge>
+	</edges>
+	
+	<neighbors>
+		<neighbor type = "8"></neighbor>
+	</neighbors>
+
+	<grid>
+		<row stateNum="0"></row>
+	</grid>
+	
+</simulation>

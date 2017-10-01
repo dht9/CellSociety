@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "Segregation">
+
+	<colormap>
+		<color stateNum = "-1" color = "WHITE"></color>
+		<color stateNum = "0" color = "RED"></color>
+		<color stateNum = "1" color = "BLUE"></color>
+	</colormap>
+	
+	<statemap>
+		<state stateNum = "-1" name = "EMPTY"></state>
+		<state stateNum = "0" name = "A"></state>
+		<state stateNum = "1" name = "B"></state>
+	</statemap>
+	
+	<parametermap>
+		<parameter name="satisfiedThreshold" value="0.7"></parameter>
+	</parametermap>
+
+	<edges>
+		<edge type = "straight"></edge>
+	</edges>
+	
+	<neighbors>
+		<neighbor type = "8"></neighbor>
+	</neighbors>
+	
+	<grid>
+		<row stateNum = " 1, 0,-1, 1, 0, 0, 0, 0, 1, 1"></row>
+		<row stateNum = " 1,-1, 0,-1, 1, 0, 1,-1, 0,-1"></row>
+		<row stateNum = " 1, 1, 1, 1, 1, 1, 0,-1, 1, 1"></row>
+		<row stateNum = " 0, 1, 0,-1, 0,-1, 0, 1, 0, 0"></row>
+		<row stateNum = "-1, 0,-1, 0, 1,-1, 1,-1, 1, 1"></row>
+		<row stateNum = "-1, 1, 0,-1, 1, 1,-1, 1, 1,-1"></row>
+		<row stateNum = "-1,-1, 0, 1,-1, 1, 0, 0,-1, 0"></row>
+		<row stateNum = " 1, 0,-1,-1, 1, 0, 1, 1, 1,-1"></row>
+		<row stateNum = " 0, 0, 0, 0, 1, 1,-1, 0,-1, 1"></row>
+		<row stateNum = " 0, 1, 1, 1,-1, 0, 1,-1, 1,-1"></row>
+	</grid>
+	
+</simulation>

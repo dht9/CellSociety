@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "GameOfLife">
+
+	<colormap>
+		<color stateNum = "0" color = "BLACK"></color>
+		<color stateNum = "1" color = "WHITE"></color>
+	</colormap>
+	
+	<statemap>
+		<state stateNum = "0" name = "DEAD"></state>
+		<state stateNum = "1" name = "ALIVE"></state>
+	</statemap>
+	
+	<parametermap></parametermap>
+	
+	<edges>
+		<edge type = "straight"></edge>
+	</edges>
+	
+	<neighbors>
+		<neighbor type = "4"></neighbor>
+	</neighbors>
+	
+	<grid>
+		<row stateNum="0"></row>
+	</grid>
+	
+</simulation>
+
+
+
+
+

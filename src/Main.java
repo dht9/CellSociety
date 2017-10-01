@@ -1,4 +1,4 @@
-package simulation;
+import simulation.SimulationSetup;
 
 /**
  * This class starts the simulation.
