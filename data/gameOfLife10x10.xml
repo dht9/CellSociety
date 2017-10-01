@@ -2,17 +2,17 @@
 
 <simulation type = "GameOfLife">
 
-	<colors>
-		<colormap stateNum = "0" color = "BLACK"></colormap>
-		<colormap stateNum = "1" color = "WHITE"></colormap>
-	</colors>
+	<colormap>
+		<color stateNum = "0" color = "BLACK"></color>
+		<color stateNum = "1" color = "WHITE"></color>
+	</colormap>
 	
-	<states>
-		<statemap stateNum = "0" name = "DEAD"></statemap>
-		<statemap stateNum = "1" name = "ALIVE"></statemap>
-	</states>
+	<statemap>
+		<state stateNum = "0" name = "DEAD"></state>
+		<state stateNum = "1" name = "ALIVE"></state>
+	</statemap>
 	
-	<parameters></parameters>
+	<parametermap></parametermap>
 	
 	<edges>
 		<edge type = "straight"></edge>

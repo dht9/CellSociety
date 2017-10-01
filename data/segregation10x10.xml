@@ -2,21 +2,21 @@
 
 <simulation type = "Segregation">
 
-	<colors>
-		<colormap stateNum = "-1" color = "WHITE"></colormap>
-		<colormap stateNum = "0" color = "RED"></colormap>
-		<colormap stateNum = "1" color = "BLUE"></colormap>
-	</colors>
+	<colormap>
+		<color stateNum = "-1" color = "WHITE"></color>
+		<color stateNum = "0" color = "RED"></color>
+		<color stateNum = "1" color = "BLUE"></color>
+	</colormap>
 	
-	<states>
-		<statemap stateNum = "-1" name = "EMPTY"></statemap>
-		<statemap stateNum = "0" name = "A"></statemap>
-		<statemap stateNum = "1" name = "B"></statemap>
-	</states>
+	<statemap>
+		<state stateNum = "-1" name = "EMPTY"></state>
+		<state stateNum = "0" name = "A"></state>
+		<state stateNum = "1" name = "B"></state>
+	</statemap>
 	
-	<parameters>
-		<parametermap name="satisfiedThreshold" value="0.7"></parametermap>
-	</parameters>
+	<parametermap>
+		<parameter name="satisfiedThreshold" value="0.7"></parameter>
+	</parametermap>
 
 	<edges>
 		<edge type = "straight"></edge>

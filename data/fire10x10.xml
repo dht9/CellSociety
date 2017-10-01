@@ -2,28 +2,28 @@
 
 <simulation type = "Fire">
 	
-	<colors>
-		<colormap stateNum = "-1" color = "YELLOW"></colormap>
-		<colormap stateNum = "0" color = "GREEN"></colormap>
-		<colormap stateNum = "1" color = "RED"></colormap>
-	</colors>
+	<colormap>
+		<color stateNum = "-1" color = "YELLOW"></color>
+		<color stateNum = "0" color = "GREEN"></color>
+		<color stateNum = "1" color = "RED"></color>
+	</colormap>
 	
-	<states>
-		<statemap stateNum = "-1" name = "EMPTY"></statemap>
-		<statemap stateNum = "0" name = "TREE"></statemap>
-		<statemap stateNum = "1" name = "BURNING"></statemap>
-	</states>
+	<statemap>
+		<state stateNum = "-1" name = "EMPTY"></state>
+		<state stateNum = "0" name = "TREE"></state>
+		<state stateNum = "1" name = "BURNING"></state>
+	</statemap>
 	
-	<parameters>
-		<parametermap name="probCatch" value="0.5"></parametermap>
-	</parameters>
+	<parametermap>
+		<parameter name="probCatch" value="0.5"></parameter>
+	</parametermap>
 	
 	<edges>
 		<edge type = "straight"></edge>
 	</edges>
 	
 	<neighbors>
-		<neighbor type = "8"></neighbor>
+		<neighbor type = "4"></neighbor>
 	</neighbors>
 
 	<grid>
