@@ -2,15 +2,10 @@ package simulation;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-import config.XMLFireRandom;
-import config.XMLGameOfLifeRandom;
-import config.XMLPredatorPreyRandom;
 import config.XMLReader;
-import config.XMLSegregationRandom;
-import config.XMLWriter;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -28,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import visualization.MakeSlider;
 import visualization.VisualizeGrid;
 
@@ -42,14 +37,12 @@ public class SimulationSetup extends Application {
 	private static final int STARTING_ROWS = 10;
 	private static final int STARTING_COLS = 10;
 	private static final int STARTING_CELL_SIZE = 55;
-	private static final int GUI_WIDTH = 800;
-	private static final int GUI_HEIGHT = 700;
+	private static final int guiSize = 700;
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
 
 	private SimulationLoop mySimulationLoop;
 	private XMLReader xmlReader;
-	private XMLWriter xmlWriter;
 	private MakeSlider makeSlider;
 	private GridPane startingGrid;
 
@@ -58,8 +51,7 @@ public class SimulationSetup extends Application {
 	private Button pauseButton;
 	private Button stepButton;
 	private Button resetButton;
-	private Button saveButton;
-	private Button randomizeButton;
+
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
@@ -69,12 +61,12 @@ public class SimulationSetup extends Application {
 
 		mySimulationLoop = new SimulationLoop();
 
-		Scene scene = setupScene(s, GUI_WIDTH, GUI_HEIGHT);
+		Scene scene = setupScene(s, guiSize, guiSize);
 		s.setTitle("Cell Society");
 		s.setScene(scene);
 		s.show();
 
-		mySimulationLoop.setGUI(s, scene, GUI_WIDTH, GUI_HEIGHT);
+		mySimulationLoop.setGUI(s, scene, guiSize, guiSize);
 	}
 
 	/**
@@ -92,7 +84,7 @@ public class SimulationSetup extends Application {
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene(root, guiWidth, guiHeight);
 		Node btnPanel = makeButtonPanel(s, scene);
-
+		
 		root.setBottom(btnPanel);
 		root.setMargin(btnPanel, new Insets(50));
 		root.setCenter(makeEmptyGrid());
@@ -114,16 +106,13 @@ public class SimulationSetup extends Application {
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
 		resetButton = makeButton("ResetCommand", event -> reset(scene));
-		saveButton = makeButton("SaveCommand", event -> save());
-		randomizeButton = makeButton("RandomizeCommand", event -> randomize(scene));
 
 		makeSlider = new MakeSlider(mySimulationLoop.getFPS());
 		Slider slider = makeSlider.getSlider();
 		mySimulationLoop.setMakeSlider(makeSlider);
 
 		HBox btnPanel = new HBox(10);
-		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, saveButton,
-				randomizeButton, slider);
+		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, slider);
 
 		return btnPanel;
 
@@ -148,6 +137,10 @@ public class SimulationSetup extends Application {
 		return btn;
 	}
 
+	public MakeSlider getMakeSlider() {
+		return makeSlider;
+	}
+
 	/**
 	 * Gives user a window to select XML file and creates instance of XMLReader if
 	 * file is valid. When valid file is loaded, creates a new grid and visualizes
@@ -170,23 +163,9 @@ public class SimulationSetup extends Application {
 		File file = fileChooser.showOpenDialog(s);
 
 		if (file != null) {
-			
-			String fileName = file.getName().toLowerCase();
-			
-			if (fileName.indexOf("random") != -1) {
-				if (fileName.indexOf("fire") != -1)
-					xmlReader = new XMLFireRandom(file);
-				else if (fileName.indexOf("gameoflife") != -1)
-					xmlReader = new XMLGameOfLifeRandom(file);
-				else if (fileName.indexOf("segregation") != -1)
-					xmlReader = new XMLSegregationRandom(file);
-				else if (fileName.indexOf("predatorprey") != -1)
-					xmlReader = new XMLPredatorPreyRandom(file);
-			} else
-				xmlReader = new XMLReader(file);
 
+			xmlReader = new XMLReader(file);
 			mySimulationLoop.setNewSimulationParameters(xmlReader);
-
 			newGrid(scene);
 		}
 
@@ -246,46 +225,10 @@ public class SimulationSetup extends Application {
 	// reset grid to initial states
 	private void reset(Scene scene) {
 		if (xmlReader != null) {
-			stopAndSetup(scene);
+			mySimulationLoop.pause();
+			mySimulationLoop.setNewSimulationParameters(xmlReader);
+			newGrid(scene);
 		}
-	}
-
-	// save simulation configs to new XML file
-	private void save() {
-		if (xmlReader != null) {
-
-			String filePath;
-			TextInputDialog dialog = new TextInputDialog("");
-			dialog.setTitle("Save Simulation Configurations Dialog");
-			dialog.setHeaderText("File will be located in 'data' folder");
-			dialog.setContentText("Name of file (no extension):");
-
-			Optional<String> result = dialog.showAndWait();
-			if (result.isPresent()) {
-				filePath = Paths.get(".").toAbsolutePath().normalize().toString() + "/data/" + result.get() + ".xml";
-				xmlWriter = new XMLWriter();
-				xmlWriter.setNewSimulationParameters(xmlReader);
-				xmlWriter.setNewStateGrid(mySimulationLoop.getCurrentStateGrid());
-
-				xmlWriter.writeToXML();
-				xmlWriter.outputXML(filePath);
-			}
-		}
-	}
-
-	// randomize initial states
-	private void randomize(Scene scene) {
-		if (xmlReader != null) {
-			xmlReader.createRandomStateGrid();
-			stopAndSetup(scene);
-		}
-	}
-
-	// stop simulation and reset grid
-	private void stopAndSetup(Scene scene) {
-		mySimulationLoop.pause();
-		mySimulationLoop.setNewSimulationParameters(xmlReader);
-		newGrid(scene);
 	}
 
 	public void startSimulation(String[] args) {
