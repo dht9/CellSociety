@@ -20,8 +20,8 @@ public class XMLPredatorPreyRandom extends XMLRandom{
 		sharkBreedTime = (int) ((Math.random()+1)*MAX_BREED_TIME);
 		
 		// ensures fish/sharks always breed slower than they die
-		fishDieTime = (int) (Math.random()*(fishBreedTime));
-		sharkDieTime = (int) (Math.random()*(sharkBreedTime));
+		fishDieTime = (int) ((Math.random()+1)*(fishBreedTime));
+		sharkDieTime = (int) ((Math.random()+1)*(sharkBreedTime));
 		
 		parameterMap.replace("fishDieTime", (double) fishDieTime);
 		parameterMap.replace("sharkDieTime", (double) sharkDieTime);

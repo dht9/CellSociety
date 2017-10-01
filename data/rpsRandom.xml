@@ -27,7 +27,7 @@
 	</neighbors>
 
 	<grid>
-		<row stateNum = " 0></row>
+		<row stateNum = "0"></row>
 	</grid>
 	
 </simulation>
