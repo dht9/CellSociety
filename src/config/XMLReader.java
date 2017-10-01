@@ -2,10 +2,12 @@ package config;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -37,14 +39,14 @@ public class XMLReader {
 	private File xmlFile;
 
 	private String simulationType;
-	private String edgeType;
-	private Map<Integer, Color> colorMap;
+	protected String edgeType;
+	protected Map<Integer, Color> colorMap;
 	private Map<Integer, String> stateNameMap;
-	private Map<String, Double> parameterMap;
-	private int[][] stateGrid;
-	private int numRows;
-	private int numCols;
-	private int neighborType;
+	protected Map<String, Double> parameterMap;
+	protected int[][] stateGrid;
+	protected int numRows;
+	protected int numCols;
+	protected int neighborType;
 
 	/**
 	 * Initialize DOMParser, colorMap, cellStateGrid, simulationType;
@@ -145,7 +147,13 @@ public class XMLReader {
 		NodeList nList = doc.getElementsByTagName("neighbor");
 		Element element = (Element) nList.item(0);
 		
-		return Integer.parseInt(element.getAttribute("type"));
+		try {
+			neighborType = Integer.parseInt(element.getAttribute("type"));
+		}
+		catch (NumberFormatException e) {
+			showError(e.getMessage() + "; the string does not contain a parsable integer for tag 'stateNum'");
+		}
+		return neighborType;
 	}
 
 	/**
@@ -155,7 +163,7 @@ public class XMLReader {
 
 		try {
 			colorMap = new HashMap<Integer, Color>();
-			NodeList nList = doc.getElementsByTagName("colormap");
+			NodeList nList = doc.getElementsByTagName("color");
 
 			for (int i = 0; i < nList.getLength(); i++) {
 
@@ -182,7 +190,7 @@ public class XMLReader {
 	public Map<Integer, String> createStateNameMap() {
 		try {
 			stateNameMap = new HashMap<Integer, String>();
-			NodeList nList = doc.getElementsByTagName("statemap");
+			NodeList nList = doc.getElementsByTagName("state");
 
 			for (int i = 0; i < nList.getLength(); i++) {
 
@@ -209,7 +217,7 @@ public class XMLReader {
 	public Map<String, Double> createParameterMap() {
 		try {
 			parameterMap = new HashMap<String, Double>();
-			NodeList nList = doc.getElementsByTagName("parametermap");
+			NodeList nList = doc.getElementsByTagName("parameter");
 
 			for (int i = 0; i < nList.getLength(); i++) {
 
@@ -258,14 +266,37 @@ public class XMLReader {
 
 		return stateGrid;
 	}
+	
+	public int[][] createRandomStateGrid() {
 
-	/**
-	 * Tests the XML reader for parsing.
-	 */
-	// public static void main(String args[]) {
-	// File xml = new
-	// File("/Users/DavidTran/eclipse-workspace/cellsociety_team10/src/resources/segregation.xml");
-	// XMLReader reader = new XMLReader(xml);
-	// }
+		stateGrid = new int[numRows][numCols];
+		
+		List<Integer> states = new ArrayList<Integer>(colorMap.keySet());
+		
+		for (int row = 0; row < numRows; row++) {
+			for (int col = 0; col < numCols; col++) {
+
+				Random random = new Random();
+				stateGrid[row][col] = states.get(random.nextInt(states.size())); 
+			}
+		}
+		return stateGrid;
+	}
+	
+	public int[][] getStateGrid() {
+		return stateGrid;
+	}
+	
+	public Map<String, Double> getParameterMap() {
+		return parameterMap;
+	}
+	
+	public int getNeighborType() {
+		return neighborType;
+	}
+	
+	public String getEdgeType() {
+		return edgeType;
+	}
 
 }

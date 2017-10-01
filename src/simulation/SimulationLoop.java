@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import visualization.MakeSlider;
+import visualization.RectangleCell;
 import visualization.VisualizeGrid;
 
 /**
@@ -54,6 +55,10 @@ public class SimulationLoop {
 	 * Constructor, initializes and starts the simulation loop.
 	 */
 	public SimulationLoop() {
+		setNewTimeline();
+	}
+
+	private void setNewTimeline() {
 		frame = new KeyFrame(Duration.millis(1000 / MAX_FRAMES_PER_SECOND), e -> step());
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
@@ -80,18 +85,20 @@ public class SimulationLoop {
 	 */
 	public void setNewSimulationParameters(XMLReader xmlReaderInput) {
 		xmlReader = xmlReaderInput;
+
+		simulationType = xmlReaderInput.setSimulationType();
 		colorMap = xmlReaderInput.createColorMap();
 		stateNameMap = xmlReaderInput.createStateNameMap();
-		parameterMap = xmlReaderInput.createParameterMap();
-		stateGrid = xmlReaderInput.createStateGrid();
-		edgeType = xmlReaderInput.setEdgeType();
-		simulationType = xmlReaderInput.setSimulationType();
-		neighborType = xmlReaderInput.setNeighborType();
+		
+		parameterMap = xmlReaderInput.getParameterMap();
+		stateGrid = xmlReaderInput.getStateGrid();
+		edgeType = xmlReaderInput.getEdgeType();
+		neighborType = xmlReaderInput.getNeighborType();
 		
 		manager = new CellManager();
 		
-		//need to add neighborType in constructor?
-		manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+		if (stateGrid != null)
+			manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -109,9 +116,9 @@ public class SimulationLoop {
 			 manager.update();
 			 
 			 // update all rectangles to empty color
-			 for (int i = 0; i < myGrid.getSize(); i++) {
-				 for (int j = 0; j < myGrid.getSize(); j++) {
-					 colorRectangle(i, j, colorMap.get(-1));
+			 for (int i = 0; i < myGrid.getRowSize(); i++) {
+				 for (int j = 0; j < myGrid.getColSize(); j++) {
+					 myGrid.colorRectangle(i, j, colorMap.get(-1), -1);
 				 }
 			 }
 			 
@@ -124,26 +131,11 @@ public class SimulationLoop {
 				 int state = cell.state();
 				 Color color = colorMap.get(state);
 				 
-				 colorRectangle(row, col, color);
+				 myGrid.colorRectangle(row, col, color, state);
 			 }
 		
 		}
 		animation.setRate( myMakeSlider.getValue() / MAX_FRAMES_PER_SECOND);
-	}
-
-
-	/**
-	 * Removes and adds a new rectangle with a color at a specified index in the
-	 * grid.
-	 * 
-	 * @param row
-	 * @param col
-	 * @param color
-	 */
-	// There is a bug with this line
-	private void colorRectangle(int row, int col, Color color) {
-		Rectangle rect = (Rectangle) myGrid.getRectWithCellPosition(row, col);
-		rect.setFill(color);
 	}
 
 	// start/resume the simulation
@@ -158,6 +150,17 @@ public class SimulationLoop {
 	
 	public int getFPS() {
 		return MAX_FRAMES_PER_SECOND;
+	}
+
+	public int[][] getCurrentStateGrid() {
+		int [][] grid = new int[myGrid.getRowSize()][myGrid.getColSize()];
+		for (int row=0; row<myGrid.getRowSize(); row++) {
+			for (int col=0; col<myGrid.getRowSize(); col++) {
+				RectangleCell rect = (RectangleCell) myGrid.getRectWithCellPosition(row, col);
+				grid[row][col] = rect.getState();
+			}
+		}
+		return grid;
 	}
 
 }
