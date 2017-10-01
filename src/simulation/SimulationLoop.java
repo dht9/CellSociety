@@ -81,18 +81,20 @@ public class SimulationLoop {
 	 */
 	public void setNewSimulationParameters(XMLReader xmlReaderInput) {
 		xmlReader = xmlReaderInput;
+
+		simulationType = xmlReaderInput.setSimulationType();
 		colorMap = xmlReaderInput.createColorMap();
 		stateNameMap = xmlReaderInput.createStateNameMap();
-		parameterMap = xmlReaderInput.createParameterMap();
-		stateGrid = xmlReaderInput.createStateGrid();
-		edgeType = xmlReaderInput.setEdgeType();
-		simulationType = xmlReaderInput.setSimulationType();
-		neighborType = xmlReaderInput.setNeighborType();
+		
+		parameterMap = xmlReaderInput.getParameterMap();
+		stateGrid = xmlReaderInput.getStateGrid();
+		edgeType = xmlReaderInput.getEdgeType();
+		neighborType = xmlReaderInput.getNeighborType();
 		
 		manager = new CellManager();
 		
-		//need to add neighborType in constructor?
-		manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+		if (stateGrid != null)
+			manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {

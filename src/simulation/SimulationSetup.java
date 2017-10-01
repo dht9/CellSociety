@@ -5,7 +5,11 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import config.XMLFireRandom;
+import config.XMLGameOfLifeRandom;
+import config.XMLPredatorPreyRandom;
 import config.XMLReader;
+import config.XMLSegregationRandom;
 import config.XMLWriter;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -38,7 +42,8 @@ public class SimulationSetup extends Application {
 	private static final int STARTING_ROWS = 10;
 	private static final int STARTING_COLS = 10;
 	private static final int STARTING_CELL_SIZE = 55;
-	private static final int guiSize = 700;
+	private static final int GUI_WIDTH = 800;
+	private static final int GUI_HEIGHT = 700;
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
 
@@ -54,6 +59,7 @@ public class SimulationSetup extends Application {
 	private Button stepButton;
 	private Button resetButton;
 	private Button saveButton;
+	private Button randomizeButton;
 
 	/**
 	 * Initialize stage, scene, and simulation loop.
@@ -63,12 +69,12 @@ public class SimulationSetup extends Application {
 
 		mySimulationLoop = new SimulationLoop();
 
-		Scene scene = setupScene(s, guiSize, guiSize);
+		Scene scene = setupScene(s, GUI_WIDTH, GUI_HEIGHT);
 		s.setTitle("Cell Society");
 		s.setScene(scene);
 		s.show();
 
-		mySimulationLoop.setGUI(s, scene, guiSize, guiSize);
+		mySimulationLoop.setGUI(s, scene, GUI_WIDTH, GUI_HEIGHT);
 	}
 
 	/**
@@ -108,14 +114,16 @@ public class SimulationSetup extends Application {
 		pauseButton = makeButton("PauseCommand", event -> pause());
 		stepButton = makeButton("StepCommand", event -> step());
 		resetButton = makeButton("ResetCommand", event -> reset(scene));
-		saveButton = makeButton("SaveCommand", event -> save(scene));
+		saveButton = makeButton("SaveCommand", event -> save());
+		randomizeButton = makeButton("RandomizeCommand", event -> randomize(scene));
 
 		makeSlider = new MakeSlider(mySimulationLoop.getFPS());
 		Slider slider = makeSlider.getSlider();
 		mySimulationLoop.setMakeSlider(makeSlider);
 
 		HBox btnPanel = new HBox(10);
-		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, saveButton, slider);
+		btnPanel.getChildren().addAll(chooseXMLButton, startButton, pauseButton, stepButton, resetButton, saveButton,
+				randomizeButton, slider);
 
 		return btnPanel;
 
@@ -140,10 +148,6 @@ public class SimulationSetup extends Application {
 		return btn;
 	}
 
-	public MakeSlider getMakeSlider() {
-		return makeSlider;
-	}
-
 	/**
 	 * Gives user a window to select XML file and creates instance of XMLReader if
 	 * file is valid. When valid file is loaded, creates a new grid and visualizes
@@ -166,10 +170,23 @@ public class SimulationSetup extends Application {
 		File file = fileChooser.showOpenDialog(s);
 
 		if (file != null) {
-
-			xmlReader = new XMLReader(file);
-			mySimulationLoop.setNewSimulationParameters(xmlReader);
 			
+			String fileName = file.getName().toLowerCase();
+			
+			if (fileName.indexOf("random") != -1) {
+				if (fileName.indexOf("fire") != -1)
+					xmlReader = new XMLFireRandom(file);
+				else if (fileName.indexOf("gameoflife") != -1)
+					xmlReader = new XMLGameOfLifeRandom(file);
+				else if (fileName.indexOf("segregation") != -1)
+					xmlReader = new XMLSegregationRandom(file);
+				else if (fileName.indexOf("predatorprey") != -1)
+					xmlReader = new XMLPredatorPreyRandom(file);
+			} else
+				xmlReader = new XMLReader(file);
+
+			mySimulationLoop.setNewSimulationParameters(xmlReader);
+
 			newGrid(scene);
 		}
 
@@ -229,33 +246,46 @@ public class SimulationSetup extends Application {
 	// reset grid to initial states
 	private void reset(Scene scene) {
 		if (xmlReader != null) {
-			mySimulationLoop.pause();
-			mySimulationLoop.setNewSimulationParameters(xmlReader);
-			newGrid(scene);
+			stopAndSetup(scene);
 		}
 	}
 
 	// save simulation configs to new XML file
-	private void save(Scene scene) {
+	private void save() {
 		if (xmlReader != null) {
-			
-			String filePath; 
+
+			String filePath;
 			TextInputDialog dialog = new TextInputDialog("");
 			dialog.setTitle("Save Simulation Configurations Dialog");
 			dialog.setHeaderText("File will be located in 'data' folder");
 			dialog.setContentText("Name of file (no extension):");
-			
+
 			Optional<String> result = dialog.showAndWait();
-			if (result.isPresent()){
-			    filePath = Paths.get(".").toAbsolutePath().normalize().toString() + "/data/" + result.get() + ".xml";
+			if (result.isPresent()) {
+				filePath = Paths.get(".").toAbsolutePath().normalize().toString() + "/data/" + result.get() + ".xml";
 				xmlWriter = new XMLWriter();
 				xmlWriter.setNewSimulationParameters(xmlReader);
-				xmlWriter.setNewStateGrid(mySimulationLoop.getCurrentStateGrid()); 
-				
+				xmlWriter.setNewStateGrid(mySimulationLoop.getCurrentStateGrid());
+
 				xmlWriter.writeToXML();
 				xmlWriter.outputXML(filePath);
 			}
 		}
+	}
+
+	// randomize initial states
+	private void randomize(Scene scene) {
+		if (xmlReader != null) {
+			xmlReader.createRandomStateGrid();
+			stopAndSetup(scene);
+		}
+	}
+
+	// stop simulation and reset grid
+	private void stopAndSetup(Scene scene) {
+		mySimulationLoop.pause();
+		mySimulationLoop.setNewSimulationParameters(xmlReader);
+		newGrid(scene);
 	}
 
 	public void startSimulation(String[] args) {
