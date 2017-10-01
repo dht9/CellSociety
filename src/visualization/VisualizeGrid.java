@@ -25,6 +25,7 @@ public class VisualizeGrid extends GridPane {
 	private int numRows;
 	private int numCols;
 	private int[][] gridArray;
+	private boolean showOutline = false;
 
 	/**
 	 * Constructor for VisualizeGrid Class.
@@ -42,7 +43,7 @@ public class VisualizeGrid extends GridPane {
 		int[][] gridArray = xml.getStateGrid();
 		colorGrid(myColorMap, gridArray);
 
-		setGridLinesVisible(true);
+		setGridLinesVisible(showOutline);
 
 		setAlignment(Pos.CENTER);
 
@@ -123,6 +124,11 @@ public class VisualizeGrid extends GridPane {
 		RectangleCell rect = (RectangleCell) this.getRectWithCellPosition(row, col);
 		rect.setState(state);
 		rect.setFill(color);
+	}
+	
+	public void changeOutline() {
+		if (showOutline) { showOutline = false; }
+		else { showOutline = true; }
 	}
 
 }
