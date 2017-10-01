@@ -130,7 +130,7 @@ public class PredatorPrey extends Cell {
 		}
 		int posSize = movablePos.size();
 		if (posSize != 0) {
-			int randomIndex = (int) (Math.random() * posSize);
+			int randomIndex = (int) (this.randomIndex(posSize));
 			int[] nextPos = movablePos.get(randomIndex);
 			this.setNextRow(nextPos[0]);
 			this.setNextCol(nextPos[1]);
@@ -163,7 +163,7 @@ public class PredatorPrey extends Cell {
 		}
 		int fishSize = availableFish.size();
 		if (fishSize != 0) {
-			PredatorPrey food = (PredatorPrey) availableFish.get((int) (Math.random() * (fishSize - 1)));
+			PredatorPrey food = (PredatorPrey) availableFish.get(this.randomIndex(fishSize));
 			food.consume();
 			this.setNextCol(food.column());
 			this.setNextRow(food.row());

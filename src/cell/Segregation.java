@@ -54,8 +54,7 @@ public class Segregation extends Cell{
 	}
 	
 	private int[] randomMove(List<int[]> emptyPos) {
-		int randomIndex = (int) (Math.random()*(emptyPos.size()));
-		int[] randomPos = emptyPos.get(randomIndex);
+		int[] randomPos = emptyPos.get(this.randomIndex(emptyPos.size()));
 		return randomPos;
 	}
 

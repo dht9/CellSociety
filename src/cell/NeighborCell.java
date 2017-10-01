@@ -122,7 +122,16 @@ public class NeighborCell {
 				if (i != 0 || j != 0) {
 					int[] pos = new int[2];
 					pos[0] = myCell.row() + i;
+					//System.out.println(pos[0]);
+					if (myIsTorus && (pos[0] < 0 || pos[0] > myCell.grid()[0]-1)) {
+						System.out.println(pos[0]);
+						pos[0] = myCell.grid()[0] - Math.abs(pos[0]);
+						System.out.println(pos[0]);
+					}
 					pos[1] = myCell.column() + j;
+					if (myIsTorus && (pos[1] < 0 || pos[1] > myCell.grid()[1]-1)) {
+						pos[1] = myCell.grid()[1] - Math.abs(pos[1]);
+					}
 					adjacentList.add(pos);
 				}
 			}
@@ -184,6 +193,10 @@ public class NeighborCell {
 //		return adjacentPositionsList;
 //	}
 
+	public int randomIndex(int size) {
+		return (int) (Math.random() * size);
+	}
+	
 	public int getNeighborType() {
 		return myNeighborType;
 	}
