@@ -26,6 +26,7 @@ public class VisualizeGrid extends GridPane {
 	private int numCols;
 	private int[][] gridArray;
 	private boolean showOutline = false;
+	private Map<Integer, Color> myColorMap;
 
 	/**
 	 * Constructor for VisualizeGrid Class.
@@ -39,7 +40,7 @@ public class VisualizeGrid extends GridPane {
 	 */
 	public VisualizeGrid(XMLReader xml) {
 
-		Map<Integer, Color> myColorMap = xml.createColorMap();
+		myColorMap = xml.createColorMap();
 		int[][] gridArray = xml.getStateGrid();
 		colorGrid(myColorMap, gridArray);
 
@@ -67,9 +68,12 @@ public class VisualizeGrid extends GridPane {
 
 				Color color = myColorMap.get(gridArray[i][j]);
 
-				this.add(new RectangleCell(getCellWidth(gridArray), getCellHeight(gridArray), color, gridArray[i][j]), j, i);
+				this.add(new RectangleCell(getCellWidth(gridArray), getCellHeight(gridArray), color, gridArray[i][j],myColorMap), j, i);
 			}
 		}
+	}
+	
+	public VisualizeGrid() {
 	}
 
 	/**
