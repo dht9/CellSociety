@@ -96,7 +96,7 @@ public class XMLWriter {
 	}
 
 	/*
-	 * Write data to XML.
+	 * Write data to XML doc.
 	 */
 	public void writeToXML() {
 		try {
@@ -174,6 +174,9 @@ public class XMLWriter {
 
 	}
 
+	/*
+	 * Output file into data folder.
+	 */
 	public void outputXML(String filePath) {
 
 		try {

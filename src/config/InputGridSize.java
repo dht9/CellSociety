@@ -3,35 +3,40 @@ package config;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javax.swing.JPanel;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.util.Pair;
 
+/**
+ * Class for getting user input for new grid dimension.
+ * 
+ * @author DavidTran
+ *
+ */
 public class InputGridSize {
 
-	private int numRows;
-	private int numCols;
 	private int input;
-	private JPanel myPanel;
 	private int gridWidth, gridHeight;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
 
-	public int getInputSize(String s) {
+	/**
+	 * Opens a dialog for user to input a grid dimension.
+	 * 
+	 * @param dimension
+	 *            - user prompt (can be "row" or "column")
+	 * @return
+	 */
+	public int getInputSize(String dimension) {
 		try {
 			TextInputDialog dialog = new TextInputDialog("");
 
 			dialog.setTitle("Input New Grid Dimensions");
-			dialog.setHeaderText("Enter number of " + s);
+			dialog.setHeaderText("Enter number of " + dimension);
 
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()) {
 				input = Integer.parseInt(result.get());
-			}
-			else
+			} else
 				input = 1;
 		} catch (NumberFormatException e) {
 			showError(e.getMessage());
@@ -44,10 +49,5 @@ public class InputGridSize {
 		alert.setTitle(myResources.getString("ErrorInputSize"));
 		alert.setContentText(message);
 		alert.showAndWait();
-	}
-
-	public int[] getGridSize() {
-		int[] size = { gridWidth, gridHeight };
-		return size;
 	}
 }

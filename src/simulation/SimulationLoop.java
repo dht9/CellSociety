@@ -12,7 +12,6 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,11 +30,7 @@ public class SimulationLoop {
 
 	private static final int MAX_FRAMES_PER_SECOND = 30;
 
-	private int guiWidth;
-	private int guiHeight;
 	private int numStates;
-	private Stage myStage;
-	private Scene myScene;
 	private Timeline animation;
 	private KeyFrame frame;
 	private boolean shouldRun;
@@ -56,7 +51,7 @@ public class SimulationLoop {
 
 	private VBox vbox;
 
-	private CellManager manager;
+	private CellManager myManager;
 
 	/**
 	 * Constructor, initializes and starts the simulation loop.
@@ -71,18 +66,11 @@ public class SimulationLoop {
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
+		shouldRun = false;
 	}
 
 	public void setVBox(VBox v) {
 		vbox = v;
-	}
-
-	public void setGUI(Stage s, Scene scene, int width, int height) {
-		myStage = s;
-		myScene = scene;
-		guiWidth = width;
-		guiHeight = height;
-		shouldRun = false;
 	}
 
 	public void setMakeSlider(MakeSlider mSlider) {
@@ -106,15 +94,15 @@ public class SimulationLoop {
 		edgeType = xmlReaderInput.getEdgeType();
 		neighborType = xmlReaderInput.getNeighborType();
 
-		manager = new CellManager();
+		myManager = new CellManager();
 		firstIter = true;
-		
+
 		while (!vbox.getChildren().isEmpty()) {
 			vbox.getChildren().remove(0);
 		}
 
-		if (stateGrid != null)
-			manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+		myManager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+		myGrid.setCellManager(myManager);
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -128,7 +116,7 @@ public class SimulationLoop {
 
 		if (shouldRun && xmlReader != null) {
 
-			manager.update();
+			myManager.update();
 
 			// update all rectangles to empty color
 			for (int i = 0; i < myGrid.getRowSize(); i++) {
@@ -138,7 +126,7 @@ public class SimulationLoop {
 			}
 			Map<Integer, Integer> populationMap = new HashMap<Integer, Integer>();
 			// update appropriate rectangles to non-empty color
-			List<Cell> cellList = manager.cellList();
+			List<Cell> cellList = myManager.cellList();
 			for (Cell cell : cellList) {
 
 				int row = cell.row();
@@ -158,7 +146,6 @@ public class SimulationLoop {
 			numStates = populationMap.size();
 
 			for (int key : populationMap.keySet()) {
-				System.out.print("FAE" + firstIter);
 				if (!firstIter) {
 					vbox.getChildren().remove(0);
 				}
@@ -189,7 +176,7 @@ public class SimulationLoop {
 		return MAX_FRAMES_PER_SECOND;
 	}
 
-	public Map getStateMap() {
+	public Map<Integer, String> getStateMap() {
 		return stateNameMap;
 	}
 
