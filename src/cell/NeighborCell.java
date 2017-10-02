@@ -15,6 +15,7 @@ public class NeighborCell {
 	private static final int FOURADJACENT = 4;
 	private static final int EIGHTADJACENT = 8;
 	private static final int THREEADJACENT = 3;
+	private static final int FOURVISION = 44;
 	private static final double FOURRADIUS = 1;
 	private static final double EIGHTRADIUS = Math.sqrt(2);
 	private static final double THREERADIUS = 1;
@@ -38,6 +39,9 @@ public class NeighborCell {
 		setRadius();
 	}
 
+	/**
+	 * assign neighboring radius based on neighbor type
+	 */
 	private void setRadius() {
 		switch(myNeighborType) {
 			case FOURADJACENT:
@@ -62,6 +66,10 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
+		if (myNeighborType == FOURVISION) {
+			SugarScape current = (SugarScape) myCell;
+			List<int[]> adjacentList = current.visionList();
+		}
 		List<int[]> adjacentList = myCell.adjacent();
 		for (int[] adjacent: adjacentList) {
 			if (other.row() == adjacent[0] && other.column() == adjacent[1]) {
@@ -113,21 +121,56 @@ public class NeighborCell {
 ////		}
 //		return adjacentList;
 //	}
+	/**
+	 * only valid in neighbor type 4 for SugarScape
+	 * @return
+	 */
+	public List<int[]> visionPos(int vision) {
+		List<int[]> visionList = new ArrayList<int[]>();
+		for (int i = vision; Math.abs(i) <= vision; i--) {
+			for (int j = vision; Math.abs(j) <= vision; j--) {
+				int[] pos = getPos(i, j);
+				visionList.add(pos);
+			}
+		}
+		return visionList;
+	}
 	
+	/**
+	 * get a list of adjacent position
+	 * @return list of adjacent position
+	 */
 	public List<int[]> adjacentPos() {
 		List<int[]> adjacentList = new ArrayList<int[]>();
 		double sqR = myRadius*myRadius;
 		for (int i = (int) Math.floor(myRadius); i*i <= sqR; i--) {
 			for (int j = (int) Math.floor(Math.sqrt(sqR-(i*i))); j*j <= sqR-(i*i); j--) {
 				if (i != 0 || j != 0) {
-					int[] pos = new int[2];
-					pos[0] = myCell.row() + i;
-					pos[1] = myCell.column() + j;
+					int[] pos = getPos(i, j);
 					adjacentList.add(pos);
 				}
 			}
 		}
 		return adjacentList;
+	}
+
+	/**
+	 * helper method for getting position and checking torus
+	 * @param i
+	 * @param j
+	 * @return adjacent position
+	 */
+	private int[] getPos(int i, int j) {
+		int[] pos = new int[2];
+		pos[0] = myCell.row() + i;
+		if (myIsTorus && (pos[0] < 0 || pos[0] > myCell.grid()[0]-1)) {
+			pos[0] = myCell.grid()[0] - Math.abs(pos[0]);
+		}
+		pos[1] = myCell.column() + j;
+		if (myIsTorus && (pos[1] < 0 || pos[1] > myCell.grid()[1]-1)) {
+			pos[1] = myCell.grid()[1] - Math.abs(pos[1]);
+		}
+		return pos;
 	}
 
 //	/**
@@ -184,6 +227,19 @@ public class NeighborCell {
 //		return adjacentPositionsList;
 //	}
 
+	/**
+	 * helper method for getting random index
+	 * @param size of list
+	 * @return random index
+	 */
+	public int randomIndex(int size) {
+		return (int) (Math.random() * size);
+	}
+	
+	/**
+	 * access the neighborType
+	 * @return myNeighborType
+	 */
 	public int getNeighborType() {
 		return myNeighborType;
 	}

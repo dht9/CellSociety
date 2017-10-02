@@ -161,13 +161,17 @@ public abstract class Cell {
 		return myEdgeType;
 	}
 	
-	/**
-	 * check if the cell is at edge
-	 * @return whether this cell is at edge
-	 */
-	public boolean isEdge() {
-		return (myrow == 0 || mycol == 0 || myrow == mygrid[0]-1 || mycol == mygrid[1]-1);
-	}
+//	/**
+//	 * check if the cell is at edge
+//	 * @return whether this cell is at edge
+//	 */
+//	public boolean isVerEdge() {
+//		return (myrow == 0 || myrow == mygrid[0]-1);
+//	}
+//	
+//	public boolean isSideEdge() {
+//		return (mycol == 0 || mycol == mygrid[1]-1);
+//	}
 	
 	/**
 	 * update cell position and state depending on the neighborlist input
@@ -212,12 +216,30 @@ public abstract class Cell {
 	}
 	
 	/**
+	 * return a list of vision position
+	 * @param vision
+	 * @return list of vision position
+	 */
+	protected List<int[]> visionPos(int vision) {
+		return myNeighborCell.visionPos(vision);
+	}
+	
+	/**
 	 * get the adjacent position list, to accelerate speed
 	 * 
 	 * @return adjacent position list
 	 */
 	public List<int[]> adjacent() {
 		return myAdjacent;
+	}
+	
+	/**
+	 * get random index
+	 * @param size
+	 * @return random index
+	 */
+	public int randomIndex(int size) {
+		return myNeighborCell.randomIndex(size);
 	}
 
 }

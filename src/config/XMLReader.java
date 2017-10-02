@@ -267,6 +267,11 @@ public class XMLReader {
 		return stateGrid;
 	}
 	
+	/**
+	 * Creates a grid of random states.
+	 * 
+	 * @return
+	 */
 	public int[][] createRandomStateGrid() {
 
 		stateGrid = new int[numRows][numCols];

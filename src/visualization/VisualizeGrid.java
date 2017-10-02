@@ -3,6 +3,7 @@ package visualization;
 import java.util.HashMap;
 import java.util.Map;
 
+import cell.CellManager;
 import config.XMLReader;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -25,6 +26,9 @@ public class VisualizeGrid extends GridPane {
 	private int numRows;
 	private int numCols;
 	private int[][] gridArray;
+	private boolean showOutline = false;
+	private Map<Integer, Color> myColorMap;
+	private CellManager myCellManager;
 
 	/**
 	 * Constructor for VisualizeGrid Class.
@@ -38,11 +42,11 @@ public class VisualizeGrid extends GridPane {
 	 */
 	public VisualizeGrid(XMLReader xml) {
 
-		Map<Integer, Color> myColorMap = xml.createColorMap();
-		int[][] gridArray = xml.getStateGrid();
+		myColorMap = xml.createColorMap();
+		gridArray = xml.getStateGrid();
 		colorGrid(myColorMap, gridArray);
 
-		setGridLinesVisible(true);
+		setGridLinesVisible(showOutline);
 
 		setAlignment(Pos.CENTER);
 
@@ -59,14 +63,21 @@ public class VisualizeGrid extends GridPane {
 		}
 	}
 
+	/**
+	 * Creates grid of rectangles.
+	 * 
+	 * @param myColorMap
+	 * @param gridArray
+	 */
 	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
 
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray[0].length; j++) {
 
 				Color color = myColorMap.get(gridArray[i][j]);
-
-				this.add(new RectangleCell(getCellWidth(gridArray), getCellHeight(gridArray), color, gridArray[i][j]), j, i);
+				
+				this.add(new RectangleCell(i, j, getCellWidth(gridArray), getCellHeight(gridArray), color,
+						gridArray[i][j], myColorMap), j, i);
 			}
 		}
 	}
@@ -82,7 +93,6 @@ public class VisualizeGrid extends GridPane {
 	 *            contains
 	 * @return rectangle with the cell's coordinates
 	 */
-
 	public Node getRectWithCellPosition(int row, int column) {
 		Node rect = null;
 		ObservableList<Node> children = this.getChildren();
@@ -98,7 +108,7 @@ public class VisualizeGrid extends GridPane {
 	private double getCellWidth(int[][] gridArray) {
 		return GRID_SIZE / gridArray[0].length;
 	}
-	
+
 	private double getCellHeight(int[][] gridArray) {
 		return GRID_SIZE / gridArray.length;
 	}
@@ -109,6 +119,21 @@ public class VisualizeGrid extends GridPane {
 
 	public int getColSize() {
 		return numCols;
+	}
+
+	/**
+	 * Gives each rectangle the cell manager instance to modifies cells when rectangle is clicked.
+	 */
+	public void setCellManager(CellManager c) {
+		myCellManager = c;
+		for (int i = 0; i < gridArray.length; i++) {
+			for (int j = 0; j < gridArray[0].length; j++) {
+				 RectangleCell rect = (RectangleCell) this.getRectWithCellPosition(i,j);
+				 rect.setManager(c);
+				 
+			}
+		}
+		System.out.println(myCellManager.toString());
 	}
 
 	/**
@@ -123,6 +148,15 @@ public class VisualizeGrid extends GridPane {
 		RectangleCell rect = (RectangleCell) this.getRectWithCellPosition(row, col);
 		rect.setState(state);
 		rect.setFill(color);
+	}
+	
+	public CellManager getManager() {
+		return myCellManager;
+	}
+
+	public void changeOutline() {
+		showOutline = !showOutline;
+		setGridLinesVisible(showOutline);
 	}
 
 }

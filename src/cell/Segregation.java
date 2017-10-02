@@ -33,29 +33,28 @@ public class Segregation extends Cell{
 			percent = 0;
 		}
 		if (percent < myThreshold) {
-			int[] nextPos = randomMove(emptyPos);
-			this.setNextRow(nextPos[0]);
-			this.setNextCol(nextPos[1]);
-			int[] currentPos = {this.row(), this.column()};
-			emptyPos.add(currentPos);
-			Iterator<int[]> emptyIter = emptyPos.iterator();
-			while(emptyIter.hasNext()) {
-				int[] nextEmpty = emptyIter.next();
-				if (nextEmpty[0] == this.nextrow() && nextEmpty[1] == this.nextcol()) {
-					emptyIter.remove();
-				}
+			move(emptyPos);
+		}
+	}
+
+	private void move(List<int[]> emptyPos) {
+		int[] nextPos = randomMove(emptyPos);
+		this.setNextRow(nextPos[0]);
+		this.setNextCol(nextPos[1]);
+		int[] currentPos = {this.row(), this.column()};
+		emptyPos.add(currentPos);
+		Iterator<int[]> emptyIter = emptyPos.iterator();
+		while(emptyIter.hasNext()) {
+			int[] nextEmpty = emptyIter.next();
+			if (nextEmpty[0] == this.nextrow() && nextEmpty[1] == this.nextcol()) {
+				emptyIter.remove();
 			}
 		}
 	}
-	
-	@Override
-	public void update(List<Cell>removeCellList, List<Cell> newCellList, List<int[]> emptyPos) {
-		super.update(removeCellList, newCellList, emptyPos);
-	}
+
 	
 	private int[] randomMove(List<int[]> emptyPos) {
-		int randomIndex = (int) (Math.random()*(emptyPos.size()));
-		int[] randomPos = emptyPos.get(randomIndex);
+		int[] randomPos = emptyPos.get(this.randomIndex(emptyPos.size()));
 		return randomPos;
 	}
 
