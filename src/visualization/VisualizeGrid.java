@@ -73,7 +73,7 @@ public class VisualizeGrid extends GridPane {
 //					System.out.println("SHIT");
 //				}
 				this.add(new RectangleCell(i, j, getCellWidth(gridArray), getCellHeight(gridArray), color,
-						gridArray[i][j], myColorMap, myCellManager), j, i);
+						gridArray[i][j], myColorMap), j, i);
 			}
 		}
 	}
@@ -123,6 +123,13 @@ public class VisualizeGrid extends GridPane {
 
 	public void setCellManager(CellManager c) {
 		myCellManager = c;
+		for (int i = 0; i < gridArray.length; i++) {
+			for (int j = 0; j < gridArray[0].length; j++) {
+				 RectangleCell rect = (RectangleCell) this.getRectWithCellPosition(i,j);
+				 rect.setManager(myCellManager);
+				 
+			}
+		}
 		System.out.println(myCellManager.toString());
 	}
 

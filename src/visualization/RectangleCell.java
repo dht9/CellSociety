@@ -15,14 +15,13 @@ public class RectangleCell extends Rectangle {
 	private int myRow;
 	private int myCol;
 
-	public RectangleCell(int row, int col, double width, double height, Color color, int state, Map<Integer, Color> colorMap, CellManager manager) {
+	public RectangleCell(int row, int col, double width, double height, Color color, int state, Map<Integer, Color> colorMap) {
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setFill(color);
 		myRow = row;
 		myCol = col;
 		myState = state;
-		myCellManager = manager;
 
 		// create Array consisted of keys from colorMap
 		// wraps Array. For example, if keys are -1,0,1, the colorKeyArray is
@@ -65,6 +64,10 @@ public class RectangleCell extends Rectangle {
 
 	public void setState(int state) {
 		myState = state;
+	}
+	
+	public void setManager(CellManager c) {
+		myCellManager = c;
 	}
 
 }

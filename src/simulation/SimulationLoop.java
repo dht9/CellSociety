@@ -108,15 +108,14 @@ public class SimulationLoop {
 
 		myManager = new CellManager();
 		firstIter = true;
-		
+
 		while (!vbox.getChildren().isEmpty()) {
 			vbox.getChildren().remove(0);
 		}
 
-		if (stateGrid != null)
-			myManager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
-			myGrid.setCellManager(myManager);
-			System.out.println(myManager.toString());
+		myManager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+		myGrid.setCellManager(myManager);
+//		System.out.println(myManager.toString());
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
