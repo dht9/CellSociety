@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<simulation type = "RPS">
+	
+	<colormap>
+		<color stateNum = "0" color = "WHITE"></color>
+		<color stateNum = "1" color = "RED"></color>
+		<color stateNum = "2" color = "BLUE"></color>
+		<color stateNum = "3" color = "GREEN"></color>
+	</colormap>
+	
+	<statemap>
+		<state stateNum = "0" name = "EMPTY"></state>
+		<state stateNum = "1" name = "ROCK"></state>
+		<state stateNum = "2" name = "PAPER"></state>
+		<state stateNum = "3" name = "SCISSORS"></state>
+	</statemap>
+	
+	<parametermap></parametermap>
+	
+	<edges>
+		<edge type = "straight"></edge>
+	</edges>
+	
+	<neighbors>
+		<neighbor type = "4"></neighbor>
+	</neighbors>
+
+	<grid>
+		<row stateNum = "0"></row>
+	</grid>
+	
+</simulation>

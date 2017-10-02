@@ -1,6 +1,7 @@
 package cell;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -133,6 +134,9 @@ public class CellManager {
 			case "Fire":
 				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				break;
+			case "RPS":
+				current = new RockPaperScissors(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+				break;
 			default:
 				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
 				//showError();
@@ -150,6 +154,29 @@ public class CellManager {
 		alert.setTitle("Error");
 		alert.setContentText(myResources.getString("ErrorSimulationType"));
 		alert.showAndWait();
+	}
+	
+	/**
+	 * for mouse click to change state
+	 * @param row
+	 * @param col
+	 * @param state
+	 */
+	public void changeState(int row, int col, int state) {
+		Iterator<Cell> cellIter = myCellList.iterator();
+		while (cellIter.hasNext()) {
+			Cell next = cellIter.next();
+			if (next.row() == row && next.column() == col) {
+				next.setNextState(state);;
+			}
+		}
+		List<Cell> newCellList = new ArrayList<Cell>();
+		List<Cell> removeCellList = new ArrayList<Cell>();
+		for (Cell current: myCellList) {
+			current.update(removeCellList, newCellList, myEmptyPos);
+		}
+		myCellList.addAll(newCellList);
+		myCellList.removeAll(removeCellList);
 	}
 
 }
