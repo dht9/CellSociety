@@ -115,7 +115,6 @@ public class SimulationLoop {
 
 		myManager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
 		myGrid.setCellManager(myManager);
-//		System.out.println(myManager.toString());
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {

@@ -63,22 +63,23 @@ public class VisualizeGrid extends GridPane {
 		}
 	}
 
+	/**
+	 * Creates grid of rectangles.
+	 * 
+	 * @param myColorMap
+	 * @param gridArray
+	 */
 	private void colorGrid(Map<Integer, Color> myColorMap, int[][] gridArray) {
 
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray[0].length; j++) {
 
 				Color color = myColorMap.get(gridArray[i][j]);
-//				if (myCellManager == null) {
-//					System.out.println("SHIT");
-//				}
+				
 				this.add(new RectangleCell(i, j, getCellWidth(gridArray), getCellHeight(gridArray), color,
 						gridArray[i][j], myColorMap), j, i);
 			}
 		}
-	}
-
-	public VisualizeGrid() {
 	}
 
 	/**
@@ -92,7 +93,6 @@ public class VisualizeGrid extends GridPane {
 	 *            contains
 	 * @return rectangle with the cell's coordinates
 	 */
-
 	public Node getRectWithCellPosition(int row, int column) {
 		Node rect = null;
 		ObservableList<Node> children = this.getChildren();
@@ -121,6 +121,9 @@ public class VisualizeGrid extends GridPane {
 		return numCols;
 	}
 
+	/**
+	 * Gives each rectangle the cell manager instance to modifies cells when rectangle is clicked.
+	 */
 	public void setCellManager(CellManager c) {
 		myCellManager = c;
 		for (int i = 0; i < gridArray.length; i++) {
