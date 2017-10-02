@@ -12,7 +12,6 @@ import java.util.Map;
 public class GameofLife extends Cell{
 	private static final int LIVE = 1;
 	private static final int DIE = 0;
-	private static final int EIGHTADJACENT = 8;
 	
 
 	/**
