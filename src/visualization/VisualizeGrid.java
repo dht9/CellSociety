@@ -26,7 +26,7 @@ public class VisualizeGrid extends GridPane {
 	private int numRows;
 	private int numCols;
 	private int[][] gridArray;
-	private boolean showOutline = false;
+	private boolean showOutline = true;
 	private Map<Integer, Color> myColorMap;
 	private CellManager myCellManager;
 

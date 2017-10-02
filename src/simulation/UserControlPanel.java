@@ -188,6 +188,8 @@ public class UserControlPanel extends HBox {
 
 	// save simulation configs to new XML file
 	private void save() {
+		mySimulationLoop.pause();
+		
 		if (xmlReader != null) {
 
 			String filePath;
