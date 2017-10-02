@@ -189,7 +189,7 @@ public class SimulationLoop {
 		return MAX_FRAMES_PER_SECOND;
 	}
 
-	public Map getStateMap() {
+	public Map<Integer, String> getStateMap() {
 		return stateNameMap;
 	}
 

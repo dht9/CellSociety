@@ -318,8 +318,9 @@ public class SimulationSetup extends Application {
 	// stop simulation and reset grid
 	private void stopAndSetup(Scene scene) {
 		mySimulationLoop.pause();
-		mySimulationLoop.setNewSimulationParameters(xmlReader);
 		newGrid(scene);
+		mySimulationLoop.setNewSimulationParameters(xmlReader);
+		
 	}
 
 	public void startSimulation(String[] args) {

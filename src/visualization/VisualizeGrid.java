@@ -43,7 +43,7 @@ public class VisualizeGrid extends GridPane {
 	public VisualizeGrid(XMLReader xml) {
 
 		myColorMap = xml.createColorMap();
-		int[][] gridArray = xml.getStateGrid();
+		gridArray = xml.getStateGrid();
 		colorGrid(myColorMap, gridArray);
 
 		setGridLinesVisible(showOutline);
@@ -126,7 +126,7 @@ public class VisualizeGrid extends GridPane {
 		for (int i = 0; i < gridArray.length; i++) {
 			for (int j = 0; j < gridArray[0].length; j++) {
 				 RectangleCell rect = (RectangleCell) this.getRectWithCellPosition(i,j);
-				 rect.setManager(myCellManager);
+				 rect.setManager(c);
 				 
 			}
 		}
