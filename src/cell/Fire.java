@@ -1,38 +1,35 @@
 package cell;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Fire extends Cell{
 	private static final int BURNING = 1;
 	private static final int TREE = 0;
 	private static final int EMPTY = -1;
-	private static final int FOURADJACENT = 4;
 	
 	private double myProbCatch;
 	private boolean myIsEmpty = false;
 	private boolean myIsProbBurn = false;
 
-	public Fire(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap) {
-		super(row, column, state, gridSize, paraMap);
+	public Fire(int row, int column, int state, int[] gridSize, Map<String,Double> paraMap, String edgeType, int neighborType) {
+		super(row, column, state, gridSize, paraMap, edgeType, neighborType);
 		for (String key : paraMap.keySet()) {
 			if (key.equalsIgnoreCase("probCatch"))
 				myProbCatch = paraMap.get(key);
 		}
-		myNeighborCell = new NeighborCell(FOURADJACENT, false, this);
-		myAdjacent = myNeighborCell.adjacentPos();
 	}
 	
 	@Override
-	public void updateInfo(ArrayList<Cell> neighborlist, ArrayList<int[]> emptyPos) {
+	public void updateInfo(List<Cell> neighborlist, List<int[]> emptyPos) {
 		super.updateInfo(neighborlist, emptyPos);
-		if (mystate == BURNING) {
+		if (this.state() == BURNING) {
 			myIsEmpty = true;
-			mynextState = EMPTY;
+			this.setNextState(EMPTY);
 		}
-		if (mystate == TREE) {
+		if (this.state() == TREE) {
 			for (Cell neighbor: neighborlist) {
-				if (neighbor.mystate == BURNING) {
+				if (neighbor.state() == BURNING) {
 					myIsProbBurn = true;
 				}
 			}
@@ -43,7 +40,7 @@ public class Fire extends Cell{
 	}
 	
 	@Override
-	public void update(ArrayList<Cell>removeCellList, ArrayList<Cell> newCellList, ArrayList<int[]> emptyPos) {
+	public void update(List<Cell>removeCellList, List<Cell> newCellList, List<int[]> emptyPos) {
 		super.update(removeCellList, newCellList, emptyPos);
 		if (myIsEmpty) {
 			removeCellList.add(this);
@@ -53,7 +50,7 @@ public class Fire extends Cell{
 	private void probBurn() {
 		double prob = Math.random();
 		if (prob <= myProbCatch) {
-			mynextState = BURNING;
+			this.setNextState(BURNING);
 		}
 		myIsProbBurn = false;
 	}
