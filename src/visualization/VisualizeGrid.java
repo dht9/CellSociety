@@ -155,11 +155,8 @@ public class VisualizeGrid extends GridPane {
 	}
 
 	public void changeOutline() {
-		if (showOutline) {
-			showOutline = false;
-		} else {
-			showOutline = true;
-		}
+		showOutline = !showOutline;
+		setGridLinesVisible(showOutline);
 	}
 
 }
