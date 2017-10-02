@@ -2,6 +2,7 @@ package visualization;
 
 import java.util.Map;
 
+import cell.CellManager;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -10,12 +11,18 @@ public class RectangleCell extends Rectangle {
 	private int myState;
 	private int newState;
 	private Color newColor;
+	private CellManager myCellManager;
+	private int myRow;
+	private int myCol;
 
-	public RectangleCell(double width, double height, Color color, int state, Map<Integer, Color> colorMap) {
+	public RectangleCell(int row, int col, double width, double height, Color color, int state, Map<Integer, Color> colorMap, CellManager manager) {
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setFill(color);
+		myRow = row;
+		myCol = col;
 		myState = state;
+		myCellManager = manager;
 
 		// create Array consisted of keys from colorMap
 		// wraps Array. For example, if keys are -1,0,1, the colorKeyArray is
@@ -49,6 +56,7 @@ public class RectangleCell extends Rectangle {
 		this.setFill(newColor);
 		this.setState(newState);
 		this.setNewState(colMap, stateArray);
+		myCellManager.changeState(myRow, myCol, newState);
 	}
 
 	public int getState() {
