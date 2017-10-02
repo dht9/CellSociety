@@ -49,8 +49,6 @@ public class SimulationSetup extends Application {
 		s.setTitle("Cell Society");
 		s.setScene(scene);
 		s.show();
-
-		mySimulationLoop.setGUI(s, scene, GUI_WIDTH, GUI_HEIGHT);
 	}
 
 	/**
@@ -83,9 +81,7 @@ public class SimulationSetup extends Application {
 
 		vbox = new VBox(8);
 		mySimulationLoop.setVBox(vbox);
-
 		return vbox;
-
 	}
 
 	/**
@@ -98,7 +94,6 @@ public class SimulationSetup extends Application {
 	private Node makeButtonPanel(Stage s, Scene scene, GridPane grid) {
 
 		ctrlPanel = new UserControlPanel(s, scene, mySimulationLoop, xmlReader, xmlWriter, 10);
-
 		return ctrlPanel;
 	}
 

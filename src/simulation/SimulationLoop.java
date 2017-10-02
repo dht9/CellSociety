@@ -12,7 +12,6 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,11 +30,7 @@ public class SimulationLoop {
 
 	private static final int MAX_FRAMES_PER_SECOND = 30;
 
-	private int guiWidth;
-	private int guiHeight;
 	private int numStates;
-	private Stage myStage;
-	private Scene myScene;
 	private Timeline animation;
 	private KeyFrame frame;
 	private boolean shouldRun;
@@ -71,18 +66,11 @@ public class SimulationLoop {
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.play();
+		shouldRun = false;
 	}
 
 	public void setVBox(VBox v) {
 		vbox = v;
-	}
-
-	public void setGUI(Stage s, Scene scene, int width, int height) {
-		myStage = s;
-		myScene = scene;
-		guiWidth = width;
-		guiHeight = height;
-		shouldRun = false;
 	}
 
 	public void setMakeSlider(MakeSlider mSlider) {
