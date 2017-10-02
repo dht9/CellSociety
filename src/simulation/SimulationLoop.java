@@ -56,7 +56,7 @@ public class SimulationLoop {
 
 	private VBox vbox;
 
-	private CellManager manager;
+	private CellManager myManager;
 
 	/**
 	 * Constructor, initializes and starts the simulation loop.
@@ -106,7 +106,7 @@ public class SimulationLoop {
 		edgeType = xmlReaderInput.getEdgeType();
 		neighborType = xmlReaderInput.getNeighborType();
 
-		manager = new CellManager();
+		myManager = new CellManager();
 		firstIter = true;
 		
 		while (!vbox.getChildren().isEmpty()) {
@@ -114,7 +114,9 @@ public class SimulationLoop {
 		}
 
 		if (stateGrid != null)
-			manager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+			myManager.initialize(stateGrid, edgeType, simulationType, parameterMap, neighborType);
+			myGrid.setCellManager(myManager);
+			System.out.println(myManager.toString());
 	}
 
 	public void setVisualizeGrid(VisualizeGrid grid) {
@@ -128,7 +130,7 @@ public class SimulationLoop {
 
 		if (shouldRun && xmlReader != null) {
 
-			manager.update();
+			myManager.update();
 
 			// update all rectangles to empty color
 			for (int i = 0; i < myGrid.getRowSize(); i++) {
@@ -138,7 +140,7 @@ public class SimulationLoop {
 			}
 			Map<Integer, Integer> populationMap = new HashMap<Integer, Integer>();
 			// update appropriate rectangles to non-empty color
-			List<Cell> cellList = manager.cellList();
+			List<Cell> cellList = myManager.cellList();
 			for (Cell cell : cellList) {
 
 				int row = cell.row();
@@ -158,7 +160,6 @@ public class SimulationLoop {
 			numStates = populationMap.size();
 
 			for (int key : populationMap.keySet()) {
-				System.out.print("FAE" + firstIter);
 				if (!firstIter) {
 					vbox.getChildren().remove(0);
 				}
