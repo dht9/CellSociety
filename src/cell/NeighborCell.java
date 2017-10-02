@@ -15,7 +15,7 @@ public class NeighborCell {
 	private static final int FOURADJACENT = 4;
 	private static final int EIGHTADJACENT = 8;
 	private static final int THREEADJACENT = 3;
-	private static final int TWELVEADJACENT = 12;
+	private static final int FOURVISION = 44;
 	private static final double FOURRADIUS = 1;
 	private static final double EIGHTRADIUS = Math.sqrt(2);
 	private static final double THREERADIUS = 1;
@@ -66,6 +66,10 @@ public class NeighborCell {
 	 * @return whether a cell is the neighbor cell
 	 */
 	public boolean isNeighbor(Cell other) {
+		if (myNeighborType == FOURVISION) {
+			SugarScape current = (SugarScape) myCell;
+			List<int[]> adjacentList = current.visionList();
+		}
 		List<int[]> adjacentList = myCell.adjacent();
 		for (int[] adjacent: adjacentList) {
 			if (other.row() == adjacent[0] && other.column() == adjacent[1]) {
@@ -117,6 +121,20 @@ public class NeighborCell {
 ////		}
 //		return adjacentList;
 //	}
+	/**
+	 * only valid in neighbor type 4 for SugarScape
+	 * @return
+	 */
+	public List<int[]> visionPos(int vision) {
+		List<int[]> visionList = new ArrayList<int[]>();
+		for (int i = vision; Math.abs(i) <= vision; i--) {
+			for (int j = vision; Math.abs(j) <= vision; j--) {
+				int[] pos = getPos(i, j);
+				visionList.add(pos);
+			}
+		}
+		return visionList;
+	}
 	
 	/**
 	 * get a list of adjacent position

@@ -216,6 +216,15 @@ public abstract class Cell {
 	}
 	
 	/**
+	 * return a list of vision position
+	 * @param vision
+	 * @return list of vision position
+	 */
+	protected List<int[]> visionPos(int vision) {
+		return myNeighborCell.visionPos(vision);
+	}
+	
+	/**
 	 * get the adjacent position list, to accelerate speed
 	 * 
 	 * @return adjacent position list
