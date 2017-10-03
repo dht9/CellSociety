@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import config.XMLFireRandom;
 import config.XMLGameOfLifeRandom;
 import config.XMLPredatorPreyRandom;
+import config.XMLRPSRandom;
 import config.XMLReader;
 import config.XMLSegregationRandom;
 import config.XMLWriter;
@@ -150,8 +151,8 @@ public class UserControlPanel extends HBox {
 					xmlReader = new XMLSegregationRandom(file);
 				else if (fileName.indexOf("predatorprey") != -1)
 					xmlReader = new XMLPredatorPreyRandom(file);
-				// else if (fileName.indexOf("rps") != -1)
-				// xmlReader = new XMLRPSRandom(file);
+				 else if (fileName.indexOf("rps") != -1)
+				 xmlReader = new XMLRPSRandom(file);
 			} else
 				xmlReader = new XMLReader(file);
 
@@ -188,6 +189,8 @@ public class UserControlPanel extends HBox {
 
 	// save simulation configs to new XML file
 	private void save() {
+		mySimulationLoop.pause();
+		
 		if (xmlReader != null) {
 
 			String filePath;

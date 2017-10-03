@@ -83,11 +83,11 @@ public class XMLWriter {
 
 		colorMap = xmlReaderInput.createColorMap();
 		stateNameMap = xmlReaderInput.createStateNameMap();
-		parameterMap = xmlReaderInput.createParameterMap();
-		stateGrid = xmlReaderInput.createStateGrid();
-		edgeType = xmlReaderInput.setEdgeType();
+		parameterMap = xmlReaderInput.getParameterMap();
+		stateGrid = xmlReaderInput.getStateGrid();
+		edgeType = xmlReaderInput.getEdgeType();
 		simulationType = xmlReaderInput.setSimulationType();
-		neighborType = xmlReaderInput.setNeighborType();
+		neighborType = xmlReaderInput.getNeighborType();
 
 	}
 	
