@@ -9,7 +9,7 @@ import java.util.Random;
  * @author DavidTran
  *
  */
-public class XMLRandom extends XMLReader {
+public abstract class XMLRandom extends XMLReader {
 
 	private InputGridSize dialog;
 

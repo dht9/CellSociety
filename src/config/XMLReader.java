@@ -240,6 +240,7 @@ public class XMLReader {
 	 */
 	public int[][] createStateGrid() {
 
+		try {
 		NodeList nList = doc.getElementsByTagName("row");
 
 		numRows = nList.getLength();
@@ -261,6 +262,10 @@ public class XMLReader {
 				String trim = colStates.get(j).trim();
 				stateGrid[i][j] = Integer.parseInt(trim);
 			}
+		}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			showError(e.getMessage());
 		}
 		// System.out.println(Arrays.deepToString(stateGrid));
 
