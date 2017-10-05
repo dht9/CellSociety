@@ -28,6 +28,7 @@
  	* **NumberFormatException** in XML
  	* **IOException** for XML loading
  	* **ParserConfigurationException** for XML parsing
+
 * Resource file: Text.properties (in resources folder)
 
 ### Bugs:
