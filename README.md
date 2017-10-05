@@ -25,11 +25,10 @@
  * Starting the program: Main.java
  * Testing the program: Fire10x10.xml, FireRandom.xml
  * Error handling without crashing:
- 	* **NumberFormatException** in XML
- 	* **IOException** for XML loading
- 	* **ParserConfigurationException** for XML parsing
-
-* Resource file: Text.properties (in resources folder)
+    * **NumberFormatException** in XML
+    * **IOException** for XML loading   
+    * **ParserConfigurationException** for XML parsing   
+ * Resource file: Text.properties (in resources folder)
 
 ### Bugs:
 Cell mouse-click works for changing color but not state.
