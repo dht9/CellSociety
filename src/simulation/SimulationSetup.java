@@ -1,12 +1,10 @@
 package simulation;
 
-//import config.XMLRPSRandom;
 import config.XMLReader;
 import config.XMLWriter;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -16,7 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
- * This class initializes the interface for the simulation.
+ * This class initializes the interface for the CA simulation.
  * 
  * @author DavidTran, RyanChung
  *
@@ -30,15 +28,12 @@ public class SimulationSetup extends Application {
 	private static final int GUI_HEIGHT = 700;
 
 	private SimulationLoop mySimulationLoop;
-	private XMLReader xmlReader;
-	private XMLWriter xmlWriter;
 	private GridPane startingGrid;
 	private UserControlPanel ctrlPanel;
-
-	private VBox vbox;
+	private VBox popPanel;
 
 	/**
-	 * Initialize stage, scene, and simulation loop.
+	 * Initialize the stage, scene, GUI, and simulation loop.
 	 */
 	@Override
 	public void start(Stage s) {
@@ -52,54 +47,45 @@ public class SimulationSetup extends Application {
 	}
 
 	/**
-	 * Initializes the scene with buttons.
+	 * Initializes the scene with a control panel, grid, population panel.
 	 * 
-	 * @param s
-	 *            stage for the gui
-	 * @param guiWidth
-	 * @param guiHeight
-	 * @return scene to be displayed on the stage
+	 * @param stage
+	 * @param width
+	 * @param height
+	 * @return scene
 	 */
-	@SuppressWarnings("static-access")
-	public Scene setupScene(Stage s, int guiWidth, int guiHeight) {
+	public Scene setupScene(Stage stage, int width, int height) {
 
 		BorderPane root = new BorderPane();
-		Scene scene = new Scene(root, guiWidth, guiHeight);
+		Scene scene = new Scene(root, width, height);
+		ctrlPanel = new UserControlPanel(stage, scene, mySimulationLoop, 10);
 		startingGrid = makeEmptyGrid();
-		Node btnPanel = makeButtonPanel(s, scene, startingGrid);
+		popPanel = makePopulationPanel();
 
-		Node popPanel = makePopulationPanel(s, scene);
-		root.setRight(popPanel);
-		root.setBottom(btnPanel);
-		root.setMargin(btnPanel, new Insets(50));
+		root.setBottom(ctrlPanel);
+		BorderPane.setMargin(ctrlPanel, new Insets(50));
 		root.setCenter(startingGrid);
+		root.setRight(popPanel);
 
 		return scene;
 	}
 
-	private Node makePopulationPanel(Stage s, Scene scene) {
+	/**
+	 * Returns a VBox panel for cell population display.
+	 * 
+	 * @return vbox
+	 */
+	private VBox makePopulationPanel() {
 
-		vbox = new VBox(8);
+		VBox vbox = new VBox(8);
 		mySimulationLoop.setVBox(vbox);
 		return vbox;
 	}
 
 	/**
-	 * Method inspired by makeNavigationPanel() in BrowserView.java by Robert Duvall
+	 * Makes the starting empty, white grid.
 	 * 
-	 * @param s
-	 * @param scene
-	 * @return
-	 */
-	private Node makeButtonPanel(Stage s, Scene scene, GridPane grid) {
-
-		ctrlPanel = new UserControlPanel(s, scene, mySimulationLoop, xmlReader, xmlWriter, 10);
-		return ctrlPanel;
-	}
-
-	/**
-	 * Makes a starting empty grid.
-	 * 
+	 * @return startingGrid
 	 */
 	private GridPane makeEmptyGrid() {
 
@@ -116,7 +102,10 @@ public class SimulationSetup extends Application {
 		return startingGrid;
 	}
 
-	public void startSimulation(String[] args) {
+	/**
+	 * Starts the simulation setup.
+	 */
+	public void startSetup(String[] args) {
 		launch(args);
 	}
 

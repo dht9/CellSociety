@@ -10,15 +10,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class CellManager {
-	
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/Text");
-	
+
 	private static final int EMPTY = -1;
 	private static final int AGENT = 0;
 	private static final int AGENTMAP = -1;
 	private static final int BACKGROUND = 1;
-	
+
 	private List<Cell> myCellList;
 	private List<Cell> myAgentList;
 	private List<Cell> myBackgroundList;
@@ -27,11 +26,10 @@ public class CellManager {
 	private String myEdgeType;
 	private int myNeighborType;
 	private int[] myGridSize = new int[2];
-	private Map<String,Double> myParaMap;
+	private Map<String, Double> myParaMap;
 	private int myAgentNum = 10;
 
 	private List<int[]> myEmptyPos;
-
 
 	/**
 	 * constructor for cell manager, initialize mycelllist
@@ -60,7 +58,7 @@ public class CellManager {
 	 */
 	private List<Cell> getNeighborList(Cell current) {
 		List<Cell> neighborList = new ArrayList<Cell>();
-		for (Cell other: myCellList) {
+		for (Cell other : myCellList) {
 			if (current.isNeighbor(other)) {
 				neighborList.add(other);
 			}
@@ -82,7 +80,7 @@ public class CellManager {
 		for (Cell current : myCellList) {
 			current.updateInfo(getNeighborList(current), myEmptyPos);
 		}
-		for (Cell current: myCellList) {
+		for (Cell current : myCellList) {
 			current.update(removeCellList, newCellList, myEmptyPos);
 		}
 		myCellList.addAll(newCellList);
@@ -94,17 +92,15 @@ public class CellManager {
 		if (mySimulationType == "SugarScape") {
 			myAgentList = new ArrayList<Cell>();
 			myBackgroundList = new ArrayList<Cell>();
-			for (Cell current: myCellList) {
+			for (Cell current : myCellList) {
 				if (current.state() == AGENT) {
 					myAgentList.add(current);
-				}
-				else {
+				} else {
 					myBackgroundList.add(current);
 				}
 			}
 		}
 	}
-
 
 	/**
 	 * initialize all cells based on the stateArray parsed by XML file and store
@@ -114,7 +110,8 @@ public class CellManager {
 	 * @param type
 	 * @param paraList
 	 */
-	public void initialize(int[][] stateArray, String edgeType, String simulationType, Map<String,Double> paraMap, int neighborType) {
+	public void initialize(int[][] stateArray, String edgeType, String simulationType, Map<String, Double> paraMap,
+			int neighborType) {
 		int row = stateArray.length;
 		int col = stateArray[0].length;
 		mySimulationType = simulationType;
@@ -123,7 +120,7 @@ public class CellManager {
 		myGridSize[0] = row;
 		myGridSize[1] = col;
 		myParaMap = paraMap;
-		//myAgentNum = agentNum;
+		// myAgentNum = agentNum;
 		myNeighborType = neighborType;
 		addToList(stateArray, row, col);
 	}
@@ -135,15 +132,13 @@ public class CellManager {
 					Cell current = createCell(i, j, stateArray[i][j]);
 					if (mySimulationType == "SugarScape") {
 						myBackgroundList.add(current);
-						int[] empty = {i,j};
+						int[] empty = { i, j };
 						myEmptyPos.add(empty);
-					}
-					else {
+					} else {
 						myCellList.add(current);
 					}
-				}
-				else {
-					int[] empty = {i,j};
+				} else {
+					int[] empty = { i, j };
 					myEmptyPos.add(empty);
 				}
 			}
@@ -152,10 +147,10 @@ public class CellManager {
 			addRandomAgent();
 		}
 	}
-	
+
 	private void addRandomAgent() {
 		for (int i = 0; i < myAgentNum; i++) {
-			int randomIndex = (int) (Math.random() * (myBackgroundList.size()-i));
+			int randomIndex = (int) (Math.random() * (myBackgroundList.size() - i));
 			Cell match = myBackgroundList.get(randomIndex);
 			Cell current = createCell(match.row(), match.column(), AGENTMAP);
 			myAgentList.add(current);
@@ -174,34 +169,33 @@ public class CellManager {
 	 */
 	private Cell createCell(int row, int col, int state) {
 		Cell current;
-		switch(mySimulationType) {
-			case "GameOfLife":
-				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				break;
-			case "PredatorPrey":
-				current = new PredatorPrey(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				break;
-			case "Segregation":
-				current = new Segregation(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				break;
-			case "Fire":
-				current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				break;
-			case "RPS":
-				current = new RockPaperScissors(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				break;
-			case "SugarScape":
-				current = new SugarScape(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				break;
-			default:
-				current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
-				//showError();
-				break;
+		switch (mySimulationType) {
+		case "GameOfLife":
+			current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			break;
+		case "PredatorPrey":
+			current = new PredatorPrey(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			break;
+		case "Segregation":
+			current = new Segregation(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			break;
+		case "Fire":
+			current = new Fire(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			break;
+		case "RPS":
+			current = new RockPaperScissors(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			break;
+		case "SugarScape":
+			current = new SugarScape(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			break;
+		default:
+			current = new GameofLife(row, col, state, myGridSize, myParaMap, myEdgeType, myNeighborType);
+			// showError();
+			break;
 		}
 		return current;
 	}
-	
-	
+
 	/*
 	 * Display error message. Does not work yet.
 	 */
@@ -211,9 +205,10 @@ public class CellManager {
 		alert.setContentText(myResources.getString("ErrorSimulationType"));
 		alert.showAndWait();
 	}
-	
+
 	/**
 	 * for mouse click to change state
+	 * 
 	 * @param row
 	 * @param col
 	 * @param state
@@ -223,12 +218,13 @@ public class CellManager {
 		while (cellIter.hasNext()) {
 			Cell next = cellIter.next();
 			if (next.row() == row && next.column() == col) {
-				next.setNextState(state);;
+				next.setNextState(state);
+				;
 			}
 		}
 		List<Cell> newCellList = new ArrayList<Cell>();
 		List<Cell> removeCellList = new ArrayList<Cell>();
-		for (Cell current: myCellList) {
+		for (Cell current : myCellList) {
 			current.update(removeCellList, newCellList, myEmptyPos);
 		}
 		myCellList.addAll(newCellList);

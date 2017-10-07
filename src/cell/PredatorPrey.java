@@ -62,6 +62,15 @@ public class PredatorPrey extends Cell {
 		} else if (this.state() == SHARK) {
 			sharkUpdate(neighborlist, emptyPos);
 		}
+		updateEmptyList(emptyPos);
+	}
+
+	/**
+	 * update the emptyPos list after each updateInfo cycle to make sure no 
+	 * overlapping happens during the update()
+	 * @param emptyPos
+	 */
+	private void updateEmptyList(List<int[]> emptyPos) {
 		int[] currentPos = { this.row(), this.column() };
 		if (!myGiveBirth) {
 			emptyPos.add(currentPos);

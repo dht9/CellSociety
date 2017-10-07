@@ -28,6 +28,8 @@ import visualization.VisualizeGrid;
 /**
  * Class that creates user controls (buttons, sliders)
  * 
+ * Class inspired by makeNavigationPanel() in BrowserView.java by Robert Duvall
+ * 
  * @author DavidTran
  *
  */
@@ -62,13 +64,11 @@ public class UserControlPanel extends HBox {
 	 * @param xWriter
 	 * @param spacing
 	 */
-	public UserControlPanel(Stage st, Scene sc, SimulationLoop sLoop, XMLReader xReader, XMLWriter xWriter, int spacing) {
+	public UserControlPanel(Stage st, Scene sc, SimulationLoop sLoop, int spacing) {
 
 		s = st;
 		scene = sc;
 		mySimulationLoop = sLoop;
-		xmlReader = xReader;
-		xmlWriter = xWriter;
 		
 		this.setSpacing(spacing);
 		

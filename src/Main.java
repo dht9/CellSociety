@@ -12,7 +12,7 @@ public class Main {
 		
 		SimulationSetup setup = new SimulationSetup();
 		
-		setup.startSimulation(args);
+		setup.startSetup(args);
 	}
 
 }
